@@ -1,3 +1,6 @@
 packages:
+  - 'langServer'
+  - 'subhuti'
+  - 'subhuti-ts'
   - 'extensions/*'
   - 'packages/*'
