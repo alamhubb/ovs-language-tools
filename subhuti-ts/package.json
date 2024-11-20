@@ -1,0 +1,26 @@
+{
+  "name": "subhuti-ts",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "tsx src/index.js"
+  },
+  "bin": {
+    "ovs-lsp": "src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^22.7.6",
+    "subhuti": "../subhuti",
+    "tsx": "^4.19.1"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.26.0",
+    "typescript-todo-or-die-plugin": "^0.6.0"
+  }
+}

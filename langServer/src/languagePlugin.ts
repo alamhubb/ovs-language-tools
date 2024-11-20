@@ -3,7 +3,8 @@ import type {TypeScriptExtraServiceScript} from '@volar/typescript';
 import ts from 'typescript';
 import {URI} from 'vscode-uri';
 import * as console from "node:console";
-import {LogUtil} from "./logutil";
+import {LogUtil} from "./logutil.js";
+import {vitePluginOvsTransform} from "./ovs";
 
 export const ovsLanguagePlugin: LanguagePlugin<URI> = {
 	getLanguageId(uri) {
@@ -70,7 +71,7 @@ export class OvsVirtualCode implements VirtualCode {
 		let newCode = styleText
 		LogUtil.log('styleTextstyleTextstyleTextstyleText')
 		try {
-			// newCode = vitePluginOvsTransform(styleText)
+			newCode = vitePluginOvsTransform(styleText)
 
 		} catch (e) {
 			LogUtil.log('styleErrrrrrrr')

@@ -101,6 +101,12 @@ importers:
       semver:
         specifier: ^7.6.2
         version: 7.6.3
+      subhuti:
+        specifier: ../subhuti
+        version: link:../subhuti
+      subhuti-ts:
+        specifier: ../subhuti-ts
+        version: link:../subhuti-ts
       tsx:
         specifier: ^4.19.2
         version: 4.19.2
@@ -347,6 +353,27 @@ importers:
       '@types/vscode':
         specifier: ^1.82.0
         version: 1.95.0
+
+  subhuti: {}
+
+  subhuti-ts:
+    dependencies:
+      '@types/node':
+        specifier: ^22.7.6
+        version: 22.9.1
+      subhuti:
+        specifier: ../subhuti
+        version: link:../subhuti
+      tsx:
+        specifier: ^4.19.1
+        version: 4.19.2
+    devDependencies:
+      '@babel/types':
+        specifier: ^7.26.0
+        version: 7.26.0
+      typescript-todo-or-die-plugin:
+        specifier: ^0.6.0
+        version: 0.6.0
 
 packages:
 
