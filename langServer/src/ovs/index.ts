@@ -9,6 +9,7 @@ import {ovsToAstUtil} from "./factory/Es6CstToOvsAstUtil.ts";
 import {TokenProvider} from "../IntellijTokenUtil.ts";
 import OvsAPI from "./OvsAPI.ts";
 import generate from "@babel/generator";
+import {LogUtil} from "../logutil.ts";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
     if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -57,7 +58,7 @@ export function vitePluginOvsTransform(code) {
     console.log(123123)
     console.log(generate.default)
     console.log(56465)
-    code1 = generate.default(ast).code
+    code1 = generate(ast).code
     if (code1) {
         code1 = removeSemicolons(code1)
     }
@@ -81,6 +82,8 @@ export function vitePluginOvsTransform(code) {
     // mapping.openMappingMode(curCst)
     // code1 = mapping.exec(curCst)
     // console.log(code1)
+    LogUtil.log('console code')
+    LogUtil.log(code1)
     return `${code1}`
     /*    return `
         // import OvsAPI from "@/ovs/OvsAPI.ts";\n

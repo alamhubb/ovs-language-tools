@@ -132,8 +132,6 @@ export function applyCompletionEntryDetails(
 	fileNameToUri: (fileName: string) => URI,
 	getTextDocument: (uri: URI) => TextDocument | undefined
 ) {
-	LogUtil.log('auto applyCompletionEntryDetails')
-	LogUtil.log(data)
 	const { sourceDisplay } = data;
 	if (sourceDisplay) {
 		item.labelDetails ??= {};
