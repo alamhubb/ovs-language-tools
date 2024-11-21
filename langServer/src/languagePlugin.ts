@@ -177,13 +177,13 @@ export class OvsVirtualCode implements VirtualCode {
         LogUtil.log('styleTextstyleTextstyleTextstyleText')
         let mapping = []
         try {
+            LogUtil.log('3333')
             const res = vitePluginOvsTransform(styleText)
             newCode = res.code
             mapping = res.mapping
         } catch (e: Error) {
             LogUtil.log('styleErrrrrrrr')
             LogUtil.log(e.message)
-            throw Error('cuo wu le')
         }
         const getOffsets = new MappingConverter(styleText, newCode)
         const offsets = getOffsets.convertMappings(mapping)
@@ -214,12 +214,12 @@ export class OvsVirtualCode implements VirtualCode {
             // generatedLengths?: number[];
             // data: Data;
             mappings: [{
-                // sourceOffsets: offsets.map(item => item.original.offset),
-                // generatedOffsets: offsets.map(item => item.generated.offset),
-                // lengths: offsets.map(item => item.original.length),
-                sourceOffsets: [0],
-                generatedOffsets: [0],
-                lengths: [newCode.length],
+                sourceOffsets: offsets.map(item => item.original.offset),
+                generatedOffsets: offsets.map(item => item.generated.offset),
+                lengths: offsets.map(item => item.original.length),
+                // sourceOffsets: [0],
+                // generatedOffsets: [0],
+                // lengths: [newCode.length],
                 data: {
                     completion: true,
                     format: true,

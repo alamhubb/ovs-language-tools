@@ -39,6 +39,7 @@ export function traverseClearLoc(currentNode: SubhutiCst) {
 }
 
 export function vitePluginOvsTransform(code) {
+    LogUtil.log('44444')
     const lexer = new SubhutiLexer(es6Tokens)
     const tokens = lexer.lexer(code)
     if (!tokens.length) return code
@@ -54,6 +55,7 @@ export function vitePluginOvsTransform(code) {
     //cst转 estree ast
     const ast = ovsToAstUtil.createProgramAst(curCst)
 
+    LogUtil.log(ast)
     // 验证 AST 节点是否包含位置信息
     traverse(ast, {
         enter(path) {
@@ -66,6 +68,8 @@ export function vitePluginOvsTransform(code) {
             path.node.loc.end.index = undefined
         }
     });
+
+    LogUtil.log('6666')
 
 // 生成代码
     const genRes = generate(ast, {
