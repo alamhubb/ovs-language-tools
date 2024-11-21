@@ -349,6 +349,7 @@ export default class Es6CstToEstreeAstUtil {
             variableDeclarator = babeType.variableDeclarator(id)
         }
         variableDeclarator.loc = cst.loc
+        return variableDeclarator
     }
 
     createExpressionAst(cst: SubhutiCst): Expression {

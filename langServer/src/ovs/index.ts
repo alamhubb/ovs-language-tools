@@ -69,8 +69,8 @@ export function vitePluginOvsTransform(code) {
             path.node.loc.end.index = undefined
         }
     });
-    const output = recast.print(ast).code;
-    console.log(output)
+    // const output = recast.print(ast).code;
+    // console.log(output)
     LogUtil.log(ast)
     LogUtil.log('6666')
 
@@ -105,6 +105,7 @@ export function vitePluginOvsTransform(code) {
     // mapping.openMappingMode(curCst)
     // code1 = mapping.exec(curCst)
     // console.log(code1)
+    console.log(code1)
     return {
         code: code1,
         mapping: genRes.rawMappings
