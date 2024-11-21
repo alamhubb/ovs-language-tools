@@ -10,7 +10,7 @@ import {TokenProvider} from "../IntellijTokenUtil.ts";
 import OvsAPI from "./OvsAPI.ts";
 import generate from "@babel/generator";
 import {LogUtil} from "../logutil.ts";
-import {traverse} from "@babel/types";
+import traverse from '@babel/traverse';
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
     if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -49,14 +49,14 @@ export function vitePluginOvsTransform(code) {
     let curCst = parser.Program()
     // JsonUtil.log(7777)
     curCst = traverseClearTokens(curCst)
-    curCst = traverseClearLoc(curCst)
+    // curCst = traverseClearLoc(curCst)
     // JsonUtil.log(curCst)
     console.log(111231)
     // JsonUtil.log(curCst)
     //cst转 estree ast
     const ast = ovsToAstUtil.createProgramAst(curCst)
 
-    console.log(traverse)
+    JsonUtil.log(ast)
 
     // 验证 AST 节点是否包含位置信息
     traverse(ast, {
@@ -64,11 +64,11 @@ export function vitePluginOvsTransform(code) {
             console.log(path.node.type)
             path.node.start = undefined
             path.node.end = undefined
+            if (!path.node.loc) {
+                throw Error(`Node of type ${path.node.type} is missing loc information.`);
+            }
             path.node.loc.start.index = undefined
             path.node.loc.end.index = undefined
-            if (!path.node.loc) {
-                console.error(`Node of type ${path.node.type} is missing loc information.`);
-            }
         }
     });
     JsonUtil.log(ast)

@@ -537,6 +537,7 @@ export default class Es6CstToEstreeAstUtil {
         } else {
             value = babeType.stringLiteral(firstChild.value)
         }
+        value.loc = firstChild.loc
         return value
     }
 
