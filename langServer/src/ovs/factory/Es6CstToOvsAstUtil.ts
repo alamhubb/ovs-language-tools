@@ -41,6 +41,7 @@ export default class Es6CstToOvsAstUtil extends Es6CstToEstreeAstUtil {
         return ast
     }
 
+
     createProgramAst(cst: SubhutiCst): Program {
         const ast = super.createProgramAst(cst)
         return ast

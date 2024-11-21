@@ -187,6 +187,9 @@ export class OvsVirtualCode implements VirtualCode {
         }
         const getOffsets = new MappingConverter(styleText, newCode)
         const offsets = getOffsets.convertMappings(mapping)
+        LogUtil.log('last offset offfff')
+        LogUtil.log(offsets[offsets.length - 1].original.offset)
+        LogUtil.log(offsets[offsets.length - 1].generated.offset)
         //将ovscode转为js代码，传给ts
         /*this.embeddedCodes = [{
             id: 'ts',

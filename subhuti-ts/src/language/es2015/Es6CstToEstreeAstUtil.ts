@@ -16,13 +16,14 @@ import {
     Expression,
     ExpressionStatement, FunctionDeclaration,
     FunctionExpression,
-    Identifier,
+    Identifier, InterpreterDirective,
     Literal,
     MemberExpression,
     ModuleDeclaration,
     Node,
     Pattern,
     Program,
+    File,
     SourceLocation,
     Statement, StringLiteral, TSDeclareFunction,
     VariableDeclaration,
@@ -62,33 +63,27 @@ export default class Es6CstToEstreeAstUtil {
         return ast
     }
 
+    createFileAst(cst: SubhutiCst): File {
+        const ast = this.createProgramAst(cst)
+        return babeType.file(ast)
+    }
+
     createProgramAst(cst: SubhutiCst): Program {
         const astName = checkCstName(cst, Es6Parser.prototype.Program.name);
         const first = cst.children[0]
-        const map = {
-            [Es6Parser.prototype.StatementList.name]: "script",
-            [Es6Parser.prototype.ModuleItemList.name]: "module",
-        }
-        let sourceType = map[first.name]
-        if (!sourceType) {
-            throwNewError()
-        }
-        let body: Array<Directive | Statement | ModuleDeclaration>
+        let program: Program
         if (first.name === Es6Parser.prototype.ModuleItemList.name) {
-            body = this.createModuleItemListAst(first)
-        } else {
-            body = this.createStatementListAst(first)
+            const body = this.createModuleItemListAst(first)
+            program = babeType.program(body, [], "module")
+        } else if (first.name === Es6Parser.prototype.StatementList.name) {
+            const body = this.createStatementListAst(first)
+            program = babeType.program(body, [], "script")
         }
-        const ast: Program = {
-            type: astName as any,
-            sourceType: sourceType as any,
-            body: body,
-            loc: cst.loc
-        }
-        return ast
+        program.loc = cst.loc
+        return program
     }
 
-    createModuleItemListAst(cst: SubhutiCst): Array<Directive | Statement | ModuleDeclaration> {
+    createModuleItemListAst(cst: SubhutiCst): Array<Statement> {
         //直接返回声明
         //                 this.Statement()
         //                 this.Declaration()

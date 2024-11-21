@@ -53,7 +53,7 @@ export function vitePluginOvsTransform(code) {
     // JsonUtil.log(curCst)
     // JsonUtil.log(curCst)
     //cst转 estree ast
-    const ast = ovsToAstUtil.createProgramAst(curCst)
+    const ast = ovsToAstUtil.createFileAst(curCst)
 
     LogUtil.log(ast)
     // 验证 AST 节点是否包含位置信息
@@ -112,19 +112,19 @@ export function vitePluginOvsTransform(code) {
         `*/
 }
 
-const code = `let c1 = 123
-let c2 = c1
-let c3 = c2
-let c4 = c3
-
-Tes
+const code = `export default class TestA{
+    static log(v){
+        console.log(123)
+    }
+}
 `
+
 // const code = `let a = div{
 //             header = div{123},
 //             true
 //         }
 // `
-// const res = vitePluginOvsTransform(code)
+const res = vitePluginOvsTransform(code)
 
 // const getOffsets = new MappingConverter(code, res.code)
 // const offsets = getOffsets.convertMappings(res.mapping)
