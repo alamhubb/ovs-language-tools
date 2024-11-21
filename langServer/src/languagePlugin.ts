@@ -47,6 +47,111 @@ export const ovsLanguagePlugin: LanguagePlugin<URI> = {
     },
 };
 
+
+interface BabelMapping {
+    generated: { line: number; column: number };
+    original: { line: number; column: number };
+    source: string;
+    name?: string;
+}
+
+interface SegmentInfo {
+    offset: number;
+    length: number;
+}
+
+interface EnhancedMapping {
+    generated: SegmentInfo;
+    original: SegmentInfo;
+}
+
+export class MappingConverter {
+    private sourceLineStarts: number[];
+    private generatedLineStarts: number[];
+
+    constructor(sourceCode: string, generatedCode: string) {
+        this.sourceLineStarts = this.computeLineStarts(sourceCode);
+        this.generatedLineStarts = this.computeLineStarts(generatedCode);
+    }
+
+    private computeLineStarts(code: string): number[] {
+        const starts = [0];
+        let pos = 0;
+        while ((pos = code.indexOf('\n', pos)) !== -1) {
+            starts.push(pos + 1);
+            pos++;
+        }
+        return starts;
+    }
+
+    private positionToOffset(position: { line: number; column: number }, lineStarts: number[]): number {
+        const lineIndex = position.line - 1;
+        return lineStarts[lineIndex] + position.column;
+    }
+
+    /**
+     * 计算两个位置之间的长度
+     */
+    private calculateLength(
+        current: { line: number; column: number },
+        next: { line: number; column: number } | undefined,
+        lineStarts: number[]
+    ): number {
+        if (!next) {
+            return 1; // 如果是最后一个位置，默认长度为1
+        }
+
+        if (current.line === next.line) {
+            // 同一行，直接计算列差
+            return next.column - current.column;
+        } else {
+            // 跨行，计算到行尾的距离
+            const currentLineLength = (lineStarts[current.line] || 0) -
+                (lineStarts[current.line - 1] + current.column);
+            return currentLineLength;
+        }
+    }
+
+    convertMappings(mappings: BabelMapping[]): EnhancedMapping[] {
+        return mappings.map((mapping, index) => {
+            const nextMapping = mappings[index + 1];
+
+            // 计算生成代码的信息
+            const generatedOffset = this.positionToOffset(
+                mapping.generated,
+                this.generatedLineStarts
+            );
+            const generatedLength = this.calculateLength(
+                mapping.generated,
+                nextMapping?.generated,
+                this.generatedLineStarts
+            );
+
+            // 计算源代码的信息
+            const originalOffset = this.positionToOffset(
+                mapping.original,
+                this.sourceLineStarts
+            );
+            const originalLength = this.calculateLength(
+                mapping.original,
+                nextMapping?.original,
+                this.sourceLineStarts
+            );
+
+            return {
+                generated: {
+                    offset: generatedOffset,
+                    length: generatedLength
+                },
+                original: {
+                    offset: originalOffset,
+                    length: originalLength
+                }
+            };
+        });
+    }
+}
+
 export class OvsVirtualCode implements VirtualCode {
     id = 'root';
     languageId = 'qqovs';
@@ -70,14 +175,18 @@ export class OvsVirtualCode implements VirtualCode {
         const styleText = snapshot.getText(0, snapshot.getLength());
         let newCode = styleText
         LogUtil.log('styleTextstyleTextstyleTextstyleText')
+        let mapping = []
         try {
-            newCode = vitePluginOvsTransform(styleText)
+            const res = vitePluginOvsTransform(styleText)
+            newCode = res.code
+            mapping = res.mapping
         } catch (e: Error) {
             LogUtil.log('styleErrrrrrrr')
             LogUtil.log(e.message)
+            throw Error('cuo wu le')
         }
-        LogUtil.log(styleText)
-        LogUtil.log(newCode)
+        const getOffsets = new MappingConverter(styleText, newCode)
+        const offsets = getOffsets.convertMappings(mapping)
         //将ovscode转为js代码，传给ts
         /*this.embeddedCodes = [{
             id: 'ts',
@@ -105,6 +214,9 @@ export class OvsVirtualCode implements VirtualCode {
             // generatedLengths?: number[];
             // data: Data;
             mappings: [{
+                // sourceOffsets: offsets.map(item => item.original.offset),
+                // generatedOffsets: offsets.map(item => item.generated.offset),
+                // lengths: offsets.map(item => item.original.length),
                 sourceOffsets: [0],
                 generatedOffsets: [0],
                 lengths: [newCode.length],

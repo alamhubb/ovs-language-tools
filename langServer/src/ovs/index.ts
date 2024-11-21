@@ -11,6 +11,7 @@ import OvsAPI from "./OvsAPI.ts";
 import generate from "@babel/generator";
 import {LogUtil} from "../logutil.ts";
 import traverse from '@babel/traverse';
+import {MappingConverter} from "../languagePlugin.ts";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
     if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -37,6 +38,24 @@ export function traverseClearLoc(currentNode: SubhutiCst) {
     return currentNode
 }
 
+// 使用示例
+// 使用示例
+const sourceCode = `let c1 = 123
+let c2 = c1
+let c3 = c2
+let c4 = c3
+
+Tes
+`;
+
+const generatedCode = `let c1 = 123
+let c2 = c1
+let c3 = c2
+let c4 = c3
+Tes
+`;
+
+
 export function vitePluginOvsTransform(code) {
     const lexer = new SubhutiLexer(es6Tokens)
     const tokens = lexer.lexer(code)
@@ -49,7 +68,6 @@ export function vitePluginOvsTransform(code) {
     curCst = traverseClearTokens(curCst)
     // curCst = traverseClearLoc(curCst)
     // JsonUtil.log(curCst)
-    console.log(111231)
     // JsonUtil.log(curCst)
     //cst转 estree ast
     const ast = ovsToAstUtil.createProgramAst(curCst)
@@ -92,7 +110,6 @@ export function vitePluginOvsTransform(code) {
         return code.replace(/;$/gm, '')
     }
 
-    console.log(656555)
     //ast to client ast
     // TokenProvider.visitNode(ast)
     // JsonUtil.log(TokenProvider.tokens)
@@ -104,11 +121,10 @@ export function vitePluginOvsTransform(code) {
     // mapping.openMappingMode(curCst)
     // code1 = mapping.exec(curCst)
     // console.log(code1)
-    LogUtil.log('console code')
-    console.log(code)
-    console.log(code1)
-    console.log(genRes.rawMappings)
-    return `${code1}`
+    return {
+        code: code1,
+        mapping: genRes.rawMappings
+    }
     /*    return `
         // import OvsAPI from "@/ovs/OvsAPI.ts";\n
         ${code1.code}
@@ -128,6 +144,11 @@ Tes
 //         }
 // `
 const res = vitePluginOvsTransform(code)
+
+const getOffsets = new MappingConverter(code, res.code)
+const offsets = getOffsets.convertMappings(res.mapping)
+
+LogUtil.log(offsets)
 
 
 export default function vitePluginOvs(): Plugin {
