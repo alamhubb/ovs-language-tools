@@ -183,6 +183,7 @@ export class OvsVirtualCode implements VirtualCode {
             mapping = res.mapping
         } catch (e: Error) {
             LogUtil.log('styleErrrrrrrr')
+            LogUtil.log(styleText)
             LogUtil.log(e.message)
         }
         const getOffsets = new MappingConverter(styleText, newCode)

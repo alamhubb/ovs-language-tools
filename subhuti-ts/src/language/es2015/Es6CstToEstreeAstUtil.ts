@@ -55,12 +55,9 @@ export function throwNewError(errorMsg: string = 'syntax error') {
 export default class Es6CstToEstreeAstUtil {
     createIdentifierAst(cst: SubhutiCst): Identifier {
         const astName = checkCstName(cst, Es6TokenConsumer.prototype.Identifier.name);
-        const ast: Identifier = {
-            type: astName as any,
-            name: cst.value,
-            loc: cst.loc
-        }
-        return ast
+        const identifier = babeType.identifier(cst.value)
+        identifier.loc = cst.loc
+        return identifier
     }
 
     createFileAst(cst: SubhutiCst): File {
@@ -343,13 +340,15 @@ export default class Es6CstToEstreeAstUtil {
 
     createVariableDeclaratorAst(cst: SubhutiCst): VariableDeclarator {
         const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclarator.name);
-        const ast: VariableDeclarator = {
-            type: astName as any,
-            id: this.createIdentifierAst(cst.children[0].children[0]) as any,
-            init: this.createAssignmentExpressionAst(cst.children[1].children[1]) as any,
-            loc: cst.loc
+        const id = this.createIdentifierAst(cst.children[0].children[0])
+        let variableDeclarator: VariableDeclarator
+        if (cst.children[1]) {
+            const init = this.createAssignmentExpressionAst(cst.children[1].children[1])
+            variableDeclarator = babeType.variableDeclarator(id, init)
+        } else {
+            variableDeclarator = babeType.variableDeclarator(id)
         }
-        return ast
+        variableDeclarator.loc = cst.loc
     }
 
     createExpressionAst(cst: SubhutiCst): Expression {

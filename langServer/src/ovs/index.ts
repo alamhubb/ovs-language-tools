@@ -12,6 +12,8 @@ import generate from "@babel/generator";
 import {LogUtil} from "../logutil.ts";
 import traverse from '@babel/traverse';
 import {MappingConverter} from "../languagePlugin.ts";
+import * as recast from "recast";
+
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
     if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -55,7 +57,6 @@ export function vitePluginOvsTransform(code) {
     //cst转 estree ast
     const ast = ovsToAstUtil.createFileAst(curCst)
 
-    LogUtil.log(ast)
     // 验证 AST 节点是否包含位置信息
     traverse(ast, {
         enter(path) {
@@ -68,7 +69,9 @@ export function vitePluginOvsTransform(code) {
             path.node.loc.end.index = undefined
         }
     });
-
+    const output = recast.print(ast).code;
+    console.log(output)
+    LogUtil.log(ast)
     LogUtil.log('6666')
 
 // 生成代码
@@ -112,11 +115,12 @@ export function vitePluginOvsTransform(code) {
         `*/
 }
 
-const code = `export default class TestA{
-    static log(v){
-        console.log(123)
-    }
-}
+const code = `let a = 123
+let c = a
+let c1 = c
+let c2 = c1
+let c3 = c2
+let c4 = 
 `
 
 // const code = `let a = div{
