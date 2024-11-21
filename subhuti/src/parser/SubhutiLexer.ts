@@ -24,7 +24,7 @@ export default class SubhutiLexer {
 
   lexer(input: string): SubhutiMatchToken[] {
     const resTokens: SubhutiMatchToken[] = [] // 初始化结果token数组
-    let lineNum = 0
+    let lineNum = 1
     let columnStartNum = 0
     let newlinesPatternRes = null
     const newlinesPattern = new RegExp('^\n')

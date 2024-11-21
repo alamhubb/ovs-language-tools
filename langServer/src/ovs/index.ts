@@ -38,13 +38,11 @@ export function traverseClearLoc(currentNode: SubhutiCst) {
 }
 
 export function vitePluginOvsTransform(code) {
-    console.log(code)
     const lexer = new SubhutiLexer(es6Tokens)
     const tokens = lexer.lexer(code)
     if (!tokens.length) return code
     const parser = new OvsParser(tokens)
 
-    // console.log(tokens)
     let code1 = null
     let curCst = parser.Program()
     // JsonUtil.log(7777)
@@ -56,12 +54,9 @@ export function vitePluginOvsTransform(code) {
     //cst转 estree ast
     const ast = ovsToAstUtil.createProgramAst(curCst)
 
-    JsonUtil.log(ast)
-
     // 验证 AST 节点是否包含位置信息
     traverse(ast, {
         enter(path) {
-            console.log(path.node.type)
             path.node.start = undefined
             path.node.end = undefined
             if (!path.node.loc) {
@@ -71,9 +66,6 @@ export function vitePluginOvsTransform(code) {
             path.node.loc.end.index = undefined
         }
     });
-    JsonUtil.log(ast)
-    console.log(123123)
-    console.log(56465)
 
     // 存储生成码 tokens
     const generatedTokens: any[] = [];
@@ -83,25 +75,12 @@ export function vitePluginOvsTransform(code) {
         sourceMaps: true,             // 启用源码映射
         sourceFileName: 'source.js',  // 源文件名
         fileName: 'generated.js',     // 生成文件名
-        tokens: true,                 // 启用 tokens
         retainLines: true,            // 保留行号
         compact: false,               // 不压缩代码
-        comments: true,               // 保留注释
-        onToken: (token) => {
-            generatedTokens.push({
-                type: token.type.label,
-                value: token.value,
-                start: token.start,
-                end: token.end,
-                loc: token.loc,
-            });
-        },
+        comments: true,
     });
 
-    console.log(generatedTokens)
-    console.log(genRes)
-    console.log(genRes.map)
-    console.log(genRes.rawMappings)
+
     code1 = genRes.code
     const sourcemap = genRes.sourcemap
     if (code1) {
@@ -109,13 +88,11 @@ export function vitePluginOvsTransform(code) {
     }
 
     function removeSemicolons(code) {
-        console.log(code)
         // 按行分割，处理每行，然后重新组合
         return code.replace(/;$/gm, '')
     }
 
     console.log(656555)
-    console.log(code1)
     //ast to client ast
     // TokenProvider.visitNode(ast)
     // JsonUtil.log(TokenProvider.tokens)
@@ -128,7 +105,9 @@ export function vitePluginOvsTransform(code) {
     // code1 = mapping.exec(curCst)
     // console.log(code1)
     LogUtil.log('console code')
-    LogUtil.log(code1)
+    console.log(code)
+    console.log(code1)
+    console.log(genRes.rawMappings)
     return `${code1}`
     /*    return `
         // import OvsAPI from "@/ovs/OvsAPI.ts";\n
@@ -140,13 +119,6 @@ const code = `let c1 = 123
 let c2 = c1
 let c3 = c2
 let c4 = c3
-let c5 = c4
-let c6 = c5
-let c7 = c6
-let c8 = c7
-let c9 = c8
-let c10 = c9
-let c11 = c10
 
 Tes
 `
