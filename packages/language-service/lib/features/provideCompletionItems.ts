@@ -6,6 +6,7 @@ import type { LanguageServiceContext, LanguageServicePluginInstance } from '../t
 import { NoneCancellationToken } from '../utils/cancellation';
 import { DocumentsAndMap, forEachEmbeddedDocument, getGeneratedPositions, getSourceRange } from '../utils/featureWorkers';
 import { transformCompletionList } from '../utils/transform';
+import {LogUtil} from "../logutil";
 
 export interface ServiceCompletionData {
 	uri: string;
@@ -203,6 +204,9 @@ export function register(context: LanguageServiceContext) {
 					if (plugin[1].isAdditionalCompletion && lastResult?.results.some(data => data.plugin === plugin[1])) {
 						continue;
 					}
+
+					LogUtil.log('await plugin[1].provideCompletionItems(document, position, completionContext, token)')
+					LogUtil.log(position)
 
 					let completionList = await plugin[1].provideCompletionItems(document, position, completionContext, token);
 

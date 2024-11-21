@@ -10,6 +10,7 @@ import {TokenProvider} from "../IntellijTokenUtil.ts";
 import OvsAPI from "./OvsAPI.ts";
 import generate from "@babel/generator";
 import {LogUtil} from "../logutil.ts";
+import {traverse} from "@babel/types";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
     if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -43,7 +44,7 @@ export function vitePluginOvsTransform(code) {
     if (!tokens.length) return code
     const parser = new OvsParser(tokens)
 
-    console.log(tokens)
+    // console.log(tokens)
     let code1 = null
     let curCst = parser.Program()
     // JsonUtil.log(7777)
@@ -54,11 +55,55 @@ export function vitePluginOvsTransform(code) {
     // JsonUtil.log(curCst)
     //cst转 estree ast
     const ast = ovsToAstUtil.createProgramAst(curCst)
+
+    console.log(traverse)
+
+    // 验证 AST 节点是否包含位置信息
+    traverse(ast, {
+        enter(path) {
+            console.log(path.node.type)
+            path.node.start = undefined
+            path.node.end = undefined
+            path.node.loc.start.index = undefined
+            path.node.loc.end.index = undefined
+            if (!path.node.loc) {
+                console.error(`Node of type ${path.node.type} is missing loc information.`);
+            }
+        }
+    });
     JsonUtil.log(ast)
     console.log(123123)
-    console.log(generate.default)
     console.log(56465)
-    code1 = generate(ast).code
+
+    // 存储生成码 tokens
+    const generatedTokens: any[] = [];
+
+// 生成代码
+    const genRes = generate(ast, {
+        sourceMaps: true,             // 启用源码映射
+        sourceFileName: 'source.js',  // 源文件名
+        fileName: 'generated.js',     // 生成文件名
+        tokens: true,                 // 启用 tokens
+        retainLines: true,            // 保留行号
+        compact: false,               // 不压缩代码
+        comments: true,               // 保留注释
+        onToken: (token) => {
+            generatedTokens.push({
+                type: token.type.label,
+                value: token.value,
+                start: token.start,
+                end: token.end,
+                loc: token.loc,
+            });
+        },
+    });
+
+    console.log(generatedTokens)
+    console.log(genRes)
+    console.log(genRes.map)
+    console.log(genRes.rawMappings)
+    code1 = genRes.code
+    const sourcemap = genRes.sourcemap
     if (code1) {
         code1 = removeSemicolons(code1)
     }
@@ -110,7 +155,7 @@ Tes
 //             true
 //         }
 // `
-// const res = vitePluginOvsTransform(code)
+const res = vitePluginOvsTransform(code)
 
 
 export default function vitePluginOvs(): Plugin {
