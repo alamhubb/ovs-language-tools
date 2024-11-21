@@ -38,24 +38,6 @@ export function traverseClearLoc(currentNode: SubhutiCst) {
     return currentNode
 }
 
-// 使用示例
-// 使用示例
-const sourceCode = `let c1 = 123
-let c2 = c1
-let c3 = c2
-let c4 = c3
-
-Tes
-`;
-
-const generatedCode = `let c1 = 123
-let c2 = c1
-let c3 = c2
-let c4 = c3
-Tes
-`;
-
-
 export function vitePluginOvsTransform(code) {
     const lexer = new SubhutiLexer(es6Tokens)
     const tokens = lexer.lexer(code)
@@ -85,9 +67,6 @@ export function vitePluginOvsTransform(code) {
         }
     });
 
-    // 存储生成码 tokens
-    const generatedTokens: any[] = [];
-
 // 生成代码
     const genRes = generate(ast, {
         sourceMaps: true,             // 启用源码映射
@@ -98,9 +77,7 @@ export function vitePluginOvsTransform(code) {
         comments: true,
     });
 
-
     code1 = genRes.code
-    const sourcemap = genRes.sourcemap
     if (code1) {
         code1 = removeSemicolons(code1)
     }
@@ -143,12 +120,12 @@ Tes
 //             true
 //         }
 // `
-const res = vitePluginOvsTransform(code)
+// const res = vitePluginOvsTransform(code)
 
-const getOffsets = new MappingConverter(code, res.code)
-const offsets = getOffsets.convertMappings(res.mapping)
+// const getOffsets = new MappingConverter(code, res.code)
+// const offsets = getOffsets.convertMappings(res.mapping)
 
-LogUtil.log(offsets)
+// LogUtil.log(offsets)
 
 
 export default function vitePluginOvs(): Plugin {
