@@ -69,8 +69,8 @@ export function vitePluginOvsTransform(code) {
             path.node.loc.end.index = undefined
         }
     });
-    // const output = recast.print(ast).code;
-    // console.log(output)
+    const output = recast.print(ast).code;
+    console.log(output)
     LogUtil.log(ast)
     LogUtil.log('6666')
 
@@ -117,10 +117,6 @@ export function vitePluginOvsTransform(code) {
 }
 
 const code = `let a = 123
-let c = a
-let c1 = c
-let c2 = c1
-let c3 = c2
 let c4 = 
 `
 
