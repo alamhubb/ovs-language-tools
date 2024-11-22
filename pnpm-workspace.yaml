@@ -3,4 +3,5 @@ packages:
   - 'subhuti'
   - 'subhuti-ts'
   - 'extensions/*'
+  - 'slime/*'
   - 'packages/*'
