@@ -375,6 +375,28 @@ importers:
         specifier: ^1.82.0
         version: 1.95.0
 
+  slime/slime: {}
+
+  slime/slime-ast:
+    dependencies:
+      '@babel/types':
+        specifier: ^7.26.0
+        version: 7.26.0
+      slime-syntax:
+        specifier: ../slime-syntax
+        version: link:../slime-syntax
+      slime-token:
+        specifier: ../slime-token
+        version: link:../slime-token
+
+  slime/slime-generator: {}
+
+  slime/slime-parser: {}
+
+  slime/slime-syntax: {}
+
+  slime/slime-token: {}
+
   subhuti: {}
 
   subhuti-ts:

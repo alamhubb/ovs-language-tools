@@ -1,5 +1,5 @@
 {
-  "name": "slime-ast",
+  "name": "slime-token",
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
@@ -8,10 +8,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "slime-token": "../slime-token",
-    "slime-syntax": "../slime-syntax",
-    "@babel/types": "^7.26.0"
-  }
+  "description": ""
 }

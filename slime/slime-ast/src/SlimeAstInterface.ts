@@ -1,30 +1,18 @@
 // 1. 使用 const enum 定义类型常量
 import {BinaryExpression, LogicalExpression} from "@babel/types";
 import * as ts from 'typescript'
-
-const enum SlimeAstType {
-    EqToken = 'EqToken',
-
-    VariableDeclarator = 'VariableDeclarator',
-    NumericLiteral = 'NumericLiteral',
-    StringLiteral = 'StringLiteral',
-    BooleanLiteral = 'BooleanLiteral',
-    Initializer = 'Initializer'
-}
+import {SlimeSyntaxType} from "slime-syntax/src/SlimeSyntaxType.ts";
+import {SlimeTokenType} from "slime-token/src/SlimeTokenType.ts";
 
 interface BaseNode {
-    type: SlimeAstType;
+    type: SlimeTokenType|SlimeSyntaxType;
 }
 
 interface SlimeVariableDeclarator extends BaseNode {
-    type: SlimeAstType.VariableDeclarator;
+    type: SlimeSyntaxType.VariableDeclarator;
     init: SlimeLiteral
 }
 
-interface SlimeEqToken extends BaseNode {
-    type: SlimeAstType.EqToken;
-}
 
-type SlimeLiteral = SlimeEqToken;
-
+type SlimeLiteral = SlimeTokenType.EqToken;
 
