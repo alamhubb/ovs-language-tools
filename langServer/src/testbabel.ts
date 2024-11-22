@@ -1,10 +1,11 @@
-import * as prettier from "prettier";
+import Parser from 'tree-sitter'
+import typescript from 'tree-sitter-typescript'
+import JsonUtil from "./utils/JsonUtil.ts";
 
+const parser = new Parser();
+parser.setLanguage(typescript.typescript);
 
-async function main() {
-    const res = await prettier.format("let a = ", {semi: false, parser: "babel"});
+const sourceCode = 'let x =';
+const tree = parser.parse(sourceCode);
 
-    console.log(res)
-}
-
-main()
+JsonUtil.log(tree.rootNode.toString())
