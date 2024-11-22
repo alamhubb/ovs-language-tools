@@ -404,6 +404,9 @@ importers:
       '@types/node':
         specifier: ^22.7.6
         version: 22.9.1
+      slime-ast:
+        specifier: ../slime/slime-ast
+        version: link:../slime/slime-ast
       subhuti:
         specifier: ../subhuti
         version: link:../subhuti

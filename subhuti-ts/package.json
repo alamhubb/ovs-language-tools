@@ -17,6 +17,7 @@
   "dependencies": {
     "@types/node": "^22.7.6",
     "subhuti": "../subhuti",
+    "slime-ast": "../slime/slime-ast",
     "tsx": "^4.19.1"
   },
   "devDependencies": {

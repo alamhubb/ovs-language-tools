@@ -30,6 +30,7 @@ import {
     VariableDeclarator,
 } from "@babel/types";
 import BabelAstType from "../BabelAstType.ts";
+import {SlimeLiteral} from "slime-ast/src/SlimeAstInterface.ts";
 
 
 export const EsTreeAstType: {
@@ -519,7 +520,7 @@ export default class Es6CstToEstreeAstUtil {
         }
     }
 
-    createLiteralAst(cst: SubhutiCst): Literal {
+    createLiteralAst(cst: SubhutiCst): SlimeLiteral {
         const astName = checkCstName(cst, Es6Parser.prototype.Literal.name);
         const firstChild = cst.children[0]
         let value
