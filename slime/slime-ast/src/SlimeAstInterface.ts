@@ -13,18 +13,18 @@ export enum SlimeAstType {
 }
 
 
-interface BaseNode {
+export interface BaseNode {
     type: SlimeAstType;
 }
 
-interface SlimeVariableDeclarator extends VariableDeclarator {
+export interface SlimeVariableDeclarator extends VariableDeclarator {
     type: SlimeAstType.VariableDeclarator;
     init: SlimeLiteral
 }
 
-interface SlimeCaretEqualsToken extends BaseNode {
+export interface SlimeCaretEqualsToken extends BaseNode {
     type: SlimeAstType.CaretEqualsToken;
 }
 
-type SlimeLiteral = Literal | SlimeCaretEqualsToken
+export type SlimeLiteral = Literal | SlimeCaretEqualsToken
 

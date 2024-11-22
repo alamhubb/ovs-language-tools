@@ -1,50 +1,23 @@
+import * as babeType from "@babel/types";
+import {SlimeAstType, type SlimeCaretEqualsToken, type SlimeLiteral} from "./SlimeAstInterface.ts";
 
-import {
-    AssignmentExpression,
-    BlockStatement,
-    CallExpression,
-    ClassBody,
-    ClassDeclaration, ClassMethod,
-    Comment,
-    ConditionalExpression,
-    Declaration,
-    Directive,
-    ExportDefaultDeclaration, ExportNamedDeclaration,
-    Expression,
-    ExpressionStatement, FunctionDeclaration,
-    FunctionExpression,
-    Identifier, InterpreterDirective,
-    Literal,
-    MemberExpression,
-    ModuleDeclaration,
-    NumericLiteral,
-    Node,
-    Pattern,
-    Program,
-    File,
-    SourceLocation,
-    Statement, StringLiteral, TSDeclareFunction,
-    VariableDeclaration,
-    VariableDeclarator,
-} from "@babel/types";
+export const SlimeAst = {
+    createCaretEqualsToken(): SlimeCaretEqualsToken {
+        return {
+            type: SlimeAstType.CaretEqualsToken
+        }
+    },
 
-export class SlimeAstType {
-    NumericLiteral: 'NumericLiteral' = 'NumericLiteral'
-    stringLiteral: 'stringLiteral'
-    booleanLiteral: 'booleanLiteral'
+    createLiteral(value?: number | string): SlimeLiteral {
+        let ast: SlimeLiteral
+        if (value === undefined) {
+            ast = SlimeAst.createCaretEqualsToken()
+        }
+        if (typeof value === "string") {
+            ast = babeType.stringLiteral(value)
+        } else if (typeof value === "number") {
+            ast = babeType.numericLiteral(value)
+        }
+        return ast
+    }
 }
-
-const SlimeAst: SlimeAstType = new SlimeAstType()
-
-interface VariableDeclarator extends BaseNode {
-    type: "VariableDeclarator";
-    id: LVal;
-    init?: Expression | null;
-    definite?: boolean | null;
-}
-
-
-
-const number:NumericLiteral =
-
-export default SlimeAst
