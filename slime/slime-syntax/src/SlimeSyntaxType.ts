@@ -1,7 +1,8 @@
 export enum SlimeSyntaxType {
     VariableDeclarator = 'VariableDeclarator',
-    NumericLiteral = 'NumericLiteral',
+    NumericLiteral = 'NumberLiteral',
     StringLiteral = 'StringLiteral',
     BooleanLiteral = 'BooleanLiteral',
+    NullLiteral = 'NullLiteral',
     Initializer = 'Initializer'
 }
