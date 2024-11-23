@@ -398,12 +398,12 @@ importers:
 
   slime/slime-parser:
     dependencies:
+      slime-ast:
+        specifier: ^0.0.1
+        version: link:../slime-ast
       subhuti:
-        specifier: ../../subhuti
+        specifier: ^0.1.3
         version: link:../../subhuti
-      subhuti-ts:
-        specifier: ../../subhuti-ts
-        version: link:../../subhuti-ts
 
   slime/slime-syntax: {}
 

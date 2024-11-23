@@ -2,35 +2,35 @@ import * as babeType from "@babel/types";
 import type SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import Es6TokenConsumer, {Es6TokenName, es6TokensObj} from "./Es6Tokens.ts";
 import Es6Parser from "./Es6Parser.ts";
-import {
-    AssignmentExpression,
-    BlockStatement,
-    CallExpression,
-    ClassBody,
-    ClassDeclaration, ClassMethod,
-    Comment,
-    ConditionalExpression,
-    Declaration,
-    Directive,
-    ExportDefaultDeclaration, ExportNamedDeclaration,
-    Expression,
-    ExpressionStatement, FunctionDeclaration,
-    FunctionExpression,
-    Identifier, InterpreterDirective,
-    Literal,
-    MemberExpression,
-    ModuleDeclaration,
-    Node,
-    Pattern,
-    Program,
-    File,
-    SourceLocation,
-    Statement, StringLiteral, TSDeclareFunction,
-    VariableDeclaration,
-    VariableDeclarator,
-} from "@babel/types";
-import BabelAstType from "../BabelAstType.ts";
-import {SlimeLiteral} from "slime-ast/src/SlimeAstInterface.ts";
+import type {
+    SlimeAssignmentExpression,
+    SlimeBlockStatement,
+    SlimeCallExpression,
+    SlimeClassBody,
+    SlimeClassDeclaration,
+    SlimeClassMethod,
+    SlimeConditionalExpression,
+    SlimeDeclaration,
+    SlimeDirective,
+    SlimeExportDefaultDeclaration,
+    SlimeExportNamedDeclaration,
+    SlimeExpression,
+    SlimeExpressionStatement,
+    SlimeFunctionDeclaration,
+    SlimeFunctionExpression,
+    SlimeIdentifier,
+    SlimeLiteral,
+    SlimeMemberExpression,
+    SlimeModuleDeclaration,
+    SlimePattern,
+    SlimeProgram,
+    SlimeSourceLocation,
+    SlimeStatement,
+    SlimeStringLiteral,
+    SlimeTSDeclareFunction,
+    SlimeVariableDeclaration,
+    SlimeVariableDeclarator,
+} from "slime-ast/src/SlimeAstInterface.ts";
 
 
 export const EsTreeAstType: {

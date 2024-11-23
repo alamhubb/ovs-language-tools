@@ -10,7 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "subhuti": "../../subhuti",
-    "subhuti-ts": "../../subhuti-ts"
+    "subhuti": "^0.1.3",
+    "slime-ast": "^0.0.1"
   }
 }
