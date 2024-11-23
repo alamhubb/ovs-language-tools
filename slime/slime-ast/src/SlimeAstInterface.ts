@@ -43,163 +43,163 @@ import type {
 } from "estree";
 
 // 自定义声明类型
-export interface OvsAstRenderDomViewDeclaration {
+export interface SlimeRenderDomViewDeclaration {
     type: "OvsRenderDomViewDeclaration";
-    id: OvsAstIdentifier;
-    children: OvsAstRenderDomViewDeclaration[];
-    arguments: OvsAstExpression[];
+    id: SlimeIdentifier;
+    children: SlimeRenderDomViewDeclaration[];
+    arguments: SlimeExpression[];
 }
 
-export interface OvsAstLexicalBinding {
+export interface SlimeLexicalBinding {
     type: "OvsLexicalBinding";
-    id: OvsAstIdentifier;
-    init?: OvsAstExpression | null | undefined;
+    id: SlimeIdentifier;
+    init?: SlimeExpression | null | undefined;
 }
 
 // 节点映射
-export interface OvsAstNodeMap {
-    AssignmentProperty: OvsAstAssignmentProperty;
-    CatchClause: OvsAstCatchClause;
-    Class: OvsAstClass;
-    ClassBody: OvsAstClassBody;
-    Expression: OvsAstExpression;
-    Function: OvsAstFunction;
-    Identifier: OvsAstIdentifier;
-    Literal: OvsAstLiteral;
-    MethodDefinition: OvsAstMethodDefinition;
-    ModuleDeclaration: OvsAstModuleDeclaration;
-    ModuleSpecifier: OvsAstModuleSpecifier;
-    Pattern: OvsAstPattern;
-    PrivateIdentifier: OvsAstPrivateIdentifier;
-    Program: OvsAstProgram;
-    Property: OvsAstProperty;
-    PropertyDefinition: OvsAstPropertyDefinition;
-    SpreadElement: OvsAstSpreadElement;
-    Statement: OvsAstStatement;
-    Super: OvsAstSuper;
-    SwitchCase: OvsAstSwitchCase;
-    TemplateElement: OvsAstTemplateElement;
-    VariableDeclarator: OvsAstVariableDeclarator;
+export interface SlimeNodeMap {
+    AssignmentProperty: SlimeAssignmentProperty;
+    CatchClause: SlimeCatchClause;
+    Class: SlimeClass;
+    ClassBody: SlimeClassBody;
+    Expression: SlimeExpression;
+    Function: SlimeFunction;
+    Identifier: SlimeIdentifier;
+    Literal: SlimeLiteral;
+    MethodDefinition: SlimeMethodDefinition;
+    ModuleDeclaration: SlimeModuleDeclaration;
+    ModuleSpecifier: SlimeModuleSpecifier;
+    Pattern: SlimePattern;
+    PrivateIdentifier: SlimePrivateIdentifier;
+    Program: SlimeProgram;
+    Property: SlimeProperty;
+    PropertyDefinition: SlimePropertyDefinition;
+    SpreadElement: SlimeSpreadElement;
+    Statement: SlimeStatement;
+    Super: SlimeSuper;
+    SwitchCase: SlimeSwitchCase;
+    TemplateElement: SlimeTemplateElement;
+    VariableDeclarator: SlimeVariableDeclarator;
 }
 
-export type OvsAstNode = OvsAstNodeMap[keyof OvsAstNodeMap];
+export type SlimeNode = SlimeNodeMap[keyof SlimeNodeMap];
 
-export interface OvsAstSourceLocation {
+export interface SlimeSourceLocation {
     source?: string | null | undefined;
-    start: OvsAstPosition;
-    end: OvsAstPosition;
+    start: SlimePosition;
+    end: SlimePosition;
 }
 
-export interface OvsAstPosition {
+export interface SlimePosition {
     line: number;
     column: number;
 }
 
-export interface OvsAstProgram extends Program {
-    body: Array<OvsAstDirective | OvsAstStatement | OvsAstModuleDeclaration>;
+export interface SlimeProgram extends Program {
+    body: Array<SlimeDirective | SlimeStatement | SlimeModuleDeclaration>;
 }
 
-export interface OvsAstDirective extends Directive {
+export interface SlimeDirective extends Directive {
     type: "ExpressionStatement";
-    expression: OvsAstLiteral;
+    expression: SlimeLiteral;
     directive: string;
 }
 
-export interface OvsAstBaseFunction extends BaseFunction {
-    params: OvsAstPattern[];
+export interface SlimeBaseFunction extends BaseFunction {
+    params: SlimePattern[];
     generator?: boolean | undefined;
     async?: boolean | undefined;
-    body: OvsAstBlockStatement | OvsAstExpression;
+    body: SlimeBlockStatement | SlimeExpression;
 }
 
-export type OvsAstFunction = OvsAstFunctionDeclaration | OvsAstFunctionExpression | OvsAstArrowFunctionExpression;
+export type SlimeFunction = SlimeFunctionDeclaration | SlimeFunctionExpression | SlimeArrowFunctionExpression;
 
 
-export interface OvsAstEmptyStatement extends EmptyStatement {
+export interface SlimeEmptyStatement extends EmptyStatement {
     type: "EmptyStatement";
 }
 
-export interface OvsAstBlockStatement extends BlockStatement {
+export interface SlimeBlockStatement extends BlockStatement {
     type: "BlockStatement";
-    body: OvsAstStatement[];
+    body: SlimeStatement[];
     innerComments?: Comment[] | undefined;
 }
 
-export interface OvsAstStaticBlock extends StaticBlock {
+export interface SlimeStaticBlock extends StaticBlock {
     type: "StaticBlock";
 }
 
-export interface OvsAstExpressionStatement extends ExpressionStatement {
+export interface SlimeExpressionStatement extends ExpressionStatement {
     type: "ExpressionStatement";
-    expression: OvsAstExpression;
+    expression: SlimeExpression;
 }
 
 // Statement 相关接口继续
-export interface OvsAstIfStatement extends IfStatement {
+export interface SlimeIfStatement extends IfStatement {
     type: "IfStatement";
-    test: OvsAstExpression;
-    consequent: OvsAstStatement;
-    alternate?: OvsAstStatement | null | undefined;
+    test: SlimeExpression;
+    consequent: SlimeStatement;
+    alternate?: SlimeStatement | null | undefined;
 }
 
-export interface OvsAstLabeledStatement extends LabeledStatement {
+export interface SlimeLabeledStatement extends LabeledStatement {
     type: "LabeledStatement";
-    label: OvsAstIdentifier;
-    body: OvsAstStatement;
+    label: SlimeIdentifier;
+    body: SlimeStatement;
 }
 
-export interface OvsAstBreakStatement extends BreakStatement {
+export interface SlimeBreakStatement extends BreakStatement {
     type: "BreakStatement";
-    label?: OvsAstIdentifier | null | undefined;
+    label?: SlimeIdentifier | null | undefined;
 }
 
-export interface OvsAstContinueStatement extends ContinueStatement {
+export interface SlimeContinueStatement extends ContinueStatement {
     type: "ContinueStatement";
-    label?: OvsAstIdentifier | null | undefined;
+    label?: SlimeIdentifier | null | undefined;
 }
 
-export interface OvsAstWithStatement extends WithStatement {
+export interface SlimeWithStatement extends WithStatement {
     type: "WithStatement";
-    object: OvsAstExpression;
-    body: OvsAstStatement;
+    object: SlimeExpression;
+    body: SlimeStatement;
 }
 
-export interface OvsAstSwitchStatement extends SwitchStatement {
+export interface SlimeSwitchStatement extends SwitchStatement {
     type: "SwitchStatement";
-    discriminant: OvsAstExpression;
-    cases: OvsAstSwitchCase[];
+    discriminant: SlimeExpression;
+    cases: SlimeSwitchCase[];
 }
 
-export interface OvsAstReturnStatement extends ReturnStatement {
+export interface SlimeReturnStatement extends ReturnStatement {
     type: "ReturnStatement";
-    argument?: OvsAstExpression | null | undefined;
+    argument?: SlimeExpression | null | undefined;
 }
 
-export interface OvsAstThrowStatement extends ThrowStatement {
+export interface SlimeThrowStatement extends ThrowStatement {
     type: "ThrowStatement";
-    argument: OvsAstExpression;
+    argument: SlimeExpression;
 }
 
-export interface OvsAstTryStatement extends TryStatement {
+export interface SlimeTryStatement extends TryStatement {
     type: "TryStatement";
-    block: OvsAstBlockStatement;
-    handler?: OvsAstCatchClause | null | undefined;
-    finalizer?: OvsAstBlockStatement | null | undefined;
+    block: SlimeBlockStatement;
+    handler?: SlimeCatchClause | null | undefined;
+    finalizer?: SlimeBlockStatement | null | undefined;
 }
 
-export interface OvsAstWhileStatement extends WhileStatement {
+export interface SlimeWhileStatement extends WhileStatement {
     type: "WhileStatement";
-    test: OvsAstExpression;
-    body: OvsAstStatement;
+    test: SlimeExpression;
+    body: SlimeStatement;
 }
 
-export interface OvsAstDoWhileStatement extends DoWhileStatement {
+export interface SlimeDoWhileStatement extends DoWhileStatement {
     type: "DoWhileStatement";
-    body: OvsAstStatement;
-    test: OvsAstExpression;
+    body: SlimeStatement;
+    test: SlimeExpression;
 }
 
-export interface OvsAstForStatement extends ForStatement {
+export interface SlimeForStatement extends ForStatement {
     type: "ForStatement";
     init?: VariableDeclaration | Expression | null | undefined;
     test?: Expression | null | undefined;
@@ -207,254 +207,254 @@ export interface OvsAstForStatement extends ForStatement {
     body: Statement;
 }
 
-export type OvsAstStatement =
-    | OvsAstExpressionStatement
-    | OvsAstBlockStatement
-    | OvsAstStaticBlock
-    | OvsAstEmptyStatement
-    | OvsAstDebuggerStatement
-    | OvsAstWithStatement
-    | OvsAstReturnStatement
-    | OvsAstLabeledStatement
-    | OvsAstBreakStatement
-    | OvsAstContinueStatement
-    | OvsAstIfStatement
-    | OvsAstSwitchStatement
-    | OvsAstThrowStatement
-    | OvsAstTryStatement
-    | OvsAstWhileStatement
-    | OvsAstDoWhileStatement
-    | OvsAstForStatement
-    | OvsAstForInStatement
-    | OvsAstForOfStatement
-    | OvsAstDeclaration;
+export type SlimeStatement =
+    | SlimeExpressionStatement
+    | SlimeBlockStatement
+    | SlimeStaticBlock
+    | SlimeEmptyStatement
+    | SlimeDebuggerStatement
+    | SlimeWithStatement
+    | SlimeReturnStatement
+    | SlimeLabeledStatement
+    | SlimeBreakStatement
+    | SlimeContinueStatement
+    | SlimeIfStatement
+    | SlimeSwitchStatement
+    | SlimeThrowStatement
+    | SlimeTryStatement
+    | SlimeWhileStatement
+    | SlimeDoWhileStatement
+    | SlimeForStatement
+    | SlimeForInStatement
+    | SlimeForOfStatement
+    | SlimeDeclaration;
 
-export interface OvsAstForInStatement extends ForInStatement {
+export interface SlimeForInStatement extends ForInStatement {
     type: "ForInStatement";
 }
 
-export interface OvsAstDebuggerStatement extends DebuggerStatement {
+export interface SlimeDebuggerStatement extends DebuggerStatement {
     type: "DebuggerStatement";
 }
 
 // Declaration 相关定义
-export type OvsAstDeclaration = OvsAstFunctionDeclaration | OvsAstVariableDeclaration | OvsAstClassDeclaration;
+export type SlimeDeclaration = SlimeFunctionDeclaration | SlimeVariableDeclaration | SlimeClassDeclaration;
 
-export interface OvsAstVariableDeclaration extends VariableDeclaration {
+export interface SlimeVariableDeclaration extends VariableDeclaration {
     type: "VariableDeclaration";
-    declarations: OvsAstVariableDeclarator[];
+    declarations: SlimeVariableDeclarator[];
     kind: "var" | "let" | "const";
 }
 
-export interface OvsAstMaybeNamedFunctionDeclaration extends MaybeNamedFunctionDeclaration {
+export interface SlimeMaybeNamedFunctionDeclaration extends MaybeNamedFunctionDeclaration {
     type: "FunctionDeclaration";
-    id: OvsAstIdentifier | null;
-    body: OvsAstBlockStatement;
+    id: SlimeIdentifier | null;
+    body: SlimeBlockStatement;
 }
 
-export interface OvsAstFunctionDeclaration extends FunctionDeclaration {
-    id: OvsAstIdentifier;
+export interface SlimeFunctionDeclaration extends FunctionDeclaration {
+    id: SlimeIdentifier;
 }
 
-export interface OvsAstVariableDeclarator extends VariableDeclarator {
+export interface SlimeVariableDeclarator extends VariableDeclarator {
     type: "VariableDeclarator";
-    id: OvsAstPattern;
-    init?: OvsAstExpression | null | undefined;
+    id: SlimePattern;
+    init?: SlimeExpression | null | undefined;
 }
 
 // Expression 相关定义
-export interface OvsAstExpressionMap extends ExpressionMap {
-    ArrayExpression: OvsAstArrayExpression;
-    ArrowFunctionExpression: OvsAstArrowFunctionExpression;
-    AssignmentExpression: OvsAstAssignmentExpression;
-    AwaitExpression: OvsAstAwaitExpression;
-    BinaryExpression: OvsAstBinaryExpression;
-    CallExpression: OvsAstCallExpression;
-    ChainExpression: OvsAstChainExpression;
-    ClassExpression: OvsAstClassExpression;
-    ConditionalExpression: OvsAstConditionalExpression;
-    FunctionExpression: OvsAstFunctionExpression;
-    Identifier: OvsAstIdentifier;
-    ImportExpression: OvsAstImportExpression;
-    Literal: OvsAstLiteral;
-    LogicalExpression: OvsAstLogicalExpression;
-    MemberExpression: OvsAstMemberExpression;
-    MetaProperty: OvsAstMetaProperty;
-    NewExpression: OvsAstNewExpression;
-    ObjectExpression: OvsAstObjectExpression;
-    SequenceExpression: OvsAstSequenceExpression;
-    TaggedTemplateExpression: OvsAstTaggedTemplateExpression;
-    TemplateLiteral: OvsAstTemplateLiteral;
-    ThisExpression: OvsAstThisExpression;
-    UnaryExpression: OvsAstUnaryExpression;
-    UpdateExpression: OvsAstUpdateExpression;
-    YieldExpression: OvsAstYieldExpression;
+export interface SlimeExpressionMap extends ExpressionMap {
+    ArrayExpression: SlimeArrayExpression;
+    ArrowFunctionExpression: SlimeArrowFunctionExpression;
+    AssignmentExpression: SlimeAssignmentExpression;
+    AwaitExpression: SlimeAwaitExpression;
+    BinaryExpression: SlimeBinaryExpression;
+    CallExpression: SlimeCallExpression;
+    ChainExpression: SlimeChainExpression;
+    ClassExpression: SlimeClassExpression;
+    ConditionalExpression: SlimeConditionalExpression;
+    FunctionExpression: SlimeFunctionExpression;
+    Identifier: SlimeIdentifier;
+    ImportExpression: SlimeImportExpression;
+    Literal: SlimeLiteral;
+    LogicalExpression: SlimeLogicalExpression;
+    MemberExpression: SlimeMemberExpression;
+    MetaProperty: SlimeMetaProperty;
+    NewExpression: SlimeNewExpression;
+    ObjectExpression: SlimeObjectExpression;
+    SequenceExpression: SlimeSequenceExpression;
+    TaggedTemplateExpression: SlimeTaggedTemplateExpression;
+    TemplateLiteral: SlimeTemplateLiteral;
+    ThisExpression: SlimeThisExpression;
+    UnaryExpression: SlimeUnaryExpression;
+    UpdateExpression: SlimeUpdateExpression;
+    YieldExpression: SlimeYieldExpression;
 }
 
-export type OvsAstExpression = OvsAstExpressionMap[keyof OvsAstExpressionMap];
+export type SlimeExpression = SlimeExpressionMap[keyof SlimeExpressionMap];
 
 // Expression 相关接口继续
-export type OvsAstChainElement = OvsAstSimpleCallExpression | OvsAstMemberExpression;
+export type SlimeChainElement = SlimeSimpleCallExpression | SlimeMemberExpression;
 
-export interface OvsAstChainExpression extends ChainExpression {
+export interface SlimeChainExpression extends ChainExpression {
     type: "ChainExpression";
-    expression: OvsAstChainElement;
+    expression: SlimeChainElement;
 }
 
-export interface OvsAstThisExpression extends ThisExpression {
+export interface SlimeThisExpression extends ThisExpression {
     type: "ThisExpression";
 }
 
-export interface OvsAstArrayExpression extends ArrayExpression {
+export interface SlimeArrayExpression extends ArrayExpression {
     type: "ArrayExpression";
-    elements: Array<OvsAstExpression | OvsAstSpreadElement | null>;
+    elements: Array<SlimeExpression | SlimeSpreadElement | null>;
 }
 
-export interface OvsAstObjectExpression extends ObjectExpression {
+export interface SlimeObjectExpression extends ObjectExpression {
     type: "ObjectExpression";
-    properties: Array<OvsAstProperty | OvsAstSpreadElement>;
+    properties: Array<SlimeProperty | SlimeSpreadElement>;
 }
 
-export interface OvsAstPrivateIdentifier extends PrivateIdentifier {
+export interface SlimePrivateIdentifier extends PrivateIdentifier {
     type: "PrivateIdentifier";
     name: string;
 }
 
-export interface OvsAstProperty extends Property {
+export interface SlimeProperty extends Property {
     type: "Property";
-    key: OvsAstExpression | OvsAstPrivateIdentifier;
-    value: OvsAstExpression | OvsAstPattern;
+    key: SlimeExpression | SlimePrivateIdentifier;
+    value: SlimeExpression | SlimePattern;
     kind: "init" | "get" | "set";
     method: boolean;
     shorthand: boolean;
     computed: boolean;
 }
 
-export interface OvsAstPropertyDefinition extends PropertyDefinition {
+export interface SlimePropertyDefinition extends PropertyDefinition {
     type: "PropertyDefinition";
-    key: OvsAstExpression | OvsAstPrivateIdentifier;
-    value?: OvsAstExpression | null | undefined;
+    key: SlimeExpression | SlimePrivateIdentifier;
+    value?: SlimeExpression | null | undefined;
     computed: boolean;
     static: boolean;
 }
 
-export interface OvsAstFunctionExpression extends OvsAstBaseFunction {
+export interface SlimeFunctionExpression extends SlimeBaseFunction {
     type: "FunctionExpression";
-    id?: OvsAstIdentifier | null | undefined;
-    body: OvsAstBlockStatement;
+    id?: SlimeIdentifier | null | undefined;
+    body: SlimeBlockStatement;
 }
 
-export interface OvsAstSequenceExpression extends SequenceExpression {
+export interface SlimeSequenceExpression extends SequenceExpression {
     type: "SequenceExpression";
-    expressions: OvsAstExpression[];
+    expressions: SlimeExpression[];
 }
 
-export interface OvsAstUnaryExpression extends UnaryExpression {
+export interface SlimeUnaryExpression extends UnaryExpression {
     type: "UnaryExpression";
     operator: UnaryOperator;
     prefix: true;
-    argument: OvsAstExpression;
+    argument: SlimeExpression;
 }
 
-export interface OvsAstBinaryExpression extends BinaryExpression {
+export interface SlimeBinaryExpression extends BinaryExpression {
     type: "BinaryExpression";
     operator: BinaryOperator;
-    left: OvsAstExpression | OvsAstPrivateIdentifier;
-    right: OvsAstExpression;
+    left: SlimeExpression | SlimePrivateIdentifier;
+    right: SlimeExpression;
 }
 
 // Expression 相关接口继续
-export interface OvsAstAssignmentExpression extends AssignmentExpression {
+export interface SlimeAssignmentExpression extends AssignmentExpression {
     type: "AssignmentExpression";
     operator: AssignmentOperator;
-    left: OvsAstPattern | OvsAstMemberExpression;
-    right: OvsAstExpression;
+    left: SlimePattern | SlimeMemberExpression;
+    right: SlimeExpression;
 }
 
-export interface OvsAstUpdateExpression extends UpdateExpression {
+export interface SlimeUpdateExpression extends UpdateExpression {
     type: "UpdateExpression";
     operator: UpdateOperator;
-    argument: OvsAstExpression;
+    argument: SlimeExpression;
     prefix: boolean;
 }
 
-export interface OvsAstLogicalExpression extends LogicalExpression {
+export interface SlimeLogicalExpression extends LogicalExpression {
     type: "LogicalExpression";
     operator: LogicalOperator;
-    left: OvsAstExpression;
-    right: OvsAstExpression;
+    left: SlimeExpression;
+    right: SlimeExpression;
 }
 
-export interface OvsAstConditionalExpression extends ConditionalExpression {
+export interface SlimeConditionalExpression extends ConditionalExpression {
     type: "ConditionalExpression";
-    test: OvsAstExpression;
-    alternate: OvsAstExpression;
-    consequent: OvsAstExpression;
+    test: SlimeExpression;
+    alternate: SlimeExpression;
+    consequent: SlimeExpression;
 }
 
-export interface OvsAstBaseCallExpression extends BaseCallExpression {
-    callee: OvsAstExpression | OvsAstSuper;
-    arguments: Array<OvsAstExpression | OvsAstSpreadElement>;
+export interface SlimeBaseCallExpression extends BaseCallExpression {
+    callee: SlimeExpression | SlimeSuper;
+    arguments: Array<SlimeExpression | SlimeSpreadElement>;
 }
 
-export type OvsAstCallExpression = OvsAstSimpleCallExpression | OvsAstNewExpression;
+export type SlimeCallExpression = SlimeSimpleCallExpression | SlimeNewExpression;
 
-export interface OvsAstSimpleCallExpression extends SimpleCallExpression {
+export interface SlimeSimpleCallExpression extends SimpleCallExpression {
     type: "CallExpression";
     optional: boolean;
 }
 
-export interface OvsAstNewExpression extends NewExpression {
+export interface SlimeNewExpression extends NewExpression {
     type: "NewExpression";
 }
 
 
-export interface OvsAstMemberExpression extends MemberExpression {
+export interface SlimeMemberExpression extends MemberExpression {
     type: "MemberExpression";
-    object: OvsAstExpression | OvsAstSuper;
-    property: OvsAstExpression | OvsAstPrivateIdentifier;
+    object: SlimeExpression | SlimeSuper;
+    property: SlimeExpression | SlimePrivateIdentifier;
     computed: boolean;
     optional: boolean;
 }
 
 // Pattern 相关定义
-export type OvsAstPattern = Pattern & (
-    | OvsAstIdentifier
-    | OvsAstObjectPattern
-    | OvsAstArrayPattern
-    | OvsAstRestElement
-    | OvsAstAssignmentPattern
-    | OvsAstMemberExpression
+export type SlimePattern = Pattern & (
+    | SlimeIdentifier
+    | SlimeObjectPattern
+    | SlimeArrayPattern
+    | SlimeRestElement
+    | SlimeAssignmentPattern
+    | SlimeMemberExpression
     )
 
 // 其他节点类型定义
-export interface OvsAstSwitchCase extends SwitchCase {
+export interface SlimeSwitchCase extends SwitchCase {
     type: "SwitchCase";
-    test?: OvsAstExpression | null | undefined;
-    consequent: OvsAstStatement[];
+    test?: SlimeExpression | null | undefined;
+    consequent: SlimeStatement[];
 }
 
-export interface OvsAstCatchClause extends CatchClause {
+export interface SlimeCatchClause extends CatchClause {
     type: "CatchClause";
-    param: OvsAstPattern | null;
-    body: OvsAstBlockStatement;
+    param: SlimePattern | null;
+    body: SlimeBlockStatement;
 }
 
-export interface OvsAstIdentifier extends Identifier {
+export interface SlimeIdentifier extends Identifier {
     type: "Identifier";
     name: string;
 }
 
 // Literal 相关定义
-export type OvsAstLiteral = OvsAstSimpleLiteral | OvsAstRegExpLiteral | OvsAstBigIntLiteral;
+export type SlimeLiteral = SlimeSimpleLiteral | SlimeRegExpLiteral | SlimeBigIntLiteral;
 
-export interface OvsAstSimpleLiteral extends SimpleLiteral {
+export interface SlimeSimpleLiteral extends SimpleLiteral {
     type: "Literal";
     value: string | boolean | number | null;
     raw?: string | undefined;
 }
 
-export interface OvsAstRegExpLiteral extends RegExpLiteral {
+export interface SlimeRegExpLiteral extends RegExpLiteral {
     type: "Literal";
     value?: RegExp | null | undefined;
     regex: {
@@ -464,7 +464,7 @@ export interface OvsAstRegExpLiteral extends RegExpLiteral {
     raw?: string | undefined;
 }
 
-export interface OvsAstBigIntLiteral extends BigIntLiteral {
+export interface SlimeBigIntLiteral extends BigIntLiteral {
     type: "Literal";
     value?: bigint | null | undefined;
     bigint: string;
@@ -472,46 +472,46 @@ export interface OvsAstBigIntLiteral extends BigIntLiteral {
 }
 
 // ForOfStatement 和其他类型定义
-export interface OvsAstForOfStatement extends ForOfStatement {
+export interface SlimeForOfStatement extends ForOfStatement {
     type: "ForOfStatement";
     await: boolean;
 }
 
-export interface OvsAstSuper extends Super {
+export interface SlimeSuper extends Super {
     type: "Super";
 }
 
-export interface OvsAstSpreadElement extends SpreadElement {
+export interface SlimeSpreadElement extends SpreadElement {
     type: "SpreadElement";
-    argument: OvsAstExpression;
+    argument: SlimeExpression;
 }
 
-export interface OvsAstArrowFunctionExpression extends ArrowFunctionExpression {
+export interface SlimeArrowFunctionExpression extends ArrowFunctionExpression {
     type: "ArrowFunctionExpression";
     expression: boolean;
-    body: OvsAstBlockStatement | OvsAstExpression;
+    body: SlimeBlockStatement | SlimeExpression;
 }
 
-export interface OvsAstYieldExpression extends YieldExpression {
+export interface SlimeYieldExpression extends YieldExpression {
     type: "YieldExpression";
-    argument?: OvsAstExpression | null | undefined;
+    argument?: SlimeExpression | null | undefined;
     delegate: boolean;
 }
 
 // Template 相关定义
-export interface OvsAstTemplateLiteral extends TemplateLiteral {
+export interface SlimeTemplateLiteral extends TemplateLiteral {
     type: "TemplateLiteral";
-    quasis: OvsAstTemplateElement[];
-    expressions: OvsAstExpression[];
+    quasis: SlimeTemplateElement[];
+    expressions: SlimeExpression[];
 }
 
-export interface OvsAstTaggedTemplateExpression extends TaggedTemplateExpression {
+export interface SlimeTaggedTemplateExpression extends TaggedTemplateExpression {
     type: "TaggedTemplateExpression";
-    tag: OvsAstExpression;
-    quasi: OvsAstTemplateLiteral;
+    tag: SlimeExpression;
+    quasi: SlimeTemplateLiteral;
 }
 
-export interface OvsAstTemplateElement extends TemplateElement {
+export interface SlimeTemplateElement extends TemplateElement {
     type: "TemplateElement";
     tail: boolean;
     value: {
@@ -521,145 +521,145 @@ export interface OvsAstTemplateElement extends TemplateElement {
 }
 
 // Pattern 相关定义
-export interface OvsAstAssignmentProperty extends AssignmentProperty {
-    value: OvsAstPattern;
+export interface SlimeAssignmentProperty extends AssignmentProperty {
+    value: SlimePattern;
     kind: "init";
     method: false;
 }
 
-export interface OvsAstObjectPattern extends ObjectPattern {
+export interface SlimeObjectPattern extends ObjectPattern {
     type: "ObjectPattern";
-    properties: Array<OvsAstAssignmentProperty | OvsAstRestElement>;
+    properties: Array<SlimeAssignmentProperty | SlimeRestElement>;
 }
 
-export interface OvsAstArrayPattern extends ArrayPattern {
+export interface SlimeArrayPattern extends ArrayPattern {
     type: "ArrayPattern";
-    elements: Array<OvsAstPattern | null>;
+    elements: Array<SlimePattern | null>;
 }
 
-export interface OvsAstRestElement extends RestElement {
+export interface SlimeRestElement extends RestElement {
     type: "RestElement";
-    argument: OvsAstPattern;
+    argument: SlimePattern;
 }
 
-export interface OvsAstAssignmentPattern extends AssignmentPattern {
+export interface SlimeAssignmentPattern extends AssignmentPattern {
     type: "AssignmentPattern";
-    left: OvsAstPattern;
-    right: OvsAstExpression;
+    left: SlimePattern;
+    right: SlimeExpression;
 }
 
 // Class 相关定义
-export type OvsAstClass = OvsAstClassDeclaration | OvsAstClassExpression;
+export type SlimeClass = SlimeClassDeclaration | SlimeClassExpression;
 
 
-export interface OvsAstClassBody extends ClassBody {
+export interface SlimeClassBody extends ClassBody {
     type: "ClassBody";
-    body: Array<OvsAstMethodDefinition | OvsAstPropertyDefinition | OvsAstStaticBlock>;
+    body: Array<SlimeMethodDefinition | SlimePropertyDefinition | SlimeStaticBlock>;
 }
 
 // 你的自定义扩展
-export interface OvsAstMethodDefinition extends MethodDefinition {
+export interface SlimeMethodDefinition extends MethodDefinition {
     type: "MethodDefinition";
     key: Expression | PrivateIdentifier;
-    value: OvsAstFunctionExpression;
+    value: SlimeFunctionExpression;
     kind: "constructor" | "method" | "get" | "set";
     computed: boolean;
     static: boolean;
 }
 
-export interface OvsAstMaybeNamedClassDeclaration extends MaybeNamedClassDeclaration {
+export interface SlimeMaybeNamedClassDeclaration extends MaybeNamedClassDeclaration {
     type: "ClassDeclaration";
-    id: OvsAstIdentifier | null;
+    id: SlimeIdentifier | null;
 }
 
-export interface OvsAstClassDeclaration extends ClassDeclaration {
+export interface SlimeClassDeclaration extends ClassDeclaration {
     class: BaseNode;
 }
 
-export interface OvsAstClassExpression extends ClassExpression {
+export interface SlimeClassExpression extends ClassExpression {
     type: "ClassExpression";
-    id?: OvsAstIdentifier | null | undefined;
+    id?: SlimeIdentifier | null | undefined;
 }
 
 // Meta 和 Module 相关定义
-export interface OvsAstMetaProperty extends MetaProperty {
+export interface SlimeMetaProperty extends MetaProperty {
     type: "MetaProperty";
-    meta: OvsAstIdentifier;
-    property: OvsAstIdentifier;
+    meta: SlimeIdentifier;
+    property: SlimeIdentifier;
 }
 
-export type OvsAstModuleDeclaration = ModuleDeclaration & (
-    | OvsAstImportDeclaration
-    | OvsAstExportNamedDeclaration
-    | OvsAstExportDefaultDeclaration
-    | OvsAstExportAllDeclaration
+export type SlimeModuleDeclaration = ModuleDeclaration & (
+    | SlimeImportDeclaration
+    | SlimeExportNamedDeclaration
+    | SlimeExportDefaultDeclaration
+    | SlimeExportAllDeclaration
     );
 
-export interface OvsAstBaseModuleDeclaration extends BaseModuleDeclaration {
+export interface SlimeBaseModuleDeclaration extends BaseModuleDeclaration {
 }
 
-export type OvsAstModuleSpecifier =
-    | OvsAstImportSpecifier
-    | OvsAstImportDefaultSpecifier
-    | OvsAstImportNamespaceSpecifier
-    | OvsAstExportSpecifier;
+export type SlimeModuleSpecifier =
+    | SlimeImportSpecifier
+    | SlimeImportDefaultSpecifier
+    | SlimeImportNamespaceSpecifier
+    | SlimeExportSpecifier;
 
-export interface OvsAstBaseModuleSpecifier extends BaseModuleSpecifier {
-    local: OvsAstIdentifier;
+export interface SlimeBaseModuleSpecifier extends BaseModuleSpecifier {
+    local: SlimeIdentifier;
 }
 
-export interface OvsAstImportDeclaration extends BaseModuleDeclaration {
+export interface SlimeImportDeclaration extends BaseModuleDeclaration {
     type: "ImportDeclaration";
-    specifiers: Array<OvsAstImportSpecifier | OvsAstImportDefaultSpecifier | OvsAstImportNamespaceSpecifier>;
-    source: OvsAstLiteral;
+    specifiers: Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>;
+    source: SlimeLiteral;
 }
 
-export interface OvsAstImportSpecifier extends OvsAstBaseModuleSpecifier {
+export interface SlimeImportSpecifier extends SlimeBaseModuleSpecifier {
     type: "ImportSpecifier";
-    imported: OvsAstIdentifier | OvsAstLiteral;
+    imported: SlimeIdentifier | SlimeLiteral;
 }
 
-export interface OvsAstImportExpression extends ImportExpression {
+export interface SlimeImportExpression extends ImportExpression {
     type: "ImportExpression";
-    source: OvsAstExpression;
+    source: SlimeExpression;
 }
 
-export interface OvsAstImportDefaultSpecifier extends OvsAstBaseModuleSpecifier {
+export interface SlimeImportDefaultSpecifier extends SlimeBaseModuleSpecifier {
     type: "ImportDefaultSpecifier";
 }
 
-export interface OvsAstImportNamespaceSpecifier extends OvsAstBaseModuleSpecifier {
+export interface SlimeImportNamespaceSpecifier extends SlimeBaseModuleSpecifier {
     type: "ImportNamespaceSpecifier";
 }
 
 // Export 相关定义
-export interface OvsAstExportNamedDeclaration extends BaseModuleDeclaration {
+export interface SlimeExportNamedDeclaration extends BaseModuleDeclaration {
     type: "ExportNamedDeclaration";
-    declaration?: OvsAstDeclaration | null | undefined;
-    specifiers: OvsAstExportSpecifier[];
-    source?: OvsAstLiteral | null | undefined;
+    declaration?: SlimeDeclaration | null | undefined;
+    specifiers: SlimeExportSpecifier[];
+    source?: SlimeLiteral | null | undefined;
 }
 
-export interface OvsAstExportSpecifier extends Omit<OvsAstBaseModuleSpecifier, "local"> {
+export interface SlimeExportSpecifier extends Omit<SlimeBaseModuleSpecifier, "local"> {
     type: "ExportSpecifier";
-    local: OvsAstIdentifier | OvsAstLiteral;
-    exported: OvsAstIdentifier | OvsAstLiteral;
+    local: SlimeIdentifier | SlimeLiteral;
+    exported: SlimeIdentifier | SlimeLiteral;
 }
 
-export interface OvsAstExportDefaultDeclaration extends ExportDefaultDeclaration, OvsAstBaseModuleDeclaration {
+export interface SlimeExportDefaultDeclaration extends ExportDefaultDeclaration, SlimeBaseModuleDeclaration {
     type: "ExportDefaultDeclaration";
-    declaration: OvsAstMaybeNamedFunctionDeclaration | OvsAstMaybeNamedClassDeclaration | OvsAstExpression;
+    declaration: SlimeMaybeNamedFunctionDeclaration | SlimeMaybeNamedClassDeclaration | SlimeExpression;
     export: BaseNode;
     default: BaseNode;
 }
 
-export interface OvsAstExportAllDeclaration extends BaseModuleDeclaration {
+export interface SlimeExportAllDeclaration extends BaseModuleDeclaration {
     type: "ExportAllDeclaration";
-    exported: OvsAstIdentifier | OvsAstLiteral | null;
-    source: OvsAstLiteral;
+    exported: SlimeIdentifier | SlimeLiteral | null;
+    source: SlimeLiteral;
 }
 
-export interface OvsAstAwaitExpression extends AwaitExpression {
+export interface SlimeAwaitExpression extends AwaitExpression {
     type: "AwaitExpression";
-    argument: OvsAstExpression;
+    argument: SlimeExpression;
 }
