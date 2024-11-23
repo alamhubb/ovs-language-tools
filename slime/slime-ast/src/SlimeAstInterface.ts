@@ -56,33 +56,26 @@ export interface SlimeLexicalBinding {
     init?: SlimeExpression | null | undefined;
 }
 
-// 节点映射
-export interface SlimeNodeMap {
-    AssignmentProperty: SlimeAssignmentProperty;
-    CatchClause: SlimeCatchClause;
-    Class: SlimeClass;
-    ClassBody: SlimeClassBody;
-    Expression: SlimeExpression;
-    Function: SlimeFunction;
-    Identifier: SlimeIdentifier;
-    Literal: SlimeLiteral;
-    MethodDefinition: SlimeMethodDefinition;
-    ModuleDeclaration: SlimeModuleDeclaration;
-    ModuleSpecifier: SlimeModuleSpecifier;
-    Pattern: SlimePattern;
-    PrivateIdentifier: SlimePrivateIdentifier;
-    Program: SlimeProgram;
-    Property: SlimeProperty;
-    PropertyDefinition: SlimePropertyDefinition;
-    SpreadElement: SlimeSpreadElement;
-    Statement: SlimeStatement;
-    Super: SlimeSuper;
-    SwitchCase: SlimeSwitchCase;
-    TemplateElement: SlimeTemplateElement;
-    VariableDeclarator: SlimeVariableDeclarator;
+export enum SlimeAstType {
+    Program = 'Program',
+    VariableDeclarator = 'VariableDeclarator',
+    NumericLiteral = 'NumberLiteral',
+    StringLiteral = 'StringLiteral',
+    BooleanLiteral = 'BooleanLiteral',
+    NullLiteral = 'NullLiteral',
+    CaretEqualsToken = 'CaretEqualsToken',
 }
 
-export type SlimeNode = SlimeNodeMap[keyof SlimeNodeMap];
+export enum SlimeProgramSourceType {
+    script = 'script',
+    module = 'module'
+}
+
+export interface SlimeProgram extends Program {
+    type: SlimeAstType.Program;
+    sourceType: SlimeProgramSourceType;
+    body: Array<SlimeDirective | SlimeStatement | SlimeModuleDeclaration>;
+}
 
 export interface SlimeSourceLocation {
     source?: string | null | undefined;
@@ -93,10 +86,6 @@ export interface SlimeSourceLocation {
 export interface SlimePosition {
     line: number;
     column: number;
-}
-
-export interface SlimeProgram extends Program {
-    body: Array<SlimeDirective | SlimeStatement | SlimeModuleDeclaration>;
 }
 
 export interface SlimeDirective extends Directive {
