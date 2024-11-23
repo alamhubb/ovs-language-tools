@@ -383,15 +383,16 @@ importers:
 
   slime/slime-ast:
     dependencies:
-      '@babel/types':
-        specifier: ^7.26.0
-        version: 7.26.0
       slime-syntax:
         specifier: ../slime-syntax
         version: link:../slime-syntax
       slime-token:
         specifier: ../slime-token
         version: link:../slime-token
+    devDependencies:
+      '@types/estree':
+        specifier: 1.0.6
+        version: 1.0.6
 
   slime/slime-generator: {}
 
