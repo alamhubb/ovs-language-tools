@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      pnpm:
+        specifier: ^9.14.2
+        version: 9.14.2
     devDependencies:
       '@lerna-lite/cli':
         specifier: latest
@@ -391,7 +395,14 @@ importers:
 
   slime/slime-generator: {}
 
-  slime/slime-parser: {}
+  slime/slime-parser:
+    dependencies:
+      subhuti:
+        specifier: ../../subhuti
+        version: link:../../subhuti
+      subhuti-ts:
+        specifier: ../../subhuti-ts
+        version: link:../../subhuti-ts
 
   slime/slime-syntax: {}
 
@@ -3025,6 +3036,11 @@ packages:
   pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
+
+  pnpm@9.14.2:
+    resolution: {integrity: sha512-biuvd9Brk2IpQVLIUcTyeO3jerHro6Vf2jF6SheyCfTbuXP7JQp3q8Rjo0H8sfF/F8+iQJHE6zGc2g2bhCeDhw==}
+    engines: {node: '>=18.12'}
+    hasBin: true
 
   postcss-selector-parser@6.1.2:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
@@ -6585,6 +6601,8 @@ snapshots:
   pkg-dir@4.2.0:
     dependencies:
       find-up: 4.1.0
+
+  pnpm@9.14.2: {}
 
   postcss-selector-parser@6.1.2:
     dependencies:

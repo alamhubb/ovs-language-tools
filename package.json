@@ -19,5 +19,8 @@
 		"typescript": "latest",
 		"vite": "latest",
 		"vitest": "latest"
+	},
+	"dependencies": {
+		"pnpm": "^9.14.2"
 	}
 }

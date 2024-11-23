@@ -8,5 +8,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "subhuti": "../../subhuti",
+    "subhuti-ts": "../../subhuti-ts"
+  }
 }
