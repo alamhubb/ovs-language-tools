@@ -1,23 +1,39 @@
-import * as babeType from "@babel/types";
-import {SlimeAstType, type SlimeCaretEqualsToken, type SlimeLiteral} from "./SlimeAstInterface.ts";
+import type {
+    SlimeCaretEqualsToken, SlimeLiteral,
+    SlimeNumberLiteral, SlimeStringLiteral
+} from "./SlimeAstInterface.ts";
+import {SlimeAstType} from "./SlimeAstInterface.ts";
 
-export const SlimeAst = {
+class SlimeAst {
     createCaretEqualsToken(): SlimeCaretEqualsToken {
         return {
             type: SlimeAstType.CaretEqualsToken
         }
-    },
+    }
 
     createLiteral(value?: number | string): SlimeLiteral {
         let ast: SlimeLiteral
-        if (value === undefined) {
-            ast = SlimeAst.createCaretEqualsToken()
-        }
-        if (typeof value === "string") {
-            ast = babeType.stringLiteral(value)
+         if (typeof value === "string") {
+            ast = this.createStringLiteral(value)
         } else if (typeof value === "number") {
-            ast = babeType.numericLiteral(value)
+            ast = this.createNumberLiteral(value)
         }
         return ast
     }
+
+    createStringLiteral(value: string): SlimeStringLiteral {
+        return {
+            type: SlimeAstType.StringLiteral,
+            value: value
+        }
+    }
+
+    createNumberLiteral(value: number): SlimeNumberLiteral {
+        return {
+            type: SlimeAstType.NumberLiteral,
+            value: value
+        }
+    }
 }
+
+export default new SlimeAst()
