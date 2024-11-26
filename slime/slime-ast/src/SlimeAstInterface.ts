@@ -59,7 +59,7 @@ export interface SlimeLexicalBinding {
 export enum SlimeAstType {
     Program = 'Program',
     VariableDeclarator = 'VariableDeclarator',
-    NumericLiteral = 'NumberLiteral',
+    NumberLiteral = 'NumberLiteral',
     StringLiteral = 'StringLiteral',
     BooleanLiteral = 'BooleanLiteral',
     NullLiteral = 'NullLiteral',
@@ -435,12 +435,33 @@ export interface SlimeIdentifier extends Identifier {
 }
 
 // Literal 相关定义
-export type SlimeLiteral = SlimeSimpleLiteral | SlimeRegExpLiteral | SlimeBigIntLiteral;
+export type SlimeLiteral =
+    SlimeNumberLiteral
+    | SlimeStringLiteral
+    | SlimeBooleanLiteral
+    | SlimeNullLiteral
+    | SlimeRegExpLiteral
+    | SlimeBigIntLiteral
+    | SimpleLiteral
 
-export interface SlimeSimpleLiteral extends SimpleLiteral {
-    type: "Literal";
-    value: string | boolean | number | null;
-    raw?: string | undefined;
+export interface SlimeNumberLiteral extends BaseNode {
+    type: SlimeAstType.NumberLiteral;
+    value: number;
+}
+
+export interface SlimeStringLiteral extends BaseNode {
+    type: SlimeAstType.StringLiteral;
+    value: string;
+}
+
+export interface SlimeBooleanLiteral extends BaseNode {
+    type: SlimeAstType.BooleanLiteral;
+    value: boolean;
+}
+
+export interface SlimeNullLiteral extends BaseNode {
+    type: SlimeAstType.NullLiteral;
+    value: null;
 }
 
 
