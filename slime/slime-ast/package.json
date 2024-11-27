@@ -10,8 +10,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "slime-token": "../slime-token",
-    "slime-syntax": "../slime-syntax"
+    "@babel/types": "^7.26.0",
+    "slime-syntax": "../slime-syntax",
+    "slime-token": "../slime-token"
   },
   "devDependencies": {
     "@types/estree": "1.0.6"

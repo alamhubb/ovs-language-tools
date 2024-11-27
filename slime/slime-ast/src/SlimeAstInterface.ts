@@ -5,6 +5,7 @@ import {
     type UnaryOperator,
     type UpdateOperator
 } from "estree";
+import type {BaseNode} from "./SlimeAstInterfaceOld.ts";
 
 // 自定义声明类型
 export interface SlimeRenderDomViewDeclaration {
@@ -24,6 +25,8 @@ export enum SlimeAstType {
     Program = 'Program',
     ExpressionStatement = 'ExpressionStatement',
     EmptyStatement = 'EmptyStatement',
+    VariableDeclaration = 'VariableDeclaration',
+    Identifier = 'Identifier',
     VariableDeclarator = 'VariableDeclarator',
     NumberLiteral = 'NumberLiteral',
     StringLiteral = 'StringLiteral',
@@ -35,6 +38,11 @@ export enum SlimeAstType {
 export enum SlimeProgramSourceType {
     script = 'script',
     module = 'module'
+}
+export enum SlimeVariableDeclarationKind {
+    var = 'var',
+    let = 'let',
+    const = 'const'
 }
 
 export interface SlimePosition {
@@ -213,9 +221,9 @@ export interface SlimeDebuggerStatement extends SlimeBaseNode {
 export type SlimeDeclaration = SlimeFunctionDeclaration | SlimeVariableDeclaration | SlimeClassDeclaration;
 
 export interface SlimeVariableDeclaration extends SlimeBaseNode {
-    type: "VariableDeclaration";
+    type: SlimeAstType.VariableDeclaration;
     declarations: SlimeVariableDeclarator[];
-    kind: "var" | "let" | "const";
+    kind: SlimeVariableDeclarationKind;
 }
 
 export interface SlimeMaybeNamedFunctionDeclaration extends SlimeBaseNode {
@@ -424,6 +432,11 @@ export type SlimeLiteral =
     | SlimeNullLiteral
     | SlimeRegExpLiteral
     | SlimeBigIntLiteral
+    | SlimeCaretEqualsToken
+
+export interface SlimeCaretEqualsToken extends SlimeBaseNode {
+    type: SlimeAstType.CaretEqualsToken;
+}
 
 export interface SlimeNumberLiteral extends SlimeBaseNode {
     type: SlimeAstType.NumberLiteral;
