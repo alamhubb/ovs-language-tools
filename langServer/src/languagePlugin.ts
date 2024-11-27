@@ -173,24 +173,30 @@ export class OvsVirtualCode implements VirtualCode {
             },
         }];
         const styleText = snapshot.getText(0, snapshot.getLength());
-        // let newCode = styleText
-        // LogUtil.log('styleTextstyleTextstyleTextstyleText')
-        // let mapping = []
-        // try {
-        //     LogUtil.log('3333')
-        //     const res = vitePluginOvsTransform(styleText)
-        //     newCode = res.code
-        //     mapping = res.mapping
-        // } catch (e: Error) {
-        //     LogUtil.log('styleErrrrrrrr')
-        //     LogUtil.log(styleText)
-        //     LogUtil.log(e.message)
-        // }
-        // const getOffsets = new MappingConverter(styleText, newCode)
-        // const offsets = getOffsets.convertMappings(mapping)
-        // LogUtil.log('last offset offfff')
-        // LogUtil.log(offsets[offsets.length - 1].original.offset)
-        // LogUtil.log(offsets[offsets.length - 1].generated.offset)
+        let newCode = styleText
+        LogUtil.log('styleTextstyleTextstyleTextstyleText')
+        let mapping = []
+        try {
+            LogUtil.log('3333')
+            const res = vitePluginOvsTransform(styleText)
+            newCode = res.code
+            mapping = res.mapping
+        } catch (e: Error) {
+            LogUtil.log('styleErrrrrrrr')
+            LogUtil.log(styleText)
+            LogUtil.log(e.message)
+        }
+        try {
+            const getOffsets = new MappingConverter(styleText, newCode)
+            const offsets = getOffsets.convertMappings(mapping)
+            LogUtil.log('last offset offfff')
+            LogUtil.log(offsets[offsets.length - 1].original.offset)
+            LogUtil.log(offsets[offsets.length - 1].generated.offset)
+        } catch (e: Error) {
+            LogUtil.log('styleErrrrrrrr2222222222222222222')
+            LogUtil.log(e.message)
+        }
+
         //将ovscode转为js代码，传给ts
         /*this.embeddedCodes = [{
             id: 'ts',

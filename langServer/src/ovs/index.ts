@@ -47,7 +47,7 @@ export function vitePluginOvsTransform(code) {
     if (!tokens.length) return code
     const parser = new OvsParser(tokens)
 
-    let code1 = null
+    let code1 = ''
     let curCst = parser.Program()
     // JsonUtil.log(7777)
     curCst = traverseClearTokens(curCst)
@@ -57,6 +57,8 @@ export function vitePluginOvsTransform(code) {
     //cst转 estree ast
     const ast = ovsToAstUtil.createFileAst(curCst)
 
+    JsonUtil.log(ast)
+    let genRes = null
     // 验证 AST 节点是否包含位置信息
     traverse(ast, {
         enter(path) {
@@ -69,25 +71,33 @@ export function vitePluginOvsTransform(code) {
             path.node.loc.end.index = undefined
         }
     });
-    // const output = recast.print(ast).code;
-    // console.log(output)
-    // LogUtil.log(ast)
-    LogUtil.log('6666')
+    try {
+
+        const output = recast.print(ast).code;
+        console.log(output)
+        // LogUtil.log(ast)
+        LogUtil.log('6666')
 
 // 生成代码
-    const genRes = generate(ast, {
-        sourceMaps: true,             // 启用源码映射
-        sourceFileName: 'source.js',  // 源文件名
-        fileName: 'generated.js',     // 生成文件名
-        retainLines: true,            // 保留行号
-        compact: false,               // 不压缩代码
-        comments: true,
-    });
+        const genRes = generate(ast, {
+            sourceMaps: true,             // 启用源码映射
+            sourceFileName: 'source.js',  // 源文件名
+            fileName: 'generated.js',     // 生成文件名
+            retainLines: true,            // 保留行号
+            compact: false,               // 不压缩代码
+            comments: true,
+        });
 
-    code1 = genRes.code
-    if (code1) {
-        code1 = removeSemicolons(code1)
+        code1 = genRes.code
+
+        if (code1) {
+            code1 = removeSemicolons(code1)
+        }
+    } catch (e) {
+        LogUtil.log('styleErrrrrrrr3333')
+        LogUtil.log(e.message)
     }
+
 
     function removeSemicolons(code) {
         // 按行分割，处理每行，然后重新组合
@@ -108,7 +118,7 @@ export function vitePluginOvsTransform(code) {
     console.log(code1)
     return {
         code: code1,
-        mapping: genRes.rawMappings
+        mapping: genRes?.rawMappings
     }
     /*    return `
         // import OvsAPI from "@/ovs/OvsAPI.ts";\n
@@ -125,7 +135,7 @@ let c4 =
 //             true
 //         }
 // `
-// const res = vitePluginOvsTransform(code)
+const res = vitePluginOvsTransform(code)
 
 // const getOffsets = new MappingConverter(code, res.code)
 // const offsets = getOffsets.convertMappings(res.mapping)

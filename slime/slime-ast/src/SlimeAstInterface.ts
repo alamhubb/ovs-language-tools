@@ -1,45 +1,9 @@
-import type {
-    ArrayExpression, ArrayPattern, ArrowFunctionExpression,
-    AssignmentExpression, AssignmentOperator, AssignmentPattern, AssignmentProperty,
-    AwaitExpression,
-    BaseCallExpression,
-    BaseFunction,
-    BaseModuleDeclaration,
-    BaseModuleSpecifier,
-    PropertyDefinition,
-    BaseNode,
-    BigIntLiteral,
-    BinaryExpression, BinaryOperator,
-    BlockStatement, BreakStatement, CatchClause,
-    ChainExpression,
-    ClassBody,
-    ClassDeclaration, ClassExpression,
-    Comment,
-    ConditionalExpression, ContinueStatement, DebuggerStatement,
-    Directive, DoWhileStatement, EmptyStatement,
-    ExportDefaultDeclaration,
-    Expression,
-    ExpressionMap, ExpressionStatement, ForInStatement, ForOfStatement, ForStatement, FunctionDeclaration,
-    Identifier, IfStatement, ImportExpression, LabeledStatement,
-    LogicalExpression, LogicalOperator,
-    MaybeNamedClassDeclaration,
-    MaybeNamedFunctionDeclaration,
-    MemberExpression,
-    MetaProperty,
-    MethodDefinition,
-    ModuleDeclaration, NewExpression, ObjectExpression, ObjectPattern,
-    Pattern, PrivateIdentifier,
-    Program,
-    Property, RegExpLiteral, RestElement, ReturnStatement,
-    SequenceExpression, SimpleCallExpression, SimpleLiteral,
-    SpreadElement,
-    Statement, StaticBlock, Super, SwitchCase, SwitchStatement,
-    TaggedTemplateExpression, TemplateElement,
-    TemplateLiteral,
-    ThisExpression, ThrowStatement, TryStatement,
-    UnaryExpression, UnaryOperator,
-    UpdateExpression, UpdateOperator, VariableDeclarator, WhileStatement, WithStatement,
-    YieldExpression, VariableDeclaration
+import {
+    type AssignmentOperator,
+    type BinaryOperator,
+    type LogicalOperator,
+    type UnaryOperator,
+    type UpdateOperator
 } from "estree";
 
 // 自定义声明类型
@@ -209,10 +173,10 @@ export interface SlimeDoWhileStatement extends SlimeBaseNode {
 
 export interface SlimeForStatement extends SlimeBaseNode {
     type: "ForStatement";
-    init?: VariableDeclaration | Expression | null | undefined;
-    test?: Expression | null | undefined;
-    update?: Expression | null | undefined;
-    body: Statement;
+    init?: SlimeVariableDeclaration | SlimeExpression | null | undefined;
+    test?: SlimeExpression | null | undefined;
+    update?: SlimeExpression | null | undefined;
+    body: SlimeStatement;
 }
 
 export type SlimeStatement =
@@ -426,14 +390,13 @@ export interface SlimeMemberExpression extends SlimeBaseNode {
 }
 
 // Pattern 相关定义
-export type SlimePattern = Pattern & (
+export type SlimePattern =
     | SlimeIdentifier
     | SlimeObjectPattern
     | SlimeArrayPattern
     | SlimeRestElement
     | SlimeAssignmentPattern
     | SlimeMemberExpression
-    )
 
 // 其他节点类型定义
 export interface SlimeSwitchCase extends SlimeBaseNode {
@@ -461,7 +424,6 @@ export type SlimeLiteral =
     | SlimeNullLiteral
     | SlimeRegExpLiteral
     | SlimeBigIntLiteral
-    | SimpleLiteral
 
 export interface SlimeNumberLiteral extends SlimeBaseNode {
     type: SlimeAstType.NumberLiteral;
@@ -590,7 +552,7 @@ export interface SlimeClassBody extends SlimeBaseNode {
 // 你的自定义扩展
 export interface SlimeMethodDefinition extends SlimeBaseNode {
     type: "MethodDefinition";
-    key: Expression | PrivateIdentifier;
+    key: SlimeExpression | SlimePrivateIdentifier;
     value: SlimeFunctionExpression;
     kind: "constructor" | "method" | "get" | "set";
     computed: boolean;
@@ -603,7 +565,7 @@ export interface SlimeMaybeNamedClassDeclaration extends SlimeBaseNode {
 }
 
 export interface SlimeClassDeclaration extends SlimeBaseNode {
-    class: BaseNode;
+    class: SlimeBaseNode;
 }
 
 export interface SlimeClassExpression extends SlimeBaseNode {
@@ -618,12 +580,11 @@ export interface SlimeMetaProperty extends SlimeBaseNode {
     property: SlimeIdentifier;
 }
 
-export type SlimeModuleDeclaration = ModuleDeclaration & (
+export type SlimeModuleDeclaration =
     | SlimeImportDeclaration
     | SlimeExportNamedDeclaration
     | SlimeExportDefaultDeclaration
     | SlimeExportAllDeclaration
-    );
 
 export interface SlimeBaseModuleDeclaration extends SlimeBaseNode {
 }
@@ -679,8 +640,8 @@ export interface SlimeExportSpecifier extends Omit<SlimeBaseModuleSpecifier, "lo
 export interface SlimeExportDefaultDeclaration extends SlimeBaseModuleDeclaration {
     type: "ExportDefaultDeclaration";
     declaration: SlimeMaybeNamedFunctionDeclaration | SlimeMaybeNamedClassDeclaration | SlimeExpression;
-    export: BaseNode;
-    default: BaseNode;
+    export: SlimeBaseNode;
+    default: SlimeBaseNode;
 }
 
 export interface SlimeExportAllDeclaration extends SlimeBaseNode {
