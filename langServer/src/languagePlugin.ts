@@ -211,19 +211,18 @@ export class OvsVirtualCode implements VirtualCode {
                 getLength: () => newCode.length,
                 getChangeRange: () => undefined,
             },
-
             // sourceOffsets: number[];
             // generatedOffsets: number[];
             // lengths: number[];
             // generatedLengths?: number[];
             // data: Data;
             mappings: [{
-                sourceOffsets: offsets.map(item => item.original.offset),
-                generatedOffsets: offsets.map(item => item.generated.offset),
-                lengths: offsets.map(item => item.original.length),
-                // sourceOffsets: [0],
-                // generatedOffsets: [0],
-                // lengths: [newCode.length],
+                // sourceOffsets: offsets.map(item => item.original.offset),
+                // generatedOffsets: offsets.map(item => item.generated.offset),
+                // lengths: offsets.map(item => item.original.length),
+                sourceOffsets: [0],
+                generatedOffsets: [0],
+                lengths: [newCode.length],
                 data: {
                     completion: true,
                     format: true,
