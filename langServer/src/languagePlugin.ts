@@ -207,8 +207,8 @@ export class OvsVirtualCode implements VirtualCode {
             id: 'ts1',
             languageId: 'qqqts',
             snapshot: {
-                getText: (start, end) => newCode.substring(start, end),
-                getLength: () => newCode.length,
+                getText: (start, end) => styleText.substring(start, end),
+                getLength: () => styleText.length,
                 getChangeRange: () => undefined,
             },
             // sourceOffsets: number[];
@@ -222,7 +222,7 @@ export class OvsVirtualCode implements VirtualCode {
                 // lengths: offsets.map(item => item.original.length),
                 sourceOffsets: [0],
                 generatedOffsets: [0],
-                lengths: [newCode.length],
+                lengths: [styleText.length],
                 data: {
                     completion: true,
                     format: true,

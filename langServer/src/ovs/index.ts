@@ -69,9 +69,9 @@ export function vitePluginOvsTransform(code) {
             path.node.loc.end.index = undefined
         }
     });
-    const output = recast.print(ast).code;
-    console.log(output)
-    LogUtil.log(ast)
+    // const output = recast.print(ast).code;
+    // console.log(output)
+    // LogUtil.log(ast)
     LogUtil.log('6666')
 
 // 生成代码
