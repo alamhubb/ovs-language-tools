@@ -8,6 +8,11 @@ export enum SlimeAstType {
     CaretEqualsToken = 'CaretEqualsToken',
 }
 
+export enum SlimeProgramSourceType {
+    module = 'module',
+    script = 'script'
+}
+
 export interface SlimePosition {
     /** >= 1 */
     line: number;
@@ -21,8 +26,14 @@ export interface SlimeSourceLocation {
 }
 
 export interface SlimeBaseNode {
-    type: string;
+    type: SlimeAstType
     loc?: SlimeSourceLocation | null | undefined;
+}
+
+export interface SlimeProgram extends SlimeBaseNode  {
+    type: SlimeAstType.Program
+    sourceType: SlimeProgramSourceType
+    body:
 }
 
 
