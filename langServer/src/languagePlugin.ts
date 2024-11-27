@@ -186,6 +186,15 @@ export class OvsVirtualCode implements VirtualCode {
             LogUtil.log(styleText)
             LogUtil.log(e.message)
         }
+        let offsets = [{
+            original: {
+                offset: 0
+            },
+            generated: {
+                offset: 0,
+                length: styleText.length
+            },
+        }]
         try {
             const getOffsets = new MappingConverter(styleText, newCode)
             const offsets = getOffsets.convertMappings(mapping)
@@ -213,8 +222,8 @@ export class OvsVirtualCode implements VirtualCode {
             id: 'ts1',
             languageId: 'qqqts',
             snapshot: {
-                getText: (start, end) => styleText.substring(start, end),
-                getLength: () => styleText.length,
+                getText: (start, end) => newCode.substring(start, end),
+                getLength: () => newCode.length,
                 getChangeRange: () => undefined,
             },
             // sourceOffsets: number[];
@@ -223,12 +232,12 @@ export class OvsVirtualCode implements VirtualCode {
             // generatedLengths?: number[];
             // data: Data;
             mappings: [{
-                // sourceOffsets: offsets.map(item => item.original.offset),
-                // generatedOffsets: offsets.map(item => item.generated.offset),
-                // lengths: offsets.map(item => item.original.length),
-                sourceOffsets: [0],
-                generatedOffsets: [0],
-                lengths: [styleText.length],
+                sourceOffsets: offsets.map(item => item.original.offset),
+                generatedOffsets: offsets.map(item => item.generated.offset),
+                lengths: offsets.map(item => item.generated.length),
+                // sourceOffsets: [0],
+                // generatedOffsets: [0],
+                // lengths: [styleText.length],
                 data: {
                     completion: true,
                     format: true,

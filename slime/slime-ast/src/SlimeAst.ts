@@ -1,16 +1,20 @@
+import {SlimeAstType, SlimeProgramSourceType, SlimeVariableDeclarationKind} from "./SlimeAstInterface.ts";
 import {
     type SlimeCaretEqualsToken,
-    type SlimeDirective, type SlimeExpression, type SlimeIdentifier,
+    type SlimeDirective,
+    type SlimeExpression,
+    type SlimeIdentifier,
     type SlimeLiteral,
     type SlimeModuleDeclaration,
-    type SlimeNumberLiteral, type SlimePattern,
+    type SlimeNumberLiteral,
+    type SlimePattern,
     type SlimeProgram,
-    SlimeProgramSourceType,
     type SlimeStatement,
     type SlimeStringLiteral,
-    type SlimeVariableDeclaration, SlimeVariableDeclarationKind, type SlimeVariableDeclarator
+    type SlimeVariableDeclaration,
+    type SlimeVariableDeclarator
 } from "./SlimeAstInterface.ts";
-import {SlimeAstType} from "./SlimeAstInterface.ts";
+
 import * as babelType from "@babel/types";
 
 class SlimeAst {

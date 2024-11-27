@@ -116,6 +116,7 @@ export function vitePluginOvsTransform(code) {
     // code1 = mapping.exec(curCst)
     // console.log(code1)
     console.log(code1)
+    console.log(genRes?.rawMappings)
     return {
         code: code1,
         mapping: genRes?.rawMappings
@@ -126,8 +127,8 @@ export function vitePluginOvsTransform(code) {
         `*/
 }
 
-const code = `let a = 123
-let c4 = 
+const code = `let a = 1
+let a
 `
 
 // const code = `let a = div{
@@ -135,7 +136,12 @@ let c4 =
 //             true
 //         }
 // `
-const res = vitePluginOvsTransform(code)
+// const res = vitePluginOvsTransform(code)
+// const getOffsets = new MappingConverter(code, res.code)
+// const offsets = getOffsets.convertMappings(res.mapping)
+// LogUtil.log('last offset offfff')
+// LogUtil.log(offsets[offsets.length - 1].original.offset)
+// LogUtil.log(offsets[offsets.length - 1].generated.offset)
 
 // const getOffsets = new MappingConverter(code, res.code)
 // const offsets = getOffsets.convertMappings(res.mapping)
