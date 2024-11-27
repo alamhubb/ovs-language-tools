@@ -1,8 +1,8 @@
 import SubhutiLexer from 'subhuti/src/parser/SubhutiLexer.ts'
-import {es6Tokens} from 'subhuti-ts/src/language/es2015/Es6Tokens.ts'
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
-import Es6Parser from "subhuti-ts/src/language/es2015/Es6Parser";
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
+import {es6Tokens} from "./language/es2015/Es6Tokens.ts";
+import Es6Parser from "./language/es2015/Es6Parser.ts";
 
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
