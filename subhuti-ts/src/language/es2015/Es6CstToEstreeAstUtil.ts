@@ -573,8 +573,7 @@ export default class Es6CstToEstreeAstUtil {
         } else if (firstChild.name === Es6TokenConsumer.prototype.FalseTok.name) {
             value = babeType.booleanLiteral(false)
         } else {
-            console.log(firstChild.value)
-            value = babeType.stringLiteral(firstChild.value)
+            value = babeType.stringLiteral(JsonUtil.toParse(firstChild.value))
         }
         value.loc = firstChild.loc
         return value
