@@ -27,7 +27,7 @@ import {
     SourceLocation,
     Statement, StringLiteral, TSDeclareFunction,
     VariableDeclaration,
-    VariableDeclarator, ReturnStatement,
+    VariableDeclarator, ReturnStatement, ArrayExpression, SpreadElement,
 } from "@babel/types";
 import BabelAstType from "../BabelAstType.ts";
 import {SlimeLiteral} from "slime-ast/src/SlimeAstInterface.ts";
@@ -298,7 +298,7 @@ export default class Es6CstToEstreeAstUtil {
         const astName = checkCstName(cst, Es6Parser.prototype.ReturnStatement.name);
         const ast: ReturnStatement = {
             type: astName as any,
-            expression: this.createExpressionAst(cst.children[1]),
+            argument: this.createExpressionAst(cst.children[1]),
             loc: cst.loc
         } as any
         return ast
@@ -318,18 +318,18 @@ export default class Es6CstToEstreeAstUtil {
         const astName = checkCstName(cst, Es6Parser.prototype.CallExpression.name);
         if (cst.children.length > 1) {
             const argumentsCst = cst.children[1]
-
-
-            JsonUtil.log(cst)
             let argumentsAst: any[] = []
             if (argumentsCst.children.length > 2) {
                 const ArgumentListCst = argumentsCst.children[1]
                 argumentsAst = ArgumentListCst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name).map(item => this.createAssignmentExpressionAst(item)) as any[]
             }
 
+            const callee = this.createMemberExpressionAst(cst.children[0])
+
+
             const ast: CallExpression = {
                 type: astName as any,
-                callee: this.createMemberExpressionAst(cst.children[0]),
+                callee: callee,
                 arguments: argumentsAst,
                 optional: false,
                 loc: cst.loc
@@ -539,10 +539,28 @@ export default class Es6CstToEstreeAstUtil {
             return this.createIdentifierAst(first.children[0])
         } else if (first.name === Es6Parser.prototype.Literal.name) {
             return this.createLiteralAst(first)
+        } else if (first.name === Es6Parser.prototype.ArrayLiteral.name) {
+            return this.createArrayExpressionAst(first)
         } else if (first.name === Es6Parser.prototype.FunctionExpression.name) {
             return this.createFunctionExpressionAst(first.children[1], first.children[3])
         }
     }
+
+    createArrayExpressionAst(cst: SubhutiCst): ArrayExpression {
+        const astName = checkCstName(cst, Es6Parser.prototype.ArrayLiteral.name);
+        const ast: ArrayExpression = {
+            type: 'ArrayExpression',
+            elements: this.createElementListAst(cst.children[1])
+        }
+        return ast
+    }
+
+    createElementListAst(cst: SubhutiCst): Array<null | Expression | SpreadElement> {
+        const astName = checkCstName(cst, Es6Parser.prototype.ElementList.name);
+        const ast: Array<null | Expression | SpreadElement> = cst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name).map(item => this.createAssignmentExpressionAst(item))
+        return ast
+    }
+
 
     createLiteralAst(cst: SubhutiCst): Literal {
         const astName = checkCstName(cst, Es6Parser.prototype.Literal.name);
@@ -555,6 +573,7 @@ export default class Es6CstToEstreeAstUtil {
         } else if (firstChild.name === Es6TokenConsumer.prototype.FalseTok.name) {
             value = babeType.booleanLiteral(false)
         } else {
+            console.log(firstChild.value)
             value = babeType.stringLiteral(firstChild.value)
         }
         value.loc = firstChild.loc

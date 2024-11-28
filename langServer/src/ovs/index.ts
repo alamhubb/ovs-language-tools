@@ -44,6 +44,7 @@ export function vitePluginOvsTransform(code) {
     LogUtil.log('44444')
     const lexer = new SubhutiLexer(es6Tokens)
     const tokens = lexer.lexer(code)
+    JsonUtil.log(tokens)
     if (!tokens.length) return code
     const parser = new OvsParser(tokens)
 
