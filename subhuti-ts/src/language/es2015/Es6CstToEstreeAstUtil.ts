@@ -27,7 +27,7 @@ import {
     SourceLocation,
     Statement, StringLiteral, TSDeclareFunction,
     VariableDeclaration,
-    VariableDeclarator,
+    VariableDeclarator, ReturnStatement,
 } from "@babel/types";
 import BabelAstType from "../BabelAstType.ts";
 import {SlimeLiteral} from "slime-ast/src/SlimeAstInterface.ts";
@@ -123,6 +123,8 @@ export default class Es6CstToEstreeAstUtil {
             return this.createVariableDeclarationAst(cst)
         } else if (cst.name === Es6Parser.prototype.ExpressionStatement.name) {
             return this.createExpressionStatementAst(cst)
+        } else if (cst.name === Es6Parser.prototype.ReturnStatement.name) {
+            return this.createReturnStatementAst(cst)
         }
     }
 
@@ -252,7 +254,7 @@ export default class Es6CstToEstreeAstUtil {
 
     createFunctionExpressionAst(cstParams: SubhutiCst, cst: SubhutiCst): FunctionExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.FunctionBody.name);
-        const params = this.createFormalParametersAst(cstParams)
+        const params = this.createFormalParametersAst(cstParams.children[1])
         const ast: FunctionExpression = {
             type: Es6Parser.prototype.FunctionExpression.name as any,
             id: null,
@@ -282,14 +284,23 @@ export default class Es6CstToEstreeAstUtil {
 
     createBlockStatementAst(cst: SubhutiCst): BlockStatement {
         const astName = checkCstName(cst, Es6Parser.prototype.StatementList.name);
+        const statements: Array<Statement> = this.createStatementListAst(cst)
         const ast: BlockStatement = {
             type: Es6Parser.prototype.BlockStatement.name as any,
-            body: cst.children[0].children.map(item =>
-                this.createExpressionStatementAst(item.children[0])
-            ) as any,
+            body: statements,
             directives: [],
             loc: cst.loc
         }
+        return ast
+    }
+
+    createReturnStatementAst(cst: SubhutiCst): ReturnStatement {
+        const astName = checkCstName(cst, Es6Parser.prototype.ReturnStatement.name);
+        const ast: ReturnStatement = {
+            type: astName as any,
+            expression: this.createExpressionAst(cst.children[1]),
+            loc: cst.loc
+        } as any
         return ast
     }
 
@@ -297,7 +308,7 @@ export default class Es6CstToEstreeAstUtil {
         const astName = checkCstName(cst, Es6Parser.prototype.ExpressionStatement.name);
         const ast: ExpressionStatement = {
             type: astName as any,
-            expression: this.createAssignmentExpressionAst(cst.children[0].children[0]),
+            expression: this.createStatementAst(cst.children[0]),
             loc: cst.loc
         } as any
         return ast
@@ -313,7 +324,7 @@ export default class Es6CstToEstreeAstUtil {
             let argumentsAst: any[] = []
             if (argumentsCst.children.length > 2) {
                 const ArgumentListCst = argumentsCst.children[1]
-                argumentsAst = ArgumentListCst.children.map(item => this.createAssignmentExpressionAst(item)) as any[]
+                argumentsAst = ArgumentListCst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name).map(item => this.createAssignmentExpressionAst(item)) as any[]
             }
 
             const ast: CallExpression = {
@@ -350,7 +361,10 @@ export default class Es6CstToEstreeAstUtil {
         const id = this.createIdentifierAst(cst.children[0].children[0])
         let variableDeclarator: VariableDeclarator
         if (cst.children[1]) {
-            const init = this.createAssignmentExpressionAst(cst.children[1].children[1])
+            const initCst = cst.children[1].children[1]
+            JsonUtil.log(7777)
+            JsonUtil.log(initCst)
+            const init = this.createAssignmentExpressionAst(initCst)
             variableDeclarator = babeType.variableDeclarator(id, init)
         } else {
             variableDeclarator = babeType.variableDeclarator(id)
@@ -362,7 +376,9 @@ export default class Es6CstToEstreeAstUtil {
     createExpressionAst(cst: SubhutiCst): Expression {
         const astName = cst.name
         let left
-        if (astName === Es6Parser.prototype.AssignmentExpression.name) {
+        if (astName === Es6Parser.prototype.Expression.name) {
+            left = this.createExpressionAst(cst.children[0])
+        } else if (astName === Es6Parser.prototype.AssignmentExpression.name) {
             left = this.createAssignmentExpressionAst(cst)
         } else if (astName === Es6Parser.prototype.ConditionalExpression.name) {
             left = this.createConditionalExpressionAst(cst)
@@ -523,10 +539,12 @@ export default class Es6CstToEstreeAstUtil {
             return this.createIdentifierAst(first.children[0])
         } else if (first.name === Es6Parser.prototype.Literal.name) {
             return this.createLiteralAst(first)
+        } else if (first.name === Es6Parser.prototype.FunctionExpression.name) {
+            return this.createFunctionExpressionAst(first.children[1], first.children[3])
         }
     }
 
-    createLiteralAst(cst: SubhutiCst): SlimeLiteral {
+    createLiteralAst(cst: SubhutiCst): Literal {
         const astName = checkCstName(cst, Es6Parser.prototype.Literal.name);
         const firstChild = cst.children[0]
         let value
