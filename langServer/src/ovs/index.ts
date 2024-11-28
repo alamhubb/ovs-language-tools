@@ -60,7 +60,7 @@ export function vitePluginOvsTransform(code) {
     JsonUtil.log(ast)
     let genRes = null
     // 验证 AST 节点是否包含位置信息
-    traverse(ast, {
+    /*traverse(ast, {
         enter(path) {
             path.node.start = undefined
             path.node.end = undefined
@@ -70,16 +70,16 @@ export function vitePluginOvsTransform(code) {
             path.node.loc.start.index = undefined
             path.node.loc.end.index = undefined
         }
-    });
+    });*/
     try {
 
         const output = recast.print(ast).code;
         console.log(output)
         // LogUtil.log(ast)
-        LogUtil.log('6666')
+        console.log('6666')
 
 // 生成代码
-        const genRes = generate(ast, {
+        genRes = generate(ast, {
             sourceMaps: true,             // 启用源码映射
             sourceFileName: 'source.js',  // 源文件名
             fileName: 'generated.js',     // 生成文件名
@@ -116,6 +116,8 @@ export function vitePluginOvsTransform(code) {
     // code1 = mapping.exec(curCst)
     // console.log(code1)
     console.log(code1)
+    console.log(66666)
+    console.log(genRes)
     console.log(genRes?.rawMappings)
     return {
         code: code1,
@@ -127,8 +129,7 @@ export function vitePluginOvsTransform(code) {
         `*/
 }
 
-const code = `let a = 1
-let a
+const code = `const a = function () {return OvsAPI.createVNode("div", [123]);}()
 `
 
 // const code = `let a = div{
@@ -136,12 +137,12 @@ let a
 //             true
 //         }
 // `
-// const res = vitePluginOvsTransform(code)
-// const getOffsets = new MappingConverter(code, res.code)
-// const offsets = getOffsets.convertMappings(res.mapping)
-// LogUtil.log('last offset offfff')
-// LogUtil.log(offsets[offsets.length - 1].original.offset)
-// LogUtil.log(offsets[offsets.length - 1].generated.offset)
+const res = vitePluginOvsTransform(code)
+const getOffsets = new MappingConverter(code, res.code)
+const offsets = getOffsets.convertMappings(res.mapping)
+LogUtil.log('last offset offfff')
+LogUtil.log(offsets[offsets.length - 1].original.offset)
+LogUtil.log(offsets[offsets.length - 1].generated.offset)
 
 // const getOffsets = new MappingConverter(code, res.code)
 // const offsets = getOffsets.convertMappings(res.mapping)
