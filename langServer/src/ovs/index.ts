@@ -130,7 +130,7 @@ export function vitePluginOvsTransform(code) {
         `*/
 }
 
-const code = `const a = function () {return OvsAPI.createVNode("div", [123]);}()
+const code = `const a = function () {return OvsAPI.createVNode("di
 `
 
 // const code = `let a = div{

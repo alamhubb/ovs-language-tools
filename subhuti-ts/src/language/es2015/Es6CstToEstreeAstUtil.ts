@@ -565,15 +565,17 @@ export default class Es6CstToEstreeAstUtil {
     createLiteralAst(cst: SubhutiCst): Literal {
         const astName = checkCstName(cst, Es6Parser.prototype.Literal.name);
         const firstChild = cst.children[0]
+        const firstValue = firstChild.value
         let value
         if (firstChild.name === Es6TokenConsumer.prototype.NumericLiteral.name) {
-            value = babeType.numericLiteral(Number(firstChild.value))
+            value = babeType.numericLiteral(Number(firstValue))
         } else if (firstChild.name === Es6TokenConsumer.prototype.TrueTok.name) {
             value = babeType.booleanLiteral(true)
         } else if (firstChild.name === Es6TokenConsumer.prototype.FalseTok.name) {
             value = babeType.booleanLiteral(false)
         } else {
-            value = babeType.stringLiteral(JsonUtil.toParse(firstChild.value))
+            const trimmed = firstValue.replace(/^['"]|['"]$/g, '');
+            value = babeType.stringLiteral(trimmed)
         }
         value.loc = firstChild.loc
         return value

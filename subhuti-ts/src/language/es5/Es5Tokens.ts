@@ -193,7 +193,8 @@ export const es5TokensObj = {
 
     // Literals
     NumericLiteral: createEmptyValueRegToken(Es5TokensName.NumericLiteral, /-?\d+(\.\d+)?/),
-    StringLiteral: createEmptyValueRegToken(Es5TokensName.StringLiteral, /(["'])((?:\\\1|(?:(?!\1|\n|\r).)*)*)\1/),
+
+    StringLiteral: createEmptyValueRegToken(Es5TokensName.StringLiteral, /(["'])((?:\\\1|(?:(?!\1|\n|\r).)*)*)\1?/),
     RegularExpressionLiteral: createEmptyValueRegToken(
         Es5TokensName.RegularExpressionLiteral,
         /\/(?:\\.|[^\\\/])+\/[gimuy]*/
