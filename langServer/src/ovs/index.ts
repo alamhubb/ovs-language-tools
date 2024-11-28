@@ -51,8 +51,8 @@ export function vitePluginOvsTransform(code) {
     let curCst = parser.Program()
     // JsonUtil.log(7777)
     curCst = traverseClearTokens(curCst)
-    // curCst = traverseClearLoc(curCst)
-    // JsonUtil.log(curCst)
+    curCst = traverseClearLoc(curCst)
+    JsonUtil.log(curCst)
     // JsonUtil.log(curCst)
     //cst转 estree ast
     const ast = ovsToAstUtil.createFileAst(curCst)
@@ -74,9 +74,9 @@ export function vitePluginOvsTransform(code) {
     try {
 
         const output = recast.print(ast).code;
-        console.log(output)
+        LogUtil.log(output)
         // LogUtil.log(ast)
-        console.log('6666')
+        LogUtil.log('6666')
 
 // 生成代码
         genRes = generate(ast, {
@@ -138,11 +138,11 @@ const code = `const a = function () {return OvsAPI.createVNode("div", [123]);}()
 //         }
 // `
 const res = vitePluginOvsTransform(code)
-const getOffsets = new MappingConverter(code, res.code)
-const offsets = getOffsets.convertMappings(res.mapping)
-LogUtil.log('last offset offfff')
-LogUtil.log(offsets[offsets.length - 1].original.offset)
-LogUtil.log(offsets[offsets.length - 1].generated.offset)
+// const getOffsets = new MappingConverter(code, res.code)
+// const offsets = getOffsets.convertMappings(res.mapping)
+// LogUtil.log('last offset offfff')
+// LogUtil.log(offsets[offsets.length - 1].original.offset)
+// LogUtil.log(offsets[offsets.length - 1].generated.offset)
 
 // const getOffsets = new MappingConverter(code, res.code)
 // const offsets = getOffsets.convertMappings(res.mapping)

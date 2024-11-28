@@ -31,6 +31,7 @@ import {
 } from "@babel/types";
 import BabelAstType from "../BabelAstType.ts";
 import {SlimeLiteral} from "slime-ast/src/SlimeAstInterface.ts";
+import JsonUtil from "../../utils/JsonUtil.ts";
 
 
 export const EsTreeAstType: {
@@ -306,9 +307,14 @@ export default class Es6CstToEstreeAstUtil {
         const astName = checkCstName(cst, Es6Parser.prototype.CallExpression.name);
         if (cst.children.length > 1) {
             const argumentsCst = cst.children[1]
-            const ArgumentListCst = argumentsCst.children[1]
 
-            const argumentsAst: any[] = ArgumentListCst.children.map(item => this.createAssignmentExpressionAst(item)) as any[]
+
+            JsonUtil.log(cst)
+            let argumentsAst: any[] = []
+            if (argumentsCst.children.length > 2) {
+                const ArgumentListCst = argumentsCst.children[1]
+                argumentsAst = ArgumentListCst.children.map(item => this.createAssignmentExpressionAst(item)) as any[]
+            }
 
             const ast: CallExpression = {
                 type: astName as any,
