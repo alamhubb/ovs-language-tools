@@ -1,5 +1,4 @@
 import * as babeType from "@babel/types";
-import type SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import Es6TokenConsumer, {Es6TokenName, es6TokensObj} from "./Es6Tokens.ts";
 import Es6Parser from "./Es6Parser.ts";
 import {
@@ -32,6 +31,7 @@ import {
 import BabelAstType from "../BabelAstType.ts";
 import {SlimeLiteral} from "slime-ast/src/SlimeAstInterface.ts";
 import JsonUtil from "../../utils/JsonUtil.ts";
+import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 
 
 export const EsTreeAstType: {
@@ -44,7 +44,6 @@ export const EsTreeAstType: {
 
 export function checkCstName(cst: SubhutiCst, cstName: string) {
     if (cst.name !== cstName) {
-        console.log(cst)
         throwNewError(cst.name)
     }
     return cstName
@@ -270,7 +269,6 @@ export default class Es6CstToEstreeAstUtil {
 
     createFormalParametersAst(cst: SubhutiCst): Pattern[] {
         const astName = checkCstName(cst, Es6Parser.prototype.FormalParameters.name);
-        console.log(cst)
         if (!cst.children) {
             return []
         }
@@ -362,8 +360,6 @@ export default class Es6CstToEstreeAstUtil {
         let variableDeclarator: VariableDeclarator
         if (cst.children[1]) {
             const initCst = cst.children[1].children[1]
-            JsonUtil.log(7777)
-            JsonUtil.log(initCst)
             const init = this.createAssignmentExpressionAst(initCst)
             variableDeclarator = babeType.variableDeclarator(id, init)
         } else {

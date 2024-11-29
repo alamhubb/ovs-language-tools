@@ -191,7 +191,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
 
     get checkMethodCanExec() {
         //如果不能匹配，测判断允许错误，则直接返回，无法继续匹配只能返回，避免递归
-        return this.continueMatch
+        return this.continueMatch && !this.tokenIsEmpty
     }
 
     public get tokenIsEmpty() {
@@ -235,7 +235,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
                 } else {
                     // parentCst.tokens.push(...cst.tokens);
                 }
-                parentCst.children.push(cst)
+                // parentCst.children.push(cst)
             }
             this.setCurCst(parentCst)
         }
@@ -247,6 +247,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
 
     //执行语法，将语法入栈，执行语法，语法执行完毕，语法出栈
     processCst(ruleName: string, targetFun: Function): SubhutiCst {
+
         let cst = new SubhutiCst()
         cst.name = ruleName
         // if (this.curCst) {
@@ -256,7 +257,15 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
         // }
         cst.children = []
         cst.tokens = []
-
+        let parentCst: SubhutiCst
+        if (!this.initFlag && this.cstStack.length) {
+            JsonUtil.log(this.cstStack)
+            parentCst = this.cstStack[this.cstStack.length - 1]
+            parentCst.children.push(cst)
+            console.log('kaishi jirnu ')
+            console.log(ruleName)
+            JsonUtil.log(parentCst.name)
+        }
         this.setCurCst(cst)
         this.cstStack.push(cst)
         this.ruleExecErrorStack.push(ruleName)
@@ -266,7 +275,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
         this.ruleExecErrorStack.pop()
         if (this.continueMatch) {
             if (cst.children[0]) {
-                if(!cst.children[0].loc){
+                if (!cst.children[0].loc) {
                     console.log(cst.children[0])
                     return cst
                 }
@@ -276,6 +285,9 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
                 }
             }
             return cst
+        }
+        if (parentCst) {
+            // parentCst.children.pop()
         }
         return
     }
@@ -457,6 +469,9 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
                 this.setAllowError(true)
             }
             let backData = JsonUtil.cloneDeep(this.backData)
+
+            JsonUtil.log(this.curCst)
+            JsonUtil.log(backData)
             //考虑到执行空的话，如果执行了空元素，应该是跳出的
             this.setOrBreakFlag(false)
             subhutiParserOr.alt()

@@ -59,8 +59,6 @@ export default class Es6CstToOvsAstUtil extends Es6CstToEstreeAstUtil {
         const {children} = cst;
         const [exportToken, secondChild, thirdChild] = children;
 
-        JsonUtil.log(cst)
-
         let ast: ExportDefaultDeclaration = super.createExportDeclarationAst(cst) as ExportDefaultDeclaration
         /*
 

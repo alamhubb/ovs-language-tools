@@ -51,6 +51,8 @@ export function vitePluginOvsTransform(code) {
     let code1 = ''
     let curCst = parser.Program()
     // JsonUtil.log(7777)
+    JsonUtil.log(56565656)
+    JsonUtil.log(curCst)
     curCst = traverseClearTokens(curCst)
     curCst = traverseClearLoc(curCst)
     JsonUtil.log(curCst)
@@ -130,7 +132,8 @@ export function vitePluginOvsTransform(code) {
         `*/
 }
 
-const code = `const a = function () {return OvsAPI.createVNode("di
+// const code = `const a = function () {return OvsAPI.createVNode("di
+const code = `let a = 'di
 `
 
 // const code = `let a = div{
