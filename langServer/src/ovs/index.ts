@@ -54,6 +54,7 @@ export function vitePluginOvsTransform(code) {
     JsonUtil.log(56565656)
     curCst = traverseClearTokens(curCst)
     curCst = traverseClearLoc(curCst)
+    console.log(123123)
     JsonUtil.log(curCst)
     // JsonUtil.log(curCst)
     //cst转 estree ast
@@ -131,7 +132,7 @@ export function vitePluginOvsTransform(code) {
 }
 
 // const code = `let a = 'di
-const code = `const a = function () {return OvsAPI.createVNode("di
+const code = `OvsAPI.createVNode("di
 `
 
 // const code = `let a = div{

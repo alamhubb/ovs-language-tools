@@ -306,7 +306,7 @@ export default class Es6CstToEstreeAstUtil {
         const astName = checkCstName(cst, Es6Parser.prototype.ExpressionStatement.name);
         const ast: ExpressionStatement = {
             type: astName as any,
-            expression: this.createStatementAst(cst.children[0]),
+            expression: this.createExpressionAst(cst.children[0]),
             loc: cst.loc
         } as any
         return ast
@@ -317,11 +317,12 @@ export default class Es6CstToEstreeAstUtil {
         if (cst.children.length > 1) {
             const argumentsCst = cst.children[1]
             let argumentsAst: any[] = []
-            if (argumentsCst.children.length > 2) {
-                const ArgumentListCst = argumentsCst.children[1]
-                argumentsAst = ArgumentListCst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name).map(item => this.createAssignmentExpressionAst(item)) as any[]
-            }
 
+            if (argumentsCst.children.length > 1) {
+                const ArgumentListCst = argumentsCst.children[1]
+                const assignParams = ArgumentListCst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name)
+                argumentsAst = assignParams.map(item => this.createAssignmentExpressionAst(item)) as any[]
+            }
             const callee = this.createMemberExpressionAst(cst.children[0])
 
 
@@ -374,6 +375,8 @@ export default class Es6CstToEstreeAstUtil {
         let left
         if (astName === Es6Parser.prototype.Expression.name) {
             left = this.createExpressionAst(cst.children[0])
+        } else if (astName === Es6Parser.prototype.Statement.name) {
+            left = this.createStatementAst(cst)
         } else if (astName === Es6Parser.prototype.AssignmentExpression.name) {
             left = this.createAssignmentExpressionAst(cst)
         } else if (astName === Es6Parser.prototype.ConditionalExpression.name) {
