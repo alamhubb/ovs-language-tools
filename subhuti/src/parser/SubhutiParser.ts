@@ -259,12 +259,8 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
         cst.tokens = []
         let parentCst: SubhutiCst
         if (!this.initFlag && this.cstStack.length) {
-            JsonUtil.log(this.cstStack)
             parentCst = this.cstStack[this.cstStack.length - 1]
             parentCst.children.push(cst)
-            console.log('kaishi jirnu ')
-            console.log(ruleName)
-            JsonUtil.log(parentCst.name)
         }
         this.setCurCst(cst)
         this.cstStack.push(cst)
@@ -470,8 +466,6 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
             }
             let backData = JsonUtil.cloneDeep(this.backData)
 
-            JsonUtil.log(this.curCst)
-            JsonUtil.log(backData)
             //考虑到执行空的话，如果执行了空元素，应该是跳出的
             this.setOrBreakFlag(false)
             subhutiParserOr.alt()
