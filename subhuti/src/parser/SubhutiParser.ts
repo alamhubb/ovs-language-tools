@@ -287,7 +287,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
             return cst
         }
         if (parentCst) {
-            // parentCst.children.pop()
+            parentCst.children.pop()
         }
         return
     }
