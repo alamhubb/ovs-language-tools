@@ -99,11 +99,16 @@ export default class Es6CstToOvsAstUtil extends Es6CstToEstreeAstUtil {
 
     createOvsRenderDomViewDeclarationAst(cst: SubhutiCst): CallExpression {
         const astName = checkCstName(cst, OvsParser.prototype.OvsRenderDomViewDeclaration.name);
+        JsonUtil.log(cst)
+        let children = []
+        if (cst.children.length > 1) {
+            children = cst.children[2].children.filter(item => item.name === OvsParser.prototype.OvsRenderDomViewDeclarator.name).map(item => this.createOvsRenderDomViewDeclaratorAst(item)) as any[]
+        }
         const ast: OvsAstRenderDomViewDeclaration = {
             type: astName as any,
             id: this.createIdentifierAst(cst.children[0]) as any,
             // children: cst.children[2].children.filter(item => item.name === OvsParser.prototype.OvsRenderDomViewDeclarator.name),
-            children: cst.children[2].children.filter(item => item.name === OvsParser.prototype.OvsRenderDomViewDeclarator.name).map(item => this.createOvsRenderDomViewDeclaratorAst(item)) as any[],
+            children: children
             // children: this.createAssignmentExpressionAst(cst.children[2])
         } as any
 

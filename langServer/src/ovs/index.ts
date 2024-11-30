@@ -132,7 +132,7 @@ export function vitePluginOvsTransform(code) {
 }
 
 // const code = `let a = 'di
-const code = `OvsAPI.createVNode("di
+const code = `OvsAPI.createVNode("div",[a
 `
 
 // const code = `let a = div{
@@ -140,7 +140,7 @@ const code = `OvsAPI.createVNode("di
 //             true
 //         }
 // `
-// const res = vitePluginOvsTransform(code)
+const res = vitePluginOvsTransform(code)
 // const getOffsets = new MappingConverter(code, res.code)
 // const offsets = getOffsets.convertMappings(res.mapping)
 // LogUtil.log('last offset offfff')
