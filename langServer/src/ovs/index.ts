@@ -51,16 +51,14 @@ export function vitePluginOvsTransform(code) {
     let code1 = ''
     let curCst = parser.Program()
     // JsonUtil.log(7777)
-    JsonUtil.log(56565656)
     curCst = traverseClearTokens(curCst)
     curCst = traverseClearLoc(curCst)
-    console.log(123123)
     JsonUtil.log(curCst)
     // JsonUtil.log(curCst)
     //cst转 estree ast
     const ast = ovsToAstUtil.createFileAst(curCst)
 
-    JsonUtil.log(ast)
+    // JsonUtil.log(ast)
     let genRes = null
     // 验证 AST 节点是否包含位置信息
     /*traverse(ast, {
@@ -76,10 +74,10 @@ export function vitePluginOvsTransform(code) {
     });*/
     try {
 
-        const output = recast.print(ast).code;
-        LogUtil.log(output)
-        // LogUtil.log(ast)
-        LogUtil.log('6666')
+        // const output = recast.print(ast).code;
+        // LogUtil.log(output)
+        // // LogUtil.log(ast)
+        // LogUtil.log('6666')
 
 // 生成代码
         genRes = generate(ast, {

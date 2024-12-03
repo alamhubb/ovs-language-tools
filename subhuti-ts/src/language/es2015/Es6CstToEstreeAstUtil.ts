@@ -320,8 +320,6 @@ export default class Es6CstToEstreeAstUtil {
 
             if (argumentsCst.children.length > 2) {
                 const ArgumentListCst = argumentsCst.children[1]
-                JsonUtil.log(999999)
-                JsonUtil.log(ArgumentListCst)
                 const assignParams = ArgumentListCst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name)
                 argumentsAst = assignParams.map(item => this.createAssignmentExpressionAst(item)) as any[]
             }
