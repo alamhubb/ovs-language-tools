@@ -84,4 +84,5 @@ class SlimeAst {
     }
 }
 
-export default new SlimeAst()
+const SlimeAstUtil = new SlimeAst()
+export default SlimeAstUtil
