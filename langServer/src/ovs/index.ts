@@ -52,13 +52,13 @@ export function vitePluginOvsTransform(code) {
     let curCst = parser.Program()
     // JsonUtil.log(7777)
     curCst = traverseClearTokens(curCst)
-    curCst = traverseClearLoc(curCst)
-    JsonUtil.log(curCst)
+    // curCst = traverseClearLoc(curCst)
+    // JsonUtil.log(curCst)
     // JsonUtil.log(curCst)
     //cst转 estree ast
     const ast = ovsToAstUtil.createFileAst(curCst)
 
-    // JsonUtil.log(ast)
+    JsonUtil.log(ast)
     let genRes = null
     // 验证 AST 节点是否包含位置信息
     /*traverse(ast, {
@@ -115,8 +115,8 @@ export function vitePluginOvsTransform(code) {
     // mapping.openMappingMode(curCst)
     // code1 = mapping.exec(curCst)
     // console.log(code1)
-    console.log(code1)
     console.log(66666)
+    console.log(code1)
     console.log(genRes)
     console.log(genRes?.rawMappings)
     return {
@@ -130,13 +130,13 @@ export function vitePluginOvsTransform(code) {
 }
 
 // const code = `let a = 'di
-const code = `let a = 1;
-let b = 2;
-let c = 3;
+const code = `let a = 1
+let b = 2
+let c = 3
 
 let div1 = function() {
-    return OvsAPI.createVNode("div", [a, b]);
-}();
+    return OvsAPI.createVNode("div", [a, b])
+}()
 `
 
 // const code = `let a = div{

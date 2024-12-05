@@ -38,8 +38,10 @@ export function vitePluginOvsTransform(code) {
 
     let code1 = null
     let curCst = parser.Program()
-    // JsonUtil.log(7777)
     curCst = traverseClearTokens(curCst)
+    curCst = traverseClearLoc(curCst)
+    // JsonUtil.log(7777)
+    // curCst = traverseClearTokens(curCst)
     JsonUtil.log(curCst)
 }
 
