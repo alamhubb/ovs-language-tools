@@ -1,7 +1,6 @@
-import * as babeType from "@babel/types";
 import Es6TokenConsumer, {Es6TokenName, es6TokensObj} from "./Es6Tokens.ts";
 import Es6Parser from "./Es6Parser.ts";
-import {
+import type {
     SlimeAssignmentExpression,
     SlimeBlockStatement,
     SlimeCallExpression,
@@ -11,7 +10,7 @@ import {
     SlimeComment,
     SlimeConditionalExpression,
     SlimeDeclaration,
-    SlimeDirective,
+    SlimeDirective,                                                                                                                                                                                                                                                                                                                                                                                                                       h
     SlimeExportDefaultDeclaration,
     SlimeExportNamedDeclaration,
     SlimeExpression,
@@ -26,15 +25,14 @@ import {
     SlimeNode,
     SlimePattern,
     SlimeProgram,
-    SlimeFile,
     SlimeSourceLocation,
     SlimeStatement,
     SlimeStringLiteral,
     SlimeTSDeclareFunction,
-    VariableDeclaration,
-    VariableDeclarator,
-    ReturnStatement,
-    ArrayExpression,
+    SlimeVariableDeclaration,
+    SlimeVariableDeclarator,
+    SlimeReturnStatement,
+    SlimeArrayExpression,
     SlimeSpreadElement
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
@@ -59,18 +57,18 @@ export function throwNewError(errorMsg: string = 'syntax error') {
     throw new Error(errorMsg)
 }
 
-export default class CstToAstUtil {
-    createIdentifierAst(cst: SubhutiCst): Identifier {
+class CstToAstUtil {
+    createIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
         const astName = checkCstName(cst, Es6TokenConsumer.prototype.Identifier.name);
         const identifier = babeType.identifier(cst.value)
         identifier.loc = cst.loc
         return identifier
     }
 
-    toProgram(cst: SubhutiCst): Program {
+    toProgram(cst: SubhutiCst): SlimeProgram {
         const astName = checkCstName(cst, Es6Parser.prototype.Program.name);
         const first = cst.children[0]
-        let program: Program
+        let program: SlimeProgram
         if (first.name === Es6Parser.prototype.ModuleItemList.name) {
             const body = this.createModuleItemListAst(first)
             program = babeType.program(body, [], "module")
@@ -82,7 +80,7 @@ export default class CstToAstUtil {
         return program
     }
 
-    createModuleItemListAst(cst: SubhutiCst): Array<Statement> {
+    createModuleItemListAst(cst: SubhutiCst): Array<SlimeStatement> {
         //直接返回声明
         //                 this.Statement()
         //                 this.Declaration()
@@ -100,19 +98,19 @@ export default class CstToAstUtil {
         return asts.flat()
     }
 
-    createStatementListAst(cst: SubhutiCst): Array<Statement> {
+    createStatementListAst(cst: SubhutiCst): Array<SlimeStatement> {
         const astName = checkCstName(cst, Es6Parser.prototype.StatementList.name);
         const statements = cst.children.map(item => this.createStatementListItemAst(item)).flat()
         return statements
     }
 
-    createStatementListItemAst(cst: SubhutiCst): Array<Statement> {
+    createStatementListItemAst(cst: SubhutiCst): Array<SlimeStatement> {
         const astName = checkCstName(cst, Es6Parser.prototype.StatementListItem.name);
         const statements = cst.children.map(item => this.createStatementAst(item)).flat()
         return statements
     }
 
-    createStatementAst(cst: SubhutiCst): Array<Statement> {
+    createStatementAst(cst: SubhutiCst): Array<SlimeStatement> {
         const astName = checkCstName(cst, Es6Parser.prototype.Statement.name);
         const statements: Statement[] = cst.children.map(item => this.createStatementDeclarationAst(item))
         return statements
@@ -129,7 +127,7 @@ export default class CstToAstUtil {
     }
 
 
-    createExportDeclarationAst(cst: SubhutiCst): ExportDefaultDeclaration | ExportNamedDeclaration {
+    createExportDeclarationAst(cst: SubhutiCst): SlimeExportDefaultDeclaration | SlimeExportNamedDeclaration {
         let astName = checkCstName(cst, Es6Parser.prototype.ExportDeclaration.name);
         if (cst.children.length > 2) {
             return this.createExportDefaultDeclarationAst(cst)
@@ -138,14 +136,14 @@ export default class CstToAstUtil {
         }
     }
 
-    createDefaultExportDeclarationAst(cst: SubhutiCst): TSDeclareFunction | FunctionDeclaration | ClassDeclaration | Expression {
+    createDefaultExportDeclarationAst(cst: SubhutiCst): SlimeTSDeclareFunction | SlimeFunctionDeclaration | SlimeClassDeclaration | SlimeExpression {
         switch (cst.name) {
             case Es6Parser.prototype.ClassDeclaration.name:
                 return this.createClassDeclarationAst(cst);
         }
     }
 
-    createExportDefaultDeclarationAst(cst: SubhutiCst): ExportDefaultDeclaration {
+    createExportDefaultDeclarationAst(cst: SubhutiCst): SlimeExportDefaultDeclaration {
         return {
             type: EsTreeAstType.ExportDefaultDeclaration,
             declaration: this.createDefaultExportDeclarationAst(cst.children[2]),
@@ -153,7 +151,7 @@ export default class CstToAstUtil {
         };
     }
 
-    createExportNamedDeclarationAst(cst: SubhutiCst): ExportNamedDeclaration {
+    createExportNamedDeclarationAst(cst: SubhutiCst): SlimeExportNamedDeclaration {
         return {
             type: EsTreeAstType.ExportNamedDeclaration,
             declaration: this.createDeclarationAst(cst.children[1]),
@@ -163,7 +161,7 @@ export default class CstToAstUtil {
     }
 
 
-    createDeclarationAst(cst: SubhutiCst): Declaration {
+    createDeclarationAst(cst: SubhutiCst): SlimeDeclaration {
         switch (cst.name) {
             case Es6Parser.prototype.VariableDeclaration.name:
                 return this.createVariableDeclarationAst(cst);
@@ -181,7 +179,7 @@ export default class CstToAstUtil {
     }
 
 
-    createVariableDeclarationAst(cst: SubhutiCst): VariableDeclaration {
+    createVariableDeclarationAst(cst: SubhutiCst): SlimeVariableDeclaration {
         //直接返回声明
         //                 this.Statement()
         //                 this.Declaration()
@@ -196,7 +194,7 @@ export default class CstToAstUtil {
     }
 
 
-    createClassDeclarationAst(cst: SubhutiCst): ClassDeclaration {
+    createClassDeclarationAst(cst: SubhutiCst): SlimeClassDeclaration {
         const astName = checkCstName(cst, Es6Parser.prototype.ClassDeclaration.name);
         const ast: ClassDeclaration = {
             type: astName as any,
@@ -207,7 +205,7 @@ export default class CstToAstUtil {
         return ast
     }
 
-    createClassBodyItemAst(staticCst: SubhutiCst, cst: SubhutiCst): ClassMethod | PropertyDefinition {
+    createClassBodyItemAst(staticCst: SubhutiCst, cst: SubhutiCst): ClassMethod | SlimePropertyDefinition {
         if (cst.name === Es6Parser.prototype.MethodDefinition.name) {
             return this.createMethodDefinitionAst(staticCst, cst)
         } else if (cst.name === Es6Parser.prototype.PropertyDefinition.name) {
@@ -215,10 +213,10 @@ export default class CstToAstUtil {
         }
     }
 
-    createClassBodyAst(cst: SubhutiCst): ClassBody {
+    createClassBodyAst(cst: SubhutiCst): SlimeClassBody {
         const astName = checkCstName(cst, Es6Parser.prototype.ClassBody.name);
         //ClassBody.ClassElementList
-        const body: Array<ClassMethod | PropertyDefinition> = cst.children[0].children.map(item => {
+        const body: Array<ClassMethod | SlimePropertyDefinition> = cst.children[0].children.map(item => {
                 const astName = checkCstName(item, Es6Parser.prototype.ClassElement.name);
                 if (item.children.length > 1) {
                     return this.createClassBodyItemAst(item.children[0], item.children[1])
@@ -235,7 +233,7 @@ export default class CstToAstUtil {
         return ast
     }
 
-    createMethodDefinitionAst(staticCst: SubhutiCst, cst: SubhutiCst): ClassMethod {
+    createMethodDefinitionAst(staticCst: SubhutiCst, cst: SubhutiCst): SlimeClassMethod {
         const astName = checkCstName(cst, Es6Parser.prototype.MethodDefinition.name);
         const ast: ClassMethod = {
             type: BabelAstType.ClassMethod,
@@ -252,7 +250,7 @@ export default class CstToAstUtil {
         return ast
     }
 
-    createFunctionExpressionAst(cstParams: SubhutiCst, cst: SubhutiCst): FunctionExpression {
+    createFunctionExpressionAst(cstParams: SubhutiCst, cst: SubhutiCst): SlimeFunctionExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.FunctionBody.name);
         const params = this.createFormalParametersAst(cstParams.children[1])
         const ast: FunctionExpression = {
@@ -281,7 +279,7 @@ export default class CstToAstUtil {
     }
 
 
-    createBlockStatementAst(cst: SubhutiCst): BlockStatement {
+    createBlockStatementAst(cst: SubhutiCst): SlimeBlockStatement {
         const astName = checkCstName(cst, Es6Parser.prototype.StatementList.name);
         const statements: Array<Statement> = this.createStatementListAst(cst)
         const ast: BlockStatement = {
@@ -293,7 +291,7 @@ export default class CstToAstUtil {
         return ast
     }
 
-    createReturnStatementAst(cst: SubhutiCst): ReturnStatement {
+    createReturnStatementAst(cst: SubhutiCst): SlimeReturnStatement {
         const astName = checkCstName(cst, Es6Parser.prototype.ReturnStatement.name);
         const ast: ReturnStatement = {
             type: astName as any,
@@ -303,7 +301,7 @@ export default class CstToAstUtil {
         return ast
     }
 
-    createExpressionStatementAst(cst: SubhutiCst): ExpressionStatement {
+    createExpressionStatementAst(cst: SubhutiCst): SlimeExpressionStatement {
         const astName = checkCstName(cst, Es6Parser.prototype.ExpressionStatement.name);
         const ast: ExpressionStatement = {
             type: astName as any,
@@ -313,7 +311,7 @@ export default class CstToAstUtil {
         return ast
     }
 
-    createCallExpressionAst(cst: SubhutiCst): Expression {
+    createCallExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.CallExpression.name);
         if (cst.children.length > 1) {
             const argumentsCst = cst.children[1]
@@ -340,7 +338,7 @@ export default class CstToAstUtil {
     }
 
 
-    createMemberExpressionAst(cst: SubhutiCst): Expression {
+    createMemberExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.MemberExpression.name);
         if (cst.children.length > 1) {
             const ast: MemberExpression = {
@@ -356,7 +354,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createVariableDeclaratorAst(cst: SubhutiCst): VariableDeclarator {
+    createVariableDeclaratorAst(cst: SubhutiCst): SlimeVariableDeclarator {
         const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclarator.name);
         const id = this.createIdentifierAst(cst.children[0].children[0])
         let variableDeclarator: VariableDeclarator
@@ -371,7 +369,7 @@ export default class CstToAstUtil {
         return variableDeclarator
     }
 
-    createExpressionAst(cst: SubhutiCst): Expression {
+    createExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = cst.name
         let left
         if (astName === Es6Parser.prototype.Expression.name) {
@@ -420,7 +418,7 @@ export default class CstToAstUtil {
         return left
     }
 
-    createLogicalORExpressionAst(cst: SubhutiCst): Expression {
+    createLogicalORExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.LogicalORExpression.name);
         if (cst.children.length > 1) {
 
@@ -428,7 +426,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createLogicalANDExpressionAst(cst: SubhutiCst): Expression {
+    createLogicalANDExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.LogicalANDExpression.name);
         if (cst.children.length > 1) {
 
@@ -436,7 +434,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createBitwiseORExpressionAst(cst: SubhutiCst): Expression {
+    createBitwiseORExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.BitwiseORExpression.name);
         if (cst.children.length > 1) {
 
@@ -444,7 +442,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createBitwiseXORExpressionAst(cst: SubhutiCst): Expression {
+    createBitwiseXORExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.BitwiseXORExpression.name);
         if (cst.children.length > 1) {
 
@@ -452,7 +450,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createBitwiseANDExpressionAst(cst: SubhutiCst): Expression {
+    createBitwiseANDExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.BitwiseANDExpression.name);
         if (cst.children.length > 1) {
 
@@ -460,7 +458,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createEqualityExpressionAst(cst: SubhutiCst): Expression {
+    createEqualityExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.EqualityExpression.name);
         if (cst.children.length > 1) {
 
@@ -468,7 +466,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createRelationalExpressionAst(cst: SubhutiCst): Expression {
+    createRelationalExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.RelationalExpression.name);
         if (cst.children.length > 1) {
 
@@ -476,7 +474,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createShiftExpressionAst(cst: SubhutiCst): Expression {
+    createShiftExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.ShiftExpression.name);
         if (cst.children.length > 1) {
 
@@ -484,7 +482,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createAdditiveExpressionAst(cst: SubhutiCst): Expression {
+    createAdditiveExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.AdditiveExpression.name);
         if (cst.children.length > 1) {
 
@@ -492,7 +490,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createMultiplicativeExpressionAst(cst: SubhutiCst): Expression {
+    createMultiplicativeExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.MultiplicativeExpression.name);
         if (cst.children.length > 1) {
 
@@ -500,7 +498,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createUnaryExpressionAst(cst: SubhutiCst): Expression {
+    createUnaryExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.UnaryExpression.name);
         if (cst.children.length > 1) {
 
@@ -508,7 +506,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createPostfixExpressionAst(cst: SubhutiCst): Expression {
+    createPostfixExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.PostfixExpression.name);
         if (cst.children.length > 1) {
 
@@ -516,7 +514,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createLeftHandSideExpressionAst(cst: SubhutiCst): Expression {
+    createLeftHandSideExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.LeftHandSideExpression.name);
         if (cst.children.length > 1) {
 
@@ -524,7 +522,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createNewExpressionAst(cst: SubhutiCst): Expression {
+    createNewExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.NewExpression.name);
         if (cst.children.length > 1) {
 
@@ -532,7 +530,7 @@ export default class CstToAstUtil {
         return this.createExpressionAst(cst.children[0])
     }
 
-    createPrimaryExpressionAst(cst: SubhutiCst): Expression {
+    createPrimaryExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.PrimaryExpression.name);
         const first = cst.children[0]
         if (first.name === Es6Parser.prototype.IdentifierReference.name) {
@@ -546,7 +544,7 @@ export default class CstToAstUtil {
         }
     }
 
-    createArrayExpressionAst(cst: SubhutiCst): ArrayExpression {
+    createArrayExpressionAst(cst: SubhutiCst): SlimeArrayExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.ArrayLiteral.name);
         const ast: ArrayExpression = {
             type: 'ArrayExpression',
@@ -555,14 +553,14 @@ export default class CstToAstUtil {
         return ast
     }
 
-    createElementListAst(cst: SubhutiCst): Array<null | Expression | SpreadElement> {
+    createElementListAst(cst: SubhutiCst): Array<null | SlimeExpression | SlimepreadElement> {
         const astName = checkCstName(cst, Es6Parser.prototype.ElementList.name);
-        const ast: Array<null | Expression | SpreadElement> = cst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name).map(item => this.createAssignmentExpressionAst(item))
+        const ast: Array<null | SlimeExpression | SlimepreadElement> = cst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name).map(item => this.createAssignmentExpressionAst(item))
         return ast
     }
 
 
-    createLiteralAst(cst: SubhutiCst): Literal {
+    createLiteralAst(cst: SubhutiCst): SlimeLiteral {
         const astName = checkCstName(cst, Es6Parser.prototype.Literal.name);
         const firstChild = cst.children[0]
         const firstValue = firstChild.value
@@ -582,7 +580,7 @@ export default class CstToAstUtil {
     }
 
 
-    createAssignmentExpressionAst(cst: SubhutiCst): Expression {
+    createAssignmentExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.AssignmentExpression.name);
         let left
         let right
@@ -599,7 +597,7 @@ export default class CstToAstUtil {
         return ast
     }
 
-    createConditionalExpressionAst(cst: SubhutiCst): Expression {
+    createConditionalExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.ConditionalExpression.name);
         const firstChild = cst.children[0]
         let test = this.createExpressionAst(firstChild)
@@ -622,11 +620,13 @@ export default class CstToAstUtil {
     }
 
 
-    createAssignmentOperatorAst(cst: SubhutiCst): AssignmentOperator {
+    createAssignmentOperatorAst(cst: SubhutiCst): SlimeAssignmentOperator {
         const astName = checkCstName(cst, Es6Parser.prototype.AssignmentOperator.name);
         const ast: AssignmentExpression = cst.children[0].value as any
         return ast as any
     }
 }
 
-export const SlimeCstToAstUtil = new CstToAstUtil()
+const SlimeCstToAstUtil = new CstToAstUtil()
+
+export default SlimeCstToAstUtil

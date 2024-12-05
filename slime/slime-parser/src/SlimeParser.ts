@@ -4,6 +4,7 @@ import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import {es6Tokens} from "./language/es2015/Es6Tokens.ts";
 import Es6Parser from "./language/es2015/Es6Parser.ts";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
+import SlimeCstToAstUtil from "./language/SlimeLiteralAstUtil.ts";
 
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
@@ -44,7 +45,7 @@ export function vitePluginOvsTransform(code) {
     // JsonUtil.log(7777)
     // curCst = traverseClearTokens(curCst)
     JsonUtil.log(curCst)
-    SlimeAstUtil.createProgram()
+    SlimeCstToAstUtil.toProgram(curCst)
 }
 
 const code = `let a = 1`
