@@ -1,42 +1,41 @@
-import Es6TokenConsumer, {Es6TokenName, es6TokensObj} from "./Es6Tokens.ts";
-import Es6Parser from "./Es6Parser.ts";
-import type {
-    SlimeAssignmentExpression,
-    SlimeBlockStatement,
-    SlimeCallExpression,
-    SlimeClassBody,
-    SlimeClassDeclaration,
-    SlimeClassMethod,
-    SlimeComment,
-    SlimeConditionalExpression,
-    SlimeDeclaration,
-    SlimeDirective,                                                                                                                                                                                                                                                                                                                                                                                                                       h
-    SlimeExportDefaultDeclaration,
-    SlimeExportNamedDeclaration,
-    SlimeExpression,
-    SlimeExpressionStatement,
-    SlimeFunctionDeclaration,
-    SlimeFunctionExpression,
-    SlimeIdentifier,
-    SlimeInterpreterDirective,
-    SlimeLiteral,
-    SlimeMemberExpression,
-    SlimeModuleDeclaration,
-    SlimeNode,
-    SlimePattern,
-    SlimeProgram,
-    SlimeSourceLocation,
-    SlimeStatement,
-    SlimeStringLiteral,
-    SlimeTSDeclareFunction,
-    SlimeVariableDeclaration,
-    SlimeVariableDeclarator,
-    SlimeReturnStatement,
-    SlimeArrayExpression,
-    SlimeSpreadElement
+import {
+    type SlimeAssignmentExpression,
+    type SlimeBlockStatement,
+    type SlimeCallExpression,
+    type SlimeClassBody,
+    type SlimeClassDeclaration,
+    type SlimeConditionalExpression,
+    type SlimeDeclaration,
+    type SlimeDirective,
+    type SlimeExportDefaultDeclaration,
+    type SlimeExportNamedDeclaration,
+    type SlimeExpression,
+    type SlimeExpressionStatement,
+    type SlimeFunctionDeclaration,
+    type SlimeFunctionExpression,
+    type SlimeIdentifier,
+    type SlimeLiteral,
+    type SlimeMemberExpression,
+    type SlimeModuleDeclaration,
+    type SlimePattern,
+    type SlimeProgram,
+    type SlimeSourceLocation,
+    type SlimeStatement,
+    type SlimeStringLiteral,
+    type SlimeVariableDeclaration,
+    type SlimeVariableDeclarator,
+    type SlimeReturnStatement,
+    type SlimeArrayExpression,
+    type SlimeSpreadElement,
+    type SlimePropertyDefinition,
+    SlimeProgramSourceType,
+    SlimeAstType,
+    type SlimeMethodDefinition, type SlimeMaybeNamedFunctionDeclaration, type SlimeMaybeNamedClassDeclaration
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
-
+import Es6Parser from "./es2015/Es6Parser.ts";
+import Es6TokenConsumer from "./es2015/Es6Tokens.ts";
+import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
 
 export const EsTreeAstType: {
     ExportDefaultDeclaration: 'ExportDefaultDeclaration',
@@ -60,7 +59,7 @@ export function throwNewError(errorMsg: string = 'syntax error') {
 class CstToAstUtil {
     createIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
         const astName = checkCstName(cst, Es6TokenConsumer.prototype.Identifier.name);
-        const identifier = babeType.identifier(cst.value)
+        const identifier = SlimeAstUtil.createIdentifier(cst.value)
         identifier.loc = cst.loc
         return identifier
     }
@@ -71,16 +70,16 @@ class CstToAstUtil {
         let program: SlimeProgram
         if (first.name === Es6Parser.prototype.ModuleItemList.name) {
             const body = this.createModuleItemListAst(first)
-            program = babeType.program(body, [], "module")
+            program = SlimeAstUtil.createProgram(body, SlimeProgramSourceType.module)
         } else if (first.name === Es6Parser.prototype.StatementList.name) {
             const body = this.createStatementListAst(first)
-            program = babeType.program(body, [], "script")
+            program = SlimeAstUtil.createProgram(body, SlimeProgramSourceType.script)
         }
         program.loc = cst.loc
         return program
     }
 
-    createModuleItemListAst(cst: SubhutiCst): Array<SlimeStatement> {
+    createModuleItemListAst(cst: SubhutiCst): Array<SlimeStatement | SlimeModuleDeclaration> {
         //直接返回声明
         //                 this.Statement()
         //                 this.Declaration()
@@ -95,7 +94,9 @@ class CstToAstUtil {
                 return this.createStatementListItemAst(item)
             }
         })
-        return asts.flat()
+        const astArr = asts.flat()
+
+        return astArr
     }
 
     createStatementListAst(cst: SubhutiCst): Array<SlimeStatement> {
@@ -112,7 +113,7 @@ class CstToAstUtil {
 
     createStatementAst(cst: SubhutiCst): Array<SlimeStatement> {
         const astName = checkCstName(cst, Es6Parser.prototype.Statement.name);
-        const statements: Statement[] = cst.children.map(item => this.createStatementDeclarationAst(item))
+        const statements: SlimeStatement[] = cst.children.map(item => this.createStatementDeclarationAst(item))
         return statements
     }
 
@@ -136,7 +137,7 @@ class CstToAstUtil {
         }
     }
 
-    createDefaultExportDeclarationAst(cst: SubhutiCst): SlimeTSDeclareFunction | SlimeFunctionDeclaration | SlimeClassDeclaration | SlimeExpression {
+    createDefaultExportDeclarationAst(cst: SubhutiCst): SlimeMaybeNamedFunctionDeclaration | SlimeMaybeNamedClassDeclaration | SlimeExpression {
         switch (cst.name) {
             case Es6Parser.prototype.ClassDeclaration.name:
                 return this.createClassDeclarationAst(cst);
@@ -184,7 +185,7 @@ class CstToAstUtil {
         //                 this.Statement()
         //                 this.Declaration()
         const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclaration.name);
-        const ast: VariableDeclaration = {
+        const ast: SlimeVariableDeclaration = {
             type: astName as any,
             declarations: cst.children[1].children.map(item => this.createVariableDeclaratorAst(item)) as any[],
             kind: cst.children[0].children[0].value as any,
@@ -196,7 +197,7 @@ class CstToAstUtil {
 
     createClassDeclarationAst(cst: SubhutiCst): SlimeClassDeclaration {
         const astName = checkCstName(cst, Es6Parser.prototype.ClassDeclaration.name);
-        const ast: ClassDeclaration = {
+        const ast: SlimeClassDeclaration = {
             type: astName as any,
             id: this.createIdentifierAst(cst.children[1].children[0]),
             body: this.createClassBodyAst(cst.children[2].children[1]),
@@ -205,7 +206,7 @@ class CstToAstUtil {
         return ast
     }
 
-    createClassBodyItemAst(staticCst: SubhutiCst, cst: SubhutiCst): ClassMethod | SlimePropertyDefinition {
+    createClassBodyItemAst(staticCst: SubhutiCst, cst: SubhutiCst): SlimeMethodDefinition | SlimePropertyDefinition {
         if (cst.name === Es6Parser.prototype.MethodDefinition.name) {
             return this.createMethodDefinitionAst(staticCst, cst)
         } else if (cst.name === Es6Parser.prototype.PropertyDefinition.name) {
@@ -216,7 +217,7 @@ class CstToAstUtil {
     createClassBodyAst(cst: SubhutiCst): SlimeClassBody {
         const astName = checkCstName(cst, Es6Parser.prototype.ClassBody.name);
         //ClassBody.ClassElementList
-        const body: Array<ClassMethod | SlimePropertyDefinition> = cst.children[0].children.map(item => {
+        const body: Array<SlimeMethodDefinition | SlimePropertyDefinition> = cst.children[0].children.map(item => {
                 const astName = checkCstName(item, Es6Parser.prototype.ClassElement.name);
                 if (item.children.length > 1) {
                     return this.createClassBodyItemAst(item.children[0], item.children[1])
@@ -225,7 +226,7 @@ class CstToAstUtil {
                 }
             }
         )
-        const ast: ClassBody = {
+        const ast: SlimeClassBody = {
             type: astName as any,
             body: body,
             loc: cst.loc
@@ -233,19 +234,20 @@ class CstToAstUtil {
         return ast
     }
 
-    createMethodDefinitionAst(staticCst: SubhutiCst, cst: SubhutiCst): SlimeClassMethod {
+    createMethodDefinitionAst(staticCst: SubhutiCst, cst: SubhutiCst): SlimeMethodDefinition {
         const astName = checkCstName(cst, Es6Parser.prototype.MethodDefinition.name);
-        const ast: ClassMethod = {
-            type: BabelAstType.ClassMethod,
+        const ast: SlimeMethodDefinition = {
+            type: SlimeAstType.MethodDefinition,
             kind: 'method',
             static: true,
             computed: false,
-            generator: false,
-            async: false,
-            params: this.createFormalParametersAst(cst.children[2]),
             key: this.createIdentifierAst(cst.children[0].children[0].children[0]),
-            body: this.createBlockStatementAst(cst.children[5].children[0]),
-            loc: cst.loc
+            value: null
+            // generator: false,
+            // async: false,
+            // params: this.createFormalParametersAst(cst.children[2]),
+            // body: this.createBlockStatementAst(cst.children[5].children[0]),
+            // loc: cst.loc
         }
         return ast
     }
@@ -253,7 +255,7 @@ class CstToAstUtil {
     createFunctionExpressionAst(cstParams: SubhutiCst, cst: SubhutiCst): SlimeFunctionExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.FunctionBody.name);
         const params = this.createFormalParametersAst(cstParams.children[1])
-        const ast: FunctionExpression = {
+        const ast: SlimeFunctionExpression = {
             type: Es6Parser.prototype.FunctionExpression.name as any,
             id: null,
             params: params,
@@ -266,7 +268,7 @@ class CstToAstUtil {
         return ast
     }
 
-    createFormalParametersAst(cst: SubhutiCst): Pattern[] {
+    createFormalParametersAst(cst: SubhutiCst): SlimePattern[] {
         const astName = checkCstName(cst, Es6Parser.prototype.FormalParameters.name);
         if (!cst.children) {
             return []
@@ -281,11 +283,10 @@ class CstToAstUtil {
 
     createBlockStatementAst(cst: SubhutiCst): SlimeBlockStatement {
         const astName = checkCstName(cst, Es6Parser.prototype.StatementList.name);
-        const statements: Array<Statement> = this.createStatementListAst(cst)
-        const ast: BlockStatement = {
+        const statements: Array<SlimeStatement> = this.createStatementListAst(cst)
+        const ast: SlimeBlockStatement = {
             type: Es6Parser.prototype.BlockStatement.name as any,
             body: statements,
-            directives: [],
             loc: cst.loc
         }
         return ast
@@ -293,7 +294,7 @@ class CstToAstUtil {
 
     createReturnStatementAst(cst: SubhutiCst): SlimeReturnStatement {
         const astName = checkCstName(cst, Es6Parser.prototype.ReturnStatement.name);
-        const ast: ReturnStatement = {
+        const ast: SlimeReturnStatement = {
             type: astName as any,
             argument: this.createExpressionAst(cst.children[1]),
             loc: cst.loc
@@ -303,7 +304,7 @@ class CstToAstUtil {
 
     createExpressionStatementAst(cst: SubhutiCst): SlimeExpressionStatement {
         const astName = checkCstName(cst, Es6Parser.prototype.ExpressionStatement.name);
-        const ast: ExpressionStatement = {
+        const ast: SlimeExpressionStatement = {
             type: astName as any,
             expression: this.createExpressionAst(cst.children[0]),
             loc: cst.loc
@@ -325,7 +326,7 @@ class CstToAstUtil {
             const callee = this.createMemberExpressionAst(cst.children[0])
 
 
-            const ast: CallExpression = {
+            const ast: SlimeCallExpression = {
                 type: astName as any,
                 callee: callee,
                 arguments: argumentsAst,
@@ -341,7 +342,7 @@ class CstToAstUtil {
     createMemberExpressionAst(cst: SubhutiCst): SlimeExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.MemberExpression.name);
         if (cst.children.length > 1) {
-            const ast: MemberExpression = {
+            const ast: SlimeMemberExpression = {
                 type: astName as any,
                 object: this.createIdentifierAst(cst.children[0].children[0].children[0]),
                 property: this.createIdentifierAst(cst.children[2]),
@@ -357,13 +358,13 @@ class CstToAstUtil {
     createVariableDeclaratorAst(cst: SubhutiCst): SlimeVariableDeclarator {
         const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclarator.name);
         const id = this.createIdentifierAst(cst.children[0].children[0])
-        let variableDeclarator: VariableDeclarator
+        let variableDeclarator: SlimeVariableDeclarator
         if (cst.children[1]) {
             const initCst = cst.children[1].children[1]
             const init = this.createAssignmentExpressionAst(initCst)
-            variableDeclarator = babeType.variableDeclarator(id, init)
+            variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, init)
         } else {
-            variableDeclarator = babeType.variableDeclarator(id)
+            variableDeclarator = SlimeAstUtil.createVariableDeclarator(id)
         }
         variableDeclarator.loc = cst.loc
         return variableDeclarator
@@ -546,16 +547,16 @@ class CstToAstUtil {
 
     createArrayExpressionAst(cst: SubhutiCst): SlimeArrayExpression {
         const astName = checkCstName(cst, Es6Parser.prototype.ArrayLiteral.name);
-        const ast: ArrayExpression = {
+        const ast: SlimeArrayExpression = {
             type: 'ArrayExpression',
             elements: this.createElementListAst(cst.children[1])
         }
         return ast
     }
 
-    createElementListAst(cst: SubhutiCst): Array<null | SlimeExpression | SlimepreadElement> {
+    createElementListAst(cst: SubhutiCst): Array<null | SlimeExpression> {
         const astName = checkCstName(cst, Es6Parser.prototype.ElementList.name);
-        const ast: Array<null | SlimeExpression | SlimepreadElement> = cst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name).map(item => this.createAssignmentExpressionAst(item))
+        const ast: Array<null | SlimeExpression> = cst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name).map(item => this.createAssignmentExpressionAst(item))
         return ast
     }
 
@@ -566,14 +567,14 @@ class CstToAstUtil {
         const firstValue = firstChild.value
         let value
         if (firstChild.name === Es6TokenConsumer.prototype.NumericLiteral.name) {
-            value = babeType.numericLiteral(Number(firstValue))
+            value = SlimeAstUtil.createNumericLiteral(Number(firstValue))
         } else if (firstChild.name === Es6TokenConsumer.prototype.TrueTok.name) {
-            value = babeType.booleanLiteral(true)
+            value = SlimeAstUtil.createBooleanLiteral(true)
         } else if (firstChild.name === Es6TokenConsumer.prototype.FalseTok.name) {
-            value = babeType.booleanLiteral(false)
+            value = SlimeAstUtil.createBooleanLiteral(false)
         } else {
             const trimmed = firstValue.replace(/^['"]|['"]$/g, '');
-            value = babeType.stringLiteral(trimmed)
+            value = SlimeAstUtil.createStringLiteral(trimmed)
         }
         value.loc = firstChild.loc
         return value
@@ -587,7 +588,7 @@ class CstToAstUtil {
         if (cst.children.length === 1) {
             return this.createExpressionAst(cst.children[0])
         }
-        const ast: AssignmentExpression = {
+        const ast: SlimeAssignmentExpression = {
             type: astName as any,
             // operator: AssignmentOperator;
             left: left,
@@ -609,7 +610,7 @@ class CstToAstUtil {
             alternate = this.createAssignmentExpressionAst(cst.children[1])
             consequent = this.createAssignmentExpressionAst(cst.children[2])
         }
-        const ast: ConditionalExpression = {
+        const ast: SlimeConditionalExpression = {
             type: astName as any,
             test: test as any,
             alternate: alternate as any,
@@ -617,13 +618,6 @@ class CstToAstUtil {
             loc: cst.loc
         } as any
         return ast
-    }
-
-
-    createAssignmentOperatorAst(cst: SubhutiCst): SlimeAssignmentOperator {
-        const astName = checkCstName(cst, Es6Parser.prototype.AssignmentOperator.name);
-        const ast: AssignmentExpression = cst.children[0].value as any
-        return ast as any
     }
 }
 

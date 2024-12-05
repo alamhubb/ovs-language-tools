@@ -1,11 +1,10 @@
 import {
-    type AssignmentOperator,
-    type BinaryOperator,
+    type AssignmentOperator, BaseClass, BaseDeclaration, BaseNode, BaseStatement,
+    type BinaryOperator, ClassBody, Expression, Identifier,
     type LogicalOperator,
     type UnaryOperator,
     type UpdateOperator
 } from "estree";
-import type {BaseNode} from "./SlimeAstInterfaceOld.ts";
 
 // 自定义声明类型
 export interface SlimeRenderDomViewDeclaration {
@@ -23,6 +22,7 @@ export interface SlimeLexicalBinding {
 
 export enum SlimeAstType {
     Program = 'Program',
+    MethodDefinition = 'MethodDefinition',
     ExpressionStatement = 'ExpressionStatement',
     EmptyStatement = 'EmptyStatement',
     VariableDeclaration = 'VariableDeclaration',
@@ -572,13 +572,22 @@ export interface SlimeMethodDefinition extends SlimeBaseNode {
     static: boolean;
 }
 
-export interface SlimeMaybeNamedClassDeclaration extends SlimeBaseNode {
+export interface SlimeBaseClass extends SlimeBaseNode {
+    superClass?: SlimeExpression | null | undefined;
+    body: SlimeClassBody;
+}
+
+export interface SlimeBaseStatement extends SlimeBaseNode {}
+
+export interface SlimeBaseDeclaration extends SlimeBaseStatement {}
+
+export interface SlimeMaybeNamedClassDeclaration extends SlimeBaseClass, SlimeBaseDeclaration  {
     type: "ClassDeclaration";
     id: SlimeIdentifier | null;
 }
 
-export interface SlimeClassDeclaration extends SlimeBaseNode {
-    class: SlimeBaseNode;
+export interface SlimeClassDeclaration extends SlimeMaybeNamedClassDeclaration {
+    class?: SlimeBaseNode;
 }
 
 export interface SlimeClassExpression extends SlimeBaseNode {
@@ -653,8 +662,8 @@ export interface SlimeExportSpecifier extends Omit<SlimeBaseModuleSpecifier, "lo
 export interface SlimeExportDefaultDeclaration extends SlimeBaseModuleDeclaration {
     type: "ExportDefaultDeclaration";
     declaration: SlimeMaybeNamedFunctionDeclaration | SlimeMaybeNamedClassDeclaration | SlimeExpression;
-    export: SlimeBaseNode;
-    default: SlimeBaseNode;
+    export?: SlimeBaseNode;
+    default?: SlimeBaseNode;
 }
 
 export interface SlimeExportAllDeclaration extends SlimeBaseNode {

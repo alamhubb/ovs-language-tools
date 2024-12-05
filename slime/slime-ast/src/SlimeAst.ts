@@ -1,4 +1,9 @@
-import {SlimeAstType, SlimeProgramSourceType, SlimeVariableDeclarationKind} from "./SlimeAstInterface.ts";
+import {
+    SlimeAstType,
+    type SlimeBooleanLiteral,
+    SlimeProgramSourceType,
+    SlimeVariableDeclarationKind
+} from "./SlimeAstInterface.ts";
 import {
     type SlimeCaretEqualsToken,
     type SlimeDirective,
@@ -56,7 +61,7 @@ class SlimeAst {
         } else if (typeof value === "string") {
             ast = this.createStringLiteral(value)
         } else if (typeof value === "number") {
-            ast = this.createNumberLiteral(value)
+            ast = this.createNumericLiteral(value)
         }
         return ast
     }
@@ -76,9 +81,16 @@ class SlimeAst {
         }
     }
 
-    createNumberLiteral(value: number): SlimeNumberLiteral {
+    createNumericLiteral(value: number): SlimeNumberLiteral {
         return {
             type: SlimeAstType.NumberLiteral,
+            value: value
+        }
+    }
+
+    createBooleanLiteral(value: boolean): SlimeBooleanLiteral {
+        return {
+            type: SlimeAstType.BooleanLiteral,
             value: value
         }
     }
