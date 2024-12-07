@@ -45,10 +45,11 @@ export function vitePluginOvsTransform(code) {
     // JsonUtil.log(7777)
     // curCst = traverseClearTokens(curCst)
     JsonUtil.log(curCst)
-    SlimeCstToAstUtil.toProgram(curCst)
+    const ast = SlimeCstToAstUtil.toProgram(curCst)
+    JsonUtil.log(ast)
 }
 
-const code = `let a = 1`
+const code = `let a = `
 
 
 const res = vitePluginOvsTransform(code)

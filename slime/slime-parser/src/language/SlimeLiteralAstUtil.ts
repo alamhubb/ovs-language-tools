@@ -361,8 +361,13 @@ class CstToAstUtil {
         let variableDeclarator: SlimeVariableDeclarator
         if (cst.children[1]) {
             const initCst = cst.children[1].children[1]
-            const init = this.createAssignmentExpressionAst(initCst)
-            variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, init)
+            if (initCst) {
+                const init = this.createAssignmentExpressionAst(initCst)
+                variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, init)
+            } else {
+                const init =SlimeAstUtil.createLiteral()
+                variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, init)
+            }
         } else {
             variableDeclarator = SlimeAstUtil.createVariableDeclarator(id)
         }
