@@ -21,7 +21,7 @@ export default class SlimeGenerator {
 
     private static generatorSlimeAst(node: SlimeBaseNode) {
         if (node.type === SlimeAstType.Program) {
-            this.generatorProgram(node as SlimeProgram)
+            return this.generatorProgram(node as SlimeProgram)
         }
     }
 
@@ -41,6 +41,7 @@ export default class SlimeGenerator {
         for (const node of nodes) {
             code += this.generatorStatement(node)
         }
+        return code
     }
 
 
@@ -52,18 +53,21 @@ export default class SlimeGenerator {
 
     private static generatorVariableDeclaration(node: SlimeVariableDeclaration) {
         checkAstName(SlimeAstType.VariableDeclaration, node)
+        let code = node.kind
         for (const declaration of node.declarations) {
-            this.generatorVariableDeclarator(declaration)
+            code += this.generatorVariableDeclarator(declaration)
         }
+        return code
     }
 
     private static generatorVariableDeclarator(node: SlimeVariableDeclarator) {
         checkAstName(SlimeAstType.VariableDeclarator, node)
         let code = ''
-        this.generatorPattern(node.id)
+        code += this.generatorPattern(node.id)
         if (node.init) {
-            this.generatorExpression(node.init)
+            code += this.generatorExpression(node.init)
         }
+        return code
     }
 
     private static generatorExpression(node: SlimeExpression) {
