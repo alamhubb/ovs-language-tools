@@ -1,10 +1,10 @@
-import SubhutiLexer from 'subhuti/src/parser/SubhutiLexer.ts'
-import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
-import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
-import {es6Tokens} from "./language/es2015/Es6Tokens.ts";
-import Es6Parser from "./language/es2015/Es6Parser.ts";
-import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
-import SlimeCstToAstUtil from "./language/SlimeLiteralAstUtil.ts";
+import SubhutiCst from "subhuti/src/struct/SubhutiCst";
+import SubhutiLexer from "subhuti/src/parser/SubhutiLexer";
+import {es6Tokens} from "slime-parser/src/language/es2015/Es6Tokens";
+import Es6Parser from "slime-parser/src/language/es2015/Es6Parser";
+import SlimeGenerator from "slime-generator/src/SlimeGenerator";
+import JsonUtil from "subhuti/src/utils/JsonUtil";
+import SlimeCstToAstUtil from "slime-parser/src/language/SlimeLiteralAstUtil";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
     if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -46,6 +46,7 @@ export function vitePluginOvsTransform(code) {
     JsonUtil.log(curCst)
     const ast = SlimeCstToAstUtil.toProgram(curCst)
     JsonUtil.log(ast)
+    SlimeGenerator.generator(ast)
 }
 
 const code = `let a = `

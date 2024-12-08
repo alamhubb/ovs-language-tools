@@ -19,13 +19,13 @@ export default class SlimeGenerator {
         return this.generatorSlimeAst(node)
     }
 
-    static generatorSlimeAst(node: SlimeBaseNode) {
+    private static generatorSlimeAst(node: SlimeBaseNode) {
         if (node.type === SlimeAstType.Program) {
             this.generatorProgram(node as SlimeProgram)
         }
     }
 
-    static generatorProgram(node: SlimeProgram) {
+    private static generatorProgram(node: SlimeProgram) {
         checkAstName(SlimeAstType.Program, node)
         if (node.sourceType === SlimeProgramSourceType.script) {
             const body = node.body as SlimeStatement []
@@ -36,7 +36,7 @@ export default class SlimeGenerator {
         }
     }
 
-    static generatorStatements(nodes: SlimeStatement[]) {
+    private static generatorStatements(nodes: SlimeStatement[]) {
         let code = ''
         for (const node of nodes) {
             code += this.generatorStatement(node)
@@ -44,20 +44,20 @@ export default class SlimeGenerator {
     }
 
 
-    static generatorStatement(node: SlimeStatement) {
+    private static generatorStatement(node: SlimeStatement) {
         if (node.type === SlimeAstType.VariableDeclaration) {
             return this.generatorVariableDeclaration(node as SlimeVariableDeclaration)
         }
     }
 
-    static generatorVariableDeclaration(node: SlimeVariableDeclaration) {
+    private static generatorVariableDeclaration(node: SlimeVariableDeclaration) {
         checkAstName(SlimeAstType.VariableDeclaration, node)
         for (const declaration of node.declarations) {
             this.generatorVariableDeclarator(declaration)
         }
     }
 
-    static generatorVariableDeclarator(node: SlimeVariableDeclarator) {
+    private static generatorVariableDeclarator(node: SlimeVariableDeclarator) {
         checkAstName(SlimeAstType.VariableDeclarator, node)
         let code = ''
         this.generatorPattern(node.id)
@@ -66,29 +66,29 @@ export default class SlimeGenerator {
         }
     }
 
-    static generatorExpression(node: SlimeExpression) {
+    private static generatorExpression(node: SlimeExpression) {
         if (node.type === SlimeAstType.CaretEqualsToken) {
             return this.generatorCaretEqualsToken(node)
         }
     }
 
-    static generatorCaretEqualsToken(node: SlimeCaretEqualsToken) {
+    private static generatorCaretEqualsToken(node: SlimeCaretEqualsToken) {
         checkAstName(SlimeAstType.CaretEqualsToken, node)
         return '='
     }
 
-    static generatorPattern(node: SlimePattern) {
+    private static generatorPattern(node: SlimePattern) {
         if (node.type === SlimeAstType.Identifier) {
             return this.generatorIdentifier(node)
         }
     }
 
-    static generatorIdentifier(node: SlimeIdentifier) {
+    private static generatorIdentifier(node: SlimeIdentifier) {
         checkAstName(SlimeAstType.Identifier, node)
         return node.name
     }
 
-    /*static generatorModuleDeclaration(node: SlimeModuleDeclaration[]) {
+    /*private static generatorModuleDeclaration(node: SlimeModuleDeclaration[]) {
         node.
     }*/
 }

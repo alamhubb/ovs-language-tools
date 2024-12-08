@@ -379,7 +379,20 @@ importers:
         specifier: ^1.82.0
         version: 1.95.0
 
-  slime/slime: {}
+  slime/slime:
+    dependencies:
+      slime-ast:
+        specifier: ^0.0.1
+        version: link:../slime-ast
+      slime-generator:
+        specifier: ^0.0.1
+        version: link:../slime-generator
+      slime-parser:
+        specifier: ^0.0.1
+        version: link:../slime-parser
+      subhuti:
+        specifier: ^0.1.3
+        version: link:../../subhuti
 
   slime/slime-ast:
     dependencies:
