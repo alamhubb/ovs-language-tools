@@ -36,6 +36,7 @@ import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
 import Es6TokenConsumer from "./es2015/Es6Tokens.ts";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
+import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 
 export const EsTreeAstType: {
     ExportDefaultDeclaration: 'ExportDefaultDeclaration',
@@ -59,6 +60,7 @@ export function throwNewError(errorMsg: string = 'syntax error') {
 class CstToAstUtil {
     createIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
         const astName = checkCstName(cst, Es6TokenConsumer.prototype.Identifier.name);
+        JsonUtil.log(cst)
         const identifier = SlimeAstUtil.createIdentifier(cst.value)
         identifier.loc = cst.loc
         return identifier
@@ -357,6 +359,7 @@ class CstToAstUtil {
 
     createVariableDeclaratorAst(cst: SubhutiCst): SlimeVariableDeclarator {
         const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclarator.name);
+
         const id = this.createIdentifierAst(cst.children[0].children[0])
         let variableDeclarator: SlimeVariableDeclarator
         if (cst.children[1]) {

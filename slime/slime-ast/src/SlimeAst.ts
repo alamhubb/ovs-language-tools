@@ -1,5 +1,4 @@
 import {
-    SlimeAstType,
     type SlimeBooleanLiteral,
     SlimeProgramSourceType,
     SlimeVariableDeclarationKind
@@ -20,7 +19,7 @@ import {
     type SlimeVariableDeclarator
 } from "./SlimeAstInterface.ts";
 
-import * as babelType from "@babel/types";
+import {SlimeAstType} from "./SlimeAstType.ts";
 
 class SlimeAst {
     createProgram(body: Array<SlimeDirective | SlimeStatement | SlimeModuleDeclaration>, sourceType: SlimeProgramSourceType = SlimeProgramSourceType.script): SlimeProgram {
