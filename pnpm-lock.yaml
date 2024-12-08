@@ -383,6 +383,9 @@ importers:
 
   slime/slime-ast:
     dependencies:
+      '@babel/types':
+        specifier: ^7.26.0
+        version: 7.26.0
       slime-syntax:
         specifier: ../slime-syntax
         version: link:../slime-syntax
@@ -394,7 +397,11 @@ importers:
         specifier: 1.0.6
         version: 1.0.6
 
-  slime/slime-generator: {}
+  slime/slime-generator:
+    dependencies:
+      slime-ast:
+        specifier: ^0.0.1
+        version: link:../slime-ast
 
   slime/slime-parser:
     dependencies:

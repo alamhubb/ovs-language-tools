@@ -8,5 +8,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "slime-ast": "^0.0.1"
+  }
 }

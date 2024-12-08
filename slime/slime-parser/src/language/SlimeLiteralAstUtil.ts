@@ -365,7 +365,7 @@ class CstToAstUtil {
                 const init = this.createAssignmentExpressionAst(initCst)
                 variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, init)
             } else {
-                const init =SlimeAstUtil.createLiteral()
+                const init = SlimeAstUtil.createLiteral()
                 variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, init)
             }
         } else {

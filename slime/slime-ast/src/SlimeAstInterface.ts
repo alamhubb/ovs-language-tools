@@ -1,10 +1,11 @@
 import {
-    type AssignmentOperator, BaseClass, BaseDeclaration, BaseNode, BaseStatement,
-    type BinaryOperator, ClassBody, Expression, Identifier,
+    type AssignmentOperator,
+    type BinaryOperator,
     type LogicalOperator,
     type UnaryOperator,
     type UpdateOperator
 } from "estree";
+import {SlimeAstType} from "./SlimeAstType.ts";
 
 // 自定义声明类型
 export interface SlimeRenderDomViewDeclaration {
@@ -20,25 +21,12 @@ export interface SlimeLexicalBinding {
     init?: SlimeExpression | null | undefined;
 }
 
-export enum SlimeAstType {
-    Program = 'Program',
-    MethodDefinition = 'MethodDefinition',
-    ExpressionStatement = 'ExpressionStatement',
-    EmptyStatement = 'EmptyStatement',
-    VariableDeclaration = 'VariableDeclaration',
-    Identifier = 'Identifier',
-    VariableDeclarator = 'VariableDeclarator',
-    NumberLiteral = 'NumberLiteral',
-    StringLiteral = 'StringLiteral',
-    BooleanLiteral = 'BooleanLiteral',
-    NullLiteral = 'NullLiteral',
-    CaretEqualsToken = 'CaretEqualsToken',
-}
 
 export enum SlimeProgramSourceType {
     script = 'script',
     module = 'module'
 }
+
 export enum SlimeVariableDeclarationKind {
     var = 'var',
     let = 'let',
@@ -271,7 +259,32 @@ export interface SlimeExpressionMap extends SlimeBaseNode {
     YieldExpression: SlimeYieldExpression;
 }
 
-export type SlimeExpression = SlimeExpressionMap[keyof SlimeExpressionMap];
+export type SlimeExpression =
+    SlimeArrayExpression |
+    SlimeArrowFunctionExpression |
+    SlimeAssignmentExpression |
+    SlimeAwaitExpression |
+    SlimeBinaryExpression |
+    SlimeCallExpression |
+    SlimeChainExpression |
+    SlimeClassExpression |
+    SlimeConditionalExpression |
+    SlimeFunctionExpression |
+    SlimeIdentifier |
+    SlimeImportExpression |
+    SlimeLiteral |
+    SlimeLogicalExpression |
+    SlimeMemberExpression |
+    SlimeMetaProperty |
+    SlimeNewExpression |
+    SlimeObjectExpression |
+    SlimeSequenceExpression |
+    SlimeTaggedTemplateExpression |
+    SlimeTemplateLiteral |
+    SlimeThisExpression |
+    SlimeUnaryExpression |
+    SlimeUpdateExpression |
+    SlimeYieldExpression
 
 // Expression 相关接口继续
 export type SlimeChainElement = SlimeSimpleCallExpression | SlimeMemberExpression;
@@ -577,11 +590,13 @@ export interface SlimeBaseClass extends SlimeBaseNode {
     body: SlimeClassBody;
 }
 
-export interface SlimeBaseStatement extends SlimeBaseNode {}
+export interface SlimeBaseStatement extends SlimeBaseNode {
+}
 
-export interface SlimeBaseDeclaration extends SlimeBaseStatement {}
+export interface SlimeBaseDeclaration extends SlimeBaseStatement {
+}
 
-export interface SlimeMaybeNamedClassDeclaration extends SlimeBaseClass, SlimeBaseDeclaration  {
+export interface SlimeMaybeNamedClassDeclaration extends SlimeBaseClass, SlimeBaseDeclaration {
     type: "ClassDeclaration";
     id: SlimeIdentifier | null;
 }
