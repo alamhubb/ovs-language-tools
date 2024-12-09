@@ -6,6 +6,7 @@ import {
     type SlimeStatement, SlimeVariableDeclaration, type SlimeVariableDeclarator
 } from "slime-ast/src/SlimeAstInterface";
 import {SlimeAstType} from "slime-ast/src/SlimeAstType";
+import SlimeCodeMapping, {SlimeCodePosition} from "./SlimeCodeMapping";
 
 export function checkAstName(astName: string, cst: SlimeBaseNode) {
     if (cst.type !== astName) {
@@ -15,7 +16,12 @@ export function checkAstName(astName: string, cst: SlimeBaseNode) {
 }
 
 export default class SlimeGenerator {
+    static mapping: SlimeCodeMapping = null
+    static generatePosition: SlimeCodePosition = null
+
     static generator(node: SlimeBaseNode) {
+        this.mapping = new SlimeCodeMapping()
+        this.generatePosition = new SlimeCodePosition()
         return this.generatorSlimeAst(node)
     }
 
@@ -53,7 +59,10 @@ export default class SlimeGenerator {
 
     private static generatorVariableDeclaration(node: SlimeVariableDeclaration) {
         checkAstName(SlimeAstType.VariableDeclaration, node)
-        let code = node.kind
+
+        node.loc.start
+
+        let code = node.kind.toString()
         for (const declaration of node.declarations) {
             code += this.generatorVariableDeclarator(declaration)
         }
