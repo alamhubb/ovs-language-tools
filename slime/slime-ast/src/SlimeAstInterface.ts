@@ -6,6 +6,7 @@ import {
     type UpdateOperator
 } from "estree";
 import {SlimeAstType} from "./SlimeAstType.ts";
+import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 
 // 自定义声明类型
 export interface SlimeRenderDomViewDeclaration {
@@ -33,38 +34,15 @@ export enum SlimeVariableDeclarationKind {
     const = 'const'
 }
 
-export interface SlimePosition {
-    /** >= 1 */
-    line: number;
-    /** >= 0 */
-    column: number;
-}
-
-export interface SlimeSourceLocation {
-    start: SlimePosition;
-    end: SlimePosition;
-}
-
 export interface SlimeBaseNode {
     type: string
-    loc?: SlimeSourceLocation | null | undefined;
+    loc?: SubhutiSourceLocation | null | undefined;
 }
 
 export interface SlimeProgram extends SlimeBaseNode {
     type: SlimeAstType.Program;
     sourceType: SlimeProgramSourceType;
     body: Array<SlimeDirective | SlimeStatement | SlimeModuleDeclaration>;
-}
-
-export interface SlimeSourceLocation {
-    source?: string | null | undefined;
-    start: SlimePosition;
-    end: SlimePosition;
-}
-
-export interface SlimePosition {
-    line: number;
-    column: number;
 }
 
 export interface SlimeDirective extends SlimeBaseNode {

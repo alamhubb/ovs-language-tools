@@ -402,7 +402,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
         cst.loc = {
             start: {
                 line: popToken.rowNum,
-                column: popToken.columnStartNum
+                column: popToken.columnStartNum,
             },
             end: {
                 line: popToken.rowNum,

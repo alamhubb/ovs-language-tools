@@ -24,7 +24,6 @@ import type {
     SlimeModuleDeclaration,
     SlimePattern,
     SlimeProgram,
-    SlimeSourceLocation,
     SlimeStatement,
     SlimeStringLiteral,
     SlimeTSDeclareFunction,

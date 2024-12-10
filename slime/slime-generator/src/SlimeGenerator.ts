@@ -60,8 +60,6 @@ export default class SlimeGenerator {
     private static generatorVariableDeclaration(node: SlimeVariableDeclaration) {
         checkAstName(SlimeAstType.VariableDeclaration, node)
 
-        node.loc.start
-
         let code = node.kind.toString()
         for (const declaration of node.declarations) {
             code += this.generatorVariableDeclarator(declaration)

@@ -19,7 +19,6 @@ import {
     type SlimeModuleDeclaration,
     type SlimePattern,
     type SlimeProgram,
-    type SlimeSourceLocation,
     type SlimeStatement,
     type SlimeStringLiteral,
     type SlimeVariableDeclaration,
@@ -29,7 +28,6 @@ import {
     type SlimeSpreadElement,
     type SlimePropertyDefinition,
     SlimeProgramSourceType,
-    SlimeAstType,
     type SlimeMethodDefinition, type SlimeMaybeNamedFunctionDeclaration, type SlimeMaybeNamedClassDeclaration
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";

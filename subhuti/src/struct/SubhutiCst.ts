@@ -1,15 +1,16 @@
 import SubhutiMatchToken from "./SubhutiMatchToken.ts";
 
-interface SourceLocation {
-    start: Position;
-    end: Position;
+export interface SubhutiSourceLocation {
+    start: SubhutiPosition;
+    end: SubhutiPosition;
     filename?: string;
     identifierName?: string | undefined | null;
 }
 
-interface Position {
+export interface SubhutiPosition {
     line: number;
     column: number;
+    length: number;
     index?: number;
 }
 
@@ -17,7 +18,7 @@ export default class SubhutiCst {
     // pathName: string;
     name: string;
     children?: SubhutiCst[]
-    loc: SourceLocation
+    loc: SubhutiSourceLocation
     tokens?: SubhutiMatchToken[]
     value?: string;
 

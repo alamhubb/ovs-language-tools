@@ -396,15 +396,9 @@ importers:
 
   slime/slime-ast:
     dependencies:
-      '@babel/types':
-        specifier: ^7.26.0
-        version: 7.26.0
-      slime-syntax:
-        specifier: ../slime-syntax
-        version: link:../slime-syntax
-      slime-token:
-        specifier: ../slime-token
-        version: link:../slime-token
+      subhuti:
+        specifier: ^0.1.3
+        version: link:../../subhuti
     devDependencies:
       '@types/estree':
         specifier: 1.0.6
