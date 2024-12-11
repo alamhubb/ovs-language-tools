@@ -6,7 +6,6 @@ import SubhutiCst from "../../../subhuti/src/struct/SubhutiCst.ts";
 import JsonUtil from "../../../subhuti/src/utils/JsonUtil.ts";
 import OvsParser from "./parser/OvsParser.ts";
 import {ovsToAstUtil} from "./factory/Es6CstToOvsAstUtil.ts";
-import {TokenProvider} from "../IntellijTokenUtil.ts";
 import OvsAPI from "./OvsAPI.ts";
 import generate from "@babel/generator";
 import {LogUtil} from "../logutil.ts";

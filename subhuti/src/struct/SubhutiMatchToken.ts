@@ -5,6 +5,7 @@ export default class SubhutiMatchToken {
     rowNum?: number;
     columnStartNum?: number;
     columnEndNum?: number;
+    index?: number
 
     constructor(osvToken: SubhutiMatchToken) {
         this.tokenName = osvToken.tokenName;
@@ -12,8 +13,10 @@ export default class SubhutiMatchToken {
         this.rowNum = osvToken.rowNum;
         this.columnStartNum = osvToken.columnStartNum;
         this.columnEndNum = osvToken.columnEndNum;
+        this.index = osvToken.index;
     }
 }
+
 export function createMatchToken(osvToken: SubhutiMatchToken) {
     return new SubhutiMatchToken(osvToken);
 }

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "slime-ast": "^0.0.1"
+    "slime-ast": "^0.0.1",
+    "subhuti": "^0.1.3"
   }
 }

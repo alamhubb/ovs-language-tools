@@ -10,8 +10,6 @@ export interface SubhutiSourceLocation {
 export interface SubhutiPosition {
     line: number;
     column: number;
-    length: number;
-    index?: number;
 }
 
 export default class SubhutiCst {

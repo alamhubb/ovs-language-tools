@@ -1,5 +1,5 @@
-import { SubhutiCreateToken, SubhutiCreateTokenGroupType } from "../struct/SubhutiCreateToken.ts"
-import SubhutiMatchToken, { createMatchToken } from "../struct/SubhutiMatchToken.ts"
+import {SubhutiCreateToken, SubhutiCreateTokenGroupType} from "../struct/SubhutiCreateToken.ts"
+import SubhutiMatchToken, {createMatchToken} from "../struct/SubhutiMatchToken.ts"
 
 export default class SubhutiLexer {
   constructor(tokens: SubhutiCreateToken[]) {
@@ -24,12 +24,13 @@ export default class SubhutiLexer {
 
   lexer(input: string): SubhutiMatchToken[] {
     const resTokens: SubhutiMatchToken[] = [] // 初始化结果token数组
-    let lineNum = 1
+    let lineNum = 0
     let columnStartNum = 0
     let newlinesPatternRes = null
     const newlinesPattern = new RegExp('^\n')
     while (input) { // 当输入字符串不为空时循环
       const matchTokens: SubhutiMatchToken[] = [] // 初始化匹配的token数组
+      //如果为新行
       newlinesPatternRes = input.match(newlinesPattern) // 尝试匹配输入字符串
       if (newlinesPatternRes) {
         lineNum++
@@ -51,6 +52,7 @@ export default class SubhutiLexer {
           if (newlinesPatternRes) {
             matchLength = matchLength - 1
           }
+
           // 则加入到匹配的token列表中
           matchTokens.push(createMatchToken({
             tokenName: token.name,
