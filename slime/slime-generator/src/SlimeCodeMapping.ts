@@ -1,6 +1,6 @@
 import {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst";
 
-export class SlimeCodePosition {
+export class SlimeCodeLocation {
     line: number = 0
     column: number = 0
     length: number = 0
@@ -9,6 +9,6 @@ export class SlimeCodePosition {
 }
 
 export default class SlimeCodeMapping {
-    source: SlimeCodePosition = null
-    generate: SlimeCodePosition = null
+    source: SlimeCodeLocation = null
+    generate: SlimeCodeLocation = null
 }

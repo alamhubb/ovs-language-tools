@@ -51,7 +51,7 @@ export function vitePluginOvsTransform(code) {
     console.log(code11.mappings)
 }
 
-const code = `let a = `
+const code = `let abd=1`
 
 
 const res = vitePluginOvsTransform(code)
