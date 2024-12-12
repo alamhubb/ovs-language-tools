@@ -28,13 +28,16 @@ import {
   type SlimeSpreadElement,
   type SlimePropertyDefinition,
   SlimeProgramSourceType,
-  type SlimeMethodDefinition, type SlimeMaybeNamedFunctionDeclaration, type SlimeMaybeNamedClassDeclaration
+  type SlimeMethodDefinition,
+  type SlimeMaybeNamedFunctionDeclaration,
+  type SlimeMaybeNamedClassDeclaration,
+  type SlimeEqualOperator
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
 import Es6TokenConsumer from "./es2015/Es6Tokens.ts";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
-import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
+import {SlimeAstType} from "slime-ast/src/SlimeAstType.ts";
 
 export const EsTreeAstType: {
   ExportDefaultDeclaration: 'ExportDefaultDeclaration',
@@ -58,7 +61,6 @@ export function throwNewError(errorMsg: string = 'syntax error') {
 class CstToAstUtil {
   createIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
     const astName = checkCstName(cst, Es6TokenConsumer.prototype.Identifier.name);
-    JsonUtil.log(cst)
     const identifier = SlimeAstUtil.createIdentifier(cst.value)
     identifier.loc = cst.loc
     return identifier
@@ -90,6 +92,7 @@ class CstToAstUtil {
       } else if (item.name === Es6Parser.prototype.ImportDeclaration.name) {
         // return this.createExportDeclarationAst(item)
         throw new Error('暂时不支持')
+        // return {}
       } else if (item.name === Es6Parser.prototype.StatementListItem.name) {
         return this.createStatementListItemAst(item)
       }
@@ -357,18 +360,18 @@ class CstToAstUtil {
 
   createVariableDeclaratorAst(cst: SubhutiCst): SlimeVariableDeclarator {
     const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclarator.name);
-
     const id = this.createIdentifierAst(cst.children[0].children[0])
     let variableDeclarator: SlimeVariableDeclarator
-    if (cst.children[1]) {
-      const initCst = cst.children[1].children[1]
+    const varCst = cst.children[1]
+    if (varCst) {
+      const eqCst = varCst.children[0]
+      const eqAst = SlimeAstUtil.createEqualOperator(eqCst.loc)
+      const initCst = varCst.children[1]
       if (initCst) {
         const init = this.createAssignmentExpressionAst(initCst)
-        variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, init)
+        variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, eqAst, init)
       } else {
-        const init = SlimeAstUtil.createLiteral()
-        init.loc = cst.children[1].loc
-        variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, init)
+        variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, eqAst)
       }
     } else {
       variableDeclarator = SlimeAstUtil.createVariableDeclarator(id)

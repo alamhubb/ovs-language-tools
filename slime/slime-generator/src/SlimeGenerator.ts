@@ -91,48 +91,23 @@ export default class SlimeGenerator {
   private static generatorVariableDeclarator(node: SlimeVariableDeclarator) {
     checkAstName(SlimeAstType.VariableDeclarator, node)
     this.generatorPattern(node.id)
+    if (node.operator) {
+      this.addCodeAndMappings(node.operator.value, node.operator.loc)
+    }
     if (node.init) {
-      if (node.init.type === SlimeAstType.CaretEqualsToken) {
-        this.addCodeAndMappings('=', node.init.loc)
-      } else {
-        //+空格和自己的位置
-        let preEqColumn = this.lastMapping.source.column + this.lastMapping.source.length
-        let spaceNum = 5
-        while (spaceNum > -1) {
-          const eqColumn = preEqColumn + spaceNum
-          if (eqColumn < node.init.loc.start.column) {
-            this.addCodeAndMappingsBySourcePosition('=', {
-              line: node.init.loc.start.line,
-              //减去一个才是起始位置
-              column: eqColumn,
-              length: 1,
-            })
-            break
-          }
-          spaceNum--
-          console.log(eqColumn)
-          console.log(node.init.loc.start.column)
-        }
-        this.generatorExpression(node.init)
-      }
+      this.generatorExpression(node.init)
     }
   }
 
   private static generatorExpression(node: SlimeExpression) {
     if (node.type === SlimeAstType.NumberLiteral) {
-      this.generatorNumberLiteral(node)
+      this.generatorNumberLiteral(node as SlimeNumberLiteral)
     }
   }
 
   private static generatorNumberLiteral(node: SlimeNumberLiteral) {
     checkAstName(SlimeAstType.NumberLiteral, node)
     this.addCodeAndMappings(node.value.toString(), node.loc)
-  }
-
-
-  private static generatorCaretEqualsToken(node: SlimeCaretEqualsToken) {
-    checkAstName(SlimeAstType.CaretEqualsToken, node)
-
   }
 
   static cstLocationToSlimeLocation(cstLocation: SubhutiSourceLocation, sourceLength?: number) {

@@ -1,3 +1,5 @@
+import type {SlimeEqualOperator} from "./SlimeAstInterface.ts";
+
 export enum SlimeAstType {
     Program = 'Program',
     MethodDefinition = 'MethodDefinition',
@@ -15,5 +17,5 @@ export enum SlimeAstType {
     StringLiteral = 'StringLiteral',
     BooleanLiteral = 'BooleanLiteral',
     NullLiteral = 'NullLiteral',
-    CaretEqualsToken = 'CaretEqualsToken'
+    EqualOperator = 'EqualOperator',
 }
