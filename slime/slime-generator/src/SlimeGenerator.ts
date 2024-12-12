@@ -60,6 +60,7 @@ export default class SlimeGenerator {
   private static generatorStatements(nodes: SlimeStatement[]) {
     for (const node of nodes) {
       this.generatorStatement(node)
+      this.addSemicolon()
     }
   }
 
@@ -134,7 +135,9 @@ export default class SlimeGenerator {
     this.generateColumn += code.length
   }
 
-  private static codeNewLine() {
+  private static addSemicolon() {
+    this.generateCode = this.generateCode.trim()
+    this.generateCode += ';\n'
     this.generateLine++
     this.generateColumn = 0
   }
