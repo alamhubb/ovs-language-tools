@@ -56,6 +56,9 @@
     "vscode-languageserver-textdocument": "^1.0.12",
     "vscode-nls": "^5.2.0",
     "vscode-uri": "^3.0.8",
-    "vue": "^3.5.12"
+    "vue": "^3.5.12",
+    "slime-ast": "^0.0.1",
+    "slime-generator": "^0.0.1",
+    "slime-parser": "^0.0.1"
   }
 }
