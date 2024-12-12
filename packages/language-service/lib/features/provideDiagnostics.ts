@@ -9,6 +9,7 @@ import { sleep } from '../utils/common';
 import * as dedupe from '../utils/dedupe';
 import { documentFeatureWorker, DocumentsAndMap, getSourceRange } from '../utils/featureWorkers';
 import { createUriMap } from '../utils/uriMap';
+import {LogUtil} from "../logutil";
 
 export interface ServiceDiagnosticData {
 	uri: string;
@@ -164,6 +165,9 @@ export function register(context: LanguageServiceContext) {
 					}
 
 					const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+
+					LogUtil.log('const errors = await plugin[1].provideDiagnostics?.(document, token) || [];')
+					LogUtil.log(errors)
 
 					errors.forEach(error => {
 						error.data = {

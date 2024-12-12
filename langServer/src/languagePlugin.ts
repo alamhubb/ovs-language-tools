@@ -119,6 +119,7 @@ export class OvsVirtualCode implements VirtualCode {
       LogUtil.log(e.message)
     }
     const offsets = MappingConverter.convertMappings(mapping)
+    LogUtil.log(offsets)
 
 
     //将ovscode转为js代码，传给ts
