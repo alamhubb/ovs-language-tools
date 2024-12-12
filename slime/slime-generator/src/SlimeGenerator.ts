@@ -25,14 +25,16 @@ export default class SlimeGenerator {
   private static generateCode = ''
   private static generateLine = 0
   private static generateColumn = 0
+  private static generateIndex = 0
 
-  static generator(node: SlimeBaseNode):SlimeGeneratorResult {
+  static generator(node: SlimeBaseNode): SlimeGeneratorResult {
     this.mappings = []
     this.lastSourcePosition = new SlimeCodeLocation()
     this.generatePosition = new SlimeCodeLocation()
     this.sourceCodeIndex = 0
     this.generateLine = 0
     this.generateColumn = 0
+    this.generateIndex = 0
     this.generatorSlimeAst(node)
     return {
       mapping: this.mappings,
@@ -115,6 +117,7 @@ export default class SlimeGenerator {
     const sourcePosition: SlimeCodeLocation = {
       line: cstLocation.start.line,
       column: cstLocation.start.column,
+      index: cstLocation.index,
       length: sourceLength || cstLocation.end.column - cstLocation.start.column
     }
     return sourcePosition
@@ -133,18 +136,20 @@ export default class SlimeGenerator {
   private static addCode(code: string) {
     this.generateCode += code
     this.generateColumn += code.length
+    this.generateIndex += code.length
   }
 
   private static addSemicolon() {
-    this.generateCode = this.generateCode.trim()
     this.generateCode += ';\n'
     this.generateLine++
     this.generateColumn = 0
+    this.generateIndex += 2
   }
 
   private static addCodeSpacing() {
     this.generateCode += ' '
     this.generateColumn++
+    this.generateIndex++
   }
 
 
@@ -152,6 +157,7 @@ export default class SlimeGenerator {
     let generate: SlimeCodeLocation = {
       line: this.generateLine,
       column: this.generateColumn,
+      index: this.generateIndex,
       length: generateLength,
     }
     this.mappings.push({

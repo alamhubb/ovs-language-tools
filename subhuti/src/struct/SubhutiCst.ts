@@ -1,6 +1,7 @@
 import SubhutiMatchToken from "./SubhutiMatchToken.ts";
 
 export interface SubhutiSourceLocation {
+    index: number;
     start: SubhutiPosition;
     end: SubhutiPosition;
     filename?: string;

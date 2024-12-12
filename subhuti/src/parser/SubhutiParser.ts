@@ -276,6 +276,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
           return cst
         }
         cst.loc = {
+          index: cst.children[0].loc.index,
           start: cst.children[0].loc.start,
           end: cst.children[cst.children.length - 1].loc.end,
         }
@@ -400,6 +401,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     cst.name = popToken.tokenName
     cst.value = popToken.tokenValue
     cst.loc = {
+      index: popToken.index,
       start: {
         line: popToken.rowNum,
         column: popToken.columnStartNum,

@@ -68,6 +68,7 @@ export function vitePluginOvsTransform(code) {
 
   const lexer = new SubhutiLexer(es6Tokens)
   const tokens = lexer.lexer(code)
+
   if (!tokens.length) return code
   const parser = new Es6Parser(tokens)
 
@@ -77,13 +78,13 @@ export function vitePluginOvsTransform(code) {
   // curCst = traverseClearLoc(curCst)
   // JsonUtil.log(7777)
   // curCst = traverseClearTokens(curCst)
-  JsonUtil.log(curCst)
+  // JsonUtil.log(curCst)
   const ast = SlimeCstToAstUtil.toProgram(curCst)
-  JsonUtil.log(ast)
+  // JsonUtil.log(ast)
   const code11 = SlimeGenerator.generator(ast)
   console.log(code11.code)
   console.log(code11.mapping)
-  console.log(computedIndex(code11.mapping))
+  // console.log(computedIndex(code11.mapping))
 
   return code11
   /*    return `
@@ -93,10 +94,7 @@ export function vitePluginOvsTransform(code) {
 }
 
 // const code = `let a = 'di
-const code = `let a = 1;
-let b = 2
-let c = 3
-`
+const code = `let a = 1;\nlet b = 2;\n`
 //
 // let div1 = function() {
 //     return OvsAPI.createVNode("div", [a, b])

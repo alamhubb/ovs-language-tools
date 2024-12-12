@@ -1,5 +1,6 @@
 import {SubhutiCreateToken, SubhutiCreateTokenGroupType} from "../struct/SubhutiCreateToken.ts"
 import SubhutiMatchToken, {createMatchToken} from "../struct/SubhutiMatchToken.ts"
+import JsonUtil from "../utils/JsonUtil.ts";
 
 export default class SubhutiLexer {
   constructor(tokens: SubhutiCreateToken[]) {
@@ -26,6 +27,7 @@ export default class SubhutiLexer {
     const resTokens: SubhutiMatchToken[] = [] // 初始化结果token数组
     let lineNum = 0
     let columnStartNum = 0
+    let codeIndex = 0
     let newlinesPatternRes = null
     const newlinesPattern = new RegExp('^\n')
     while (input) { // 当输入字符串不为空时循环
@@ -49,9 +51,10 @@ export default class SubhutiLexer {
         if (matchRes) {
           let matchLength = matchRes[0].length
           //新行，多一个换行符
-          if (newlinesPatternRes) {
-            matchLength = matchLength - 1
-          }
+          // if (newlinesPatternRes) {
+          //   matchLength = matchLength - 1
+          //   console.log(token.name)
+          // }
 
           // 则加入到匹配的token列表中
           matchTokens.push(createMatchToken({
@@ -59,7 +62,8 @@ export default class SubhutiLexer {
             rowNum: lineNum,
             columnStartNum: columnStartNum,
             columnEndNum: columnStartNum + matchLength,
-            tokenValue: matchRes[0]
+            tokenValue: matchRes[0],
+            index: codeIndex
           })) // 创建匹配token并加入列表
         }
       }
@@ -93,9 +97,15 @@ export default class SubhutiLexer {
       } else {
         resToken = maxLengthTokens[0]
       }
-      input = input.substring(resToken.tokenValue.length) // 从输入字符串中移除已匹配的部分
+      const tokenLength = resToken.tokenValue.length
+      input = input.substring(tokenLength) // 从输入字符串中移除已匹配的部分
+      codeIndex += tokenLength
       const createToken = this.tokenMap.get(resToken.tokenName) // 获取创建token的配置信息
-      columnStartNum = resToken.columnEndNum
+      if (newlinesPatternRes) {
+        columnStartNum = 0
+      } else {
+        columnStartNum = resToken.columnEndNum
+      }
       if (createToken.group === SubhutiCreateTokenGroupType.skip) { // 如果token属于跳过组
         continue // 跳过此token
       }
