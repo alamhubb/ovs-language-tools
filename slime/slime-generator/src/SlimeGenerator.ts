@@ -77,7 +77,7 @@ export default class SlimeGenerator {
     checkAstName(SlimeAstType.VariableDeclaration, node)
 
     this.addCodeAndMappings(node.kind.toString(), node.loc)
-
+    this.addCodeSpacing()
     for (const declaration of node.declarations) {
       this.generatorVariableDeclarator(declaration)
     }
@@ -94,8 +94,10 @@ export default class SlimeGenerator {
   private static generatorVariableDeclarator(node: SlimeVariableDeclarator) {
     checkAstName(SlimeAstType.VariableDeclarator, node)
     this.generatorPattern(node.id)
+    this.addCodeSpacing()
     if (node.operator) {
       this.addCodeAndMappings(node.operator.value, node.operator.loc)
+      this.addCodeSpacing()
     }
     if (node.init) {
       this.generatorExpression(node.init)
@@ -126,7 +128,6 @@ export default class SlimeGenerator {
   private static addCodeAndMappingsBySourcePosition(code: string, sourcePosition: SlimeCodeLocation) {
     this.addMappings(sourcePosition, code.length)
     this.addCode(code)
-    this.addCodeSpacing()
   }
 
   private static addCodeAndMappings(code: string, cstLocation: SubhutiSourceLocation, sourceLength: number = code.length) {
