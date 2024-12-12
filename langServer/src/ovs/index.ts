@@ -82,8 +82,6 @@ export function vitePluginOvsTransform(code):SlimeGeneratorResult {
   const ast = SlimeCstToAstUtil.toProgram(curCst)
   // JsonUtil.log(ast)
   const code11 = SlimeGenerator.generator(ast)
-  console.log(code11.code)
-  console.log(code11.mapping)
   // console.log(computedIndex(code11.mapping))
 
   return code11
@@ -106,7 +104,7 @@ let b = a
 //             true
 //         }
 // `
-const res = vitePluginOvsTransform(code)
+// const res = vitePluginOvsTransform(code)
 // const getOffsets = new MappingConverter(code, res.code)
 // const offsets = getOffsets.convertMappings(res.mapping)
 // LogUtil.log('last offset offfff')

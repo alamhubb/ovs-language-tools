@@ -20,8 +20,8 @@ const server = createServer(connection);
 connection.listen();
 
 function getLocalTsdkPath() {
-	let tsdkPath = "C:\\Users\\qinky\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
-	// let tsdkPath = "C:\\Users\\qinkaiyuan\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
+	// let tsdkPath = "C:\\Users\\qinky\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
+	let tsdkPath = "C:\\Users\\qinkaiyuan\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
 	return tsdkPath.replace(/\\/g, '/');
 }
 
@@ -50,7 +50,8 @@ connection.onInitialize(params => {
 			],
 		)
 	} catch (e) {
-		LogUtil.log(e)
+		LogUtil.log(7777)
+		LogUtil.log(e.message)
 	}
 });
 
