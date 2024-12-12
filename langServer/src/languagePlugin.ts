@@ -5,6 +5,7 @@ import {URI} from 'vscode-uri';
 import * as console from "node:console";
 import {LogUtil} from "./logutil.js";
 import {vitePluginOvsTransform} from "./ovs";
+import SlimeCodeMapping from "slime-generator/src/SlimeCodeMapping";
 
 export const ovsLanguagePlugin: LanguagePlugin<URI> = {
     getLanguageId(uri) {
@@ -151,6 +152,18 @@ export class MappingConverter {
         });
     }
 }
+
+let index = []
+
+function computedIndex(mappings:SlimeCodeMapping[]){
+    for (const mapping of mappings) {
+        let source = mapping.source
+        if (source.line === 0){
+
+        }
+    }
+}
+
 
 export class OvsVirtualCode implements VirtualCode {
     id = 'root';

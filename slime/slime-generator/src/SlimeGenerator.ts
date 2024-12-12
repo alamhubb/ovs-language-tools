@@ -6,7 +6,7 @@ import {
   type SlimeStatement, SlimeVariableDeclaration, type SlimeVariableDeclarator
 } from "slime-ast/src/SlimeAstInterface";
 import {SlimeAstType} from "slime-ast/src/SlimeAstType";
-import SlimeCodeMapping, {SlimeCodeLocation} from "./SlimeCodeMapping";
+import SlimeCodeMapping, {SlimeCodeLocation, SlimeGeneratorResult} from "./SlimeCodeMapping";
 import JsonUtil from "subhuti/src/utils/JsonUtil";
 import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst";
 
@@ -26,7 +26,7 @@ export default class SlimeGenerator {
   private static generateLine = 0
   private static generateColumn = 0
 
-  static generator(node: SlimeBaseNode) {
+  static generator(node: SlimeBaseNode):SlimeGeneratorResult {
     this.mappings = []
     this.lastSourcePosition = new SlimeCodeLocation()
     this.generatePosition = new SlimeCodeLocation()
@@ -35,7 +35,7 @@ export default class SlimeGenerator {
     this.generateColumn = 0
     this.generatorSlimeAst(node)
     return {
-      mappings: this.mappings,
+      mapping: this.mappings,
       code: this.generateCode
     }
   }
