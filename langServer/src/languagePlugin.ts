@@ -119,7 +119,7 @@ export class OvsVirtualCode implements VirtualCode {
       LogUtil.log(e.message)
     }
     const offsets = MappingConverter.convertMappings(mapping)
-    LogUtil.log(offsets)
+    // LogUtil.log(offsets)
 
 
     //将ovscode转为js代码，传给ts
@@ -134,6 +134,27 @@ export class OvsVirtualCode implements VirtualCode {
         mappings: []
     }];*/
 
+    const mappings = [{
+      // sourceOffsets: offsets.map(item => item.original.offset),
+      // generatedOffsets: offsets.map(item => item.generated.offset),
+      // lengths: offsets.map(item => item.original.length),
+      // generatedLengths: offsets.map(item => item.generated.length),
+      sourceOffsets: [0],
+      generatedOffsets: [0],
+      lengths: [styleText.length],
+      data: {
+        completion: true,
+        format: true,
+        navigation: true,
+        semantic: true,
+        structure: true,
+        verification: true
+      },
+    }]
+
+    LogUtil.log('mappings ascopy mapping')
+    LogUtil.log(mappings)
+
     this.embeddedCodes = [{
       id: 'ts1',
       languageId: 'qqqts',
@@ -147,23 +168,7 @@ export class OvsVirtualCode implements VirtualCode {
       // lengths: number[];
       // generatedLengths?: number[];
       // data: Data;
-      mappings: [{
-        sourceOffsets: offsets.map(item => item.original.offset),
-        generatedOffsets: offsets.map(item => item.generated.offset),
-        lengths: offsets.map(item => item.original.length),
-        generatedLengths: offsets.map(item => item.generated.length),
-        // sourceOffsets: [0],
-        // generatedOffsets: [0],
-        // lengths: [styleText.length],
-        data: {
-          completion: true,
-          format: true,
-          navigation: true,
-          semantic: true,
-          structure: true,
-          verification: true
-        },
-      }],
+      mappings: mappings,
       embeddedCodes: [],
     }];
   }

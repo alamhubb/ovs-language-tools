@@ -19,7 +19,7 @@ export class LogUtil {
     }
 
     static log(data?: any, msg = null) {
-        JsonUtil.log(data)
+        // JsonUtil.log(data)
         try {
             const timestamp = new Date().toISOString()
             let logMessage = `\n[${timestamp}]`
