@@ -107,6 +107,8 @@ export default class SlimeGenerator {
   private static generatorExpression(node: SlimeExpression) {
     if (node.type === SlimeAstType.NumberLiteral) {
       this.generatorNumberLiteral(node as SlimeNumberLiteral)
+    }else if (node.type === SlimeAstType.Identifier) {
+      this.generatorIdentifier(node as SlimeIdentifier)
     }
   }
 

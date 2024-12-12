@@ -94,8 +94,9 @@ export function vitePluginOvsTransform(code) {
 }
 
 // const code = `let a = 'di
-const code = `let a = 1;
-let b = 2;`
+const code = `let a = 1
+let b = a
+`
 //
 // let div1 = function() {
 //     return OvsAPI.createVNode("div", [a, b])
