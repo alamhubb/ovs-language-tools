@@ -67,86 +67,16 @@ interface EnhancedMapping {
 }
 
 export class MappingConverter {
-  private sourceLineStarts: number[];
-  private generatedLineStarts: number[];
-
-  constructor(sourceCode: string, generatedCode: string) {
-    this.sourceLineStarts = this.computeLineStarts(sourceCode);
-    this.generatedLineStarts = this.computeLineStarts(generatedCode);
-  }
-
-  private computeLineStarts(code: string): number[] {
-    const starts = [0];
-    let pos = 0;
-    while ((pos = code.indexOf('\n', pos)) !== -1) {
-      starts.push(pos + 1);
-      pos++;
-    }
-    return starts;
-  }
-
-  private positionToOffset(position: { line: number; column: number }, lineStarts: number[]): number {
-    const lineIndex = position.line - 1;
-    return lineStarts[lineIndex] + position.column;
-  }
-
-  /**
-   * 计算两个位置之间的长度
-   */
-  private calculateLength(
-    current: { line: number; column: number },
-    next: { line: number; column: number } | undefined,
-    lineStarts: number[]
-  ): number {
-    if (!next) {
-      return 1; // 如果是最后一个位置，默认长度为1
-    }
-
-    if (current.line === next.line) {
-      // 同一行，直接计算列差
-      return next.column - current.column;
-    } else {
-      // 跨行，计算到行尾的距离
-      const currentLineLength = (lineStarts[current.line] || 0) -
-        (lineStarts[current.line - 1] + current.column);
-      return currentLineLength;
-    }
-  }
-
-  convertMappings(mappings: BabelMapping[]): EnhancedMapping[] {
+  static convertMappings(mappings: SlimeCodeMapping[]): EnhancedMapping[] {
     return mappings.map((mapping, index) => {
-      const nextMapping = mappings[index + 1];
-
-      // 计算生成代码的信息
-      const generatedOffset = this.positionToOffset(
-        mapping.generated,
-        this.generatedLineStarts
-      );
-      const generatedLength = this.calculateLength(
-        mapping.generated,
-        nextMapping?.generated,
-        this.generatedLineStarts
-      );
-
-      // 计算源代码的信息
-      const originalOffset = this.positionToOffset(
-        mapping.original,
-        this.sourceLineStarts
-      );
-      const originalLength = this.calculateLength(
-        mapping.original,
-        nextMapping?.original,
-        this.sourceLineStarts
-      );
-
       return {
         generated: {
-          offset: generatedOffset,
-          length: generatedLength
+          offset: mapping.generate.index,
+          length: mapping.generate.length,
         },
         original: {
-          offset: originalOffset,
-          length: originalLength
+          offset: mapping.source.index,
+          length: mapping.source.length,
         }
       };
     });
@@ -188,25 +118,8 @@ export class OvsVirtualCode implements VirtualCode {
       LogUtil.log(styleText)
       LogUtil.log(e.message)
     }
-    let offsets = [{
-      original: {
-        offset: 0
-      },
-      generated: {
-        offset: 0,
-        length: styleText.length
-      },
-    }]
-    try {
-      const getOffsets = new MappingConverter(styleText, newCode)
-      const offsets = getOffsets.convertMappings(mapping)
-      LogUtil.log('last offset offfff')
-      LogUtil.log(offsets[offsets.length - 1].original.offset)
-      LogUtil.log(offsets[offsets.length - 1].generated.offset)
-    } catch (e: Error) {
-      LogUtil.log('styleErrrrrrrr2222222222222222222')
-      LogUtil.log(e.message)
-    }
+    const offsets = MappingConverter.convertMappings(mapping)
+
 
     //将ovscode转为js代码，传给ts
     /*this.embeddedCodes = [{
@@ -236,7 +149,8 @@ export class OvsVirtualCode implements VirtualCode {
       mappings: [{
         sourceOffsets: offsets.map(item => item.original.offset),
         generatedOffsets: offsets.map(item => item.generated.offset),
-        lengths: offsets.map(item => item.generated.length),
+        lengths: offsets.map(item => item.original.length),
+        generatedLengths: offsets.map(item => item.generated.length),
         // sourceOffsets: [0],
         // generatedOffsets: [0],
         // lengths: [styleText.length],

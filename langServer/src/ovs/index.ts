@@ -7,7 +7,7 @@ import JsonUtil from "../../../subhuti/src/utils/JsonUtil.ts";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
 import SlimeCstToAstUtil from "slime-parser/src/language/SlimeLiteralAstUtil.ts";
 import SlimeGenerator from "slime-generator/src/SlimeGenerator";
-import SlimeCodeMapping from "slime-generator/src/SlimeCodeMapping";
+import SlimeCodeMapping, {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
   if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -64,7 +64,7 @@ function computedIndex(mappings: SlimeCodeMapping[]) :SourceMapSourceGenerateInd
   return index
 }
 
-export function vitePluginOvsTransform(code) {
+export function vitePluginOvsTransform(code):SlimeGeneratorResult {
 
   const lexer = new SubhutiLexer(es6Tokens)
   const tokens = lexer.lexer(code)
