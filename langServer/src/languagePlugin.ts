@@ -113,7 +113,7 @@ export class OvsVirtualCode implements VirtualCode {
       const res = vitePluginOvsTransform(styleText)
       newCode = res.code
       mapping = res.mapping
-    } catch (e: Error) {
+    } catch (e: any) {
       LogUtil.log('styleErrrrrrrr')
       LogUtil.log(styleText)
       LogUtil.log(e.message)

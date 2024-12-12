@@ -42,37 +42,17 @@ export interface SourceMapSourceGenerateIndexLength {
   generateLength: number[]
 }
 
-function computedIndex(mappings: SlimeCodeMapping[]) :SourceMapSourceGenerateIndexLength{
-  let index = []
-  let nextIndex = 0
-  let lastLine = 0
-  for (const mapping of mappings) {
-
-    let source = mapping.source
-    if (source.line === 0 && source.column === 0) {
-      index.push(0)
-    } else if (source.line === lastLine) {
-      nextIndex = nextIndex + 1
-      index.push(nextIndex)
-    } else {
-      nextIndex = nextIndex + 2
-      index.push(nextIndex)
-    }
-    nextIndex = nextIndex + source.length
-    lastLine = source.line
-  }
-  return index
-}
-
-export function vitePluginOvsTransform(code):SlimeGeneratorResult {
+export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 
   const lexer = new SubhutiLexer(es6Tokens)
   const tokens = lexer.lexer(code)
 
-  if (!tokens.length) return code
+  if (!tokens.length) return {
+    code: code,
+    mapping: []
+  }
   const parser = new Es6Parser(tokens)
 
-  let code1 = null
   let curCst = parser.Program()
   curCst = traverseClearTokens(curCst)
   // curCst = traverseClearLoc(curCst)
