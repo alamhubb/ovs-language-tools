@@ -8,6 +8,7 @@ import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
 import SlimeCstToAstUtil from "slime-parser/src/language/SlimeLiteralAstUtil.ts";
 import SlimeGenerator from "slime-generator/src/SlimeGenerator";
 import SlimeCodeMapping, {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping";
+import OvsParser from "./parser/OvsParser.ts";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
   if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -51,16 +52,16 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
     code: code,
     mapping: []
   }
-  const parser = new Es6Parser(tokens)
+  const parser = new OvsParser(tokens)
 
   let curCst = parser.Program()
   curCst = traverseClearTokens(curCst)
-  // curCst = traverseClearLoc(curCst)
+  curCst = traverseClearLoc(curCst)
   // JsonUtil.log(7777)
   // curCst = traverseClearTokens(curCst)
-  // JsonUtil.log(curCst)
+  JsonUtil.log(curCst)
   const ast = SlimeCstToAstUtil.toProgram(curCst)
-  // JsonUtil.log(ast)
+  JsonUtil.log(ast)
   const code11 = SlimeGenerator.generator(ast)
   // console.log(computedIndex(code11.mapping))
 
@@ -72,8 +73,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 }
 
 // const code = `let a = 'di
-const code = `let a = 1
-let b = a
+const code = `div {123}
 `
 //
 // let div1 = function() {
@@ -84,18 +84,9 @@ let b = a
 //             true
 //         }
 // `
-// const res = vitePluginOvsTransform(code)
-// const getOffsets = new MappingConverter(code, res.code)
-// const offsets = getOffsets.convertMappings(res.mapping)
-// LogUtil.log('last offset offfff')
-// LogUtil.log(offsets[offsets.length - 1].original.offset)
-// LogUtil.log(offsets[offsets.length - 1].generated.offset)
+const res = vitePluginOvsTransform(code)
 
-// const getOffsets = new MappingConverter(code, res.code)
-// const offsets = getOffsets.convertMappings(res.mapping)
-
-// LogUtil.log(offsets)
-
+console.log(res)
 
 export default function vitePluginOvs(): Plugin {
   const filter = createFilter(

@@ -425,6 +425,8 @@ class CstToAstUtil {
       left = this.createMemberExpressionAst(cst)
     } else if (astName === Es6Parser.prototype.PrimaryExpression.name) {
       left = this.createPrimaryExpressionAst(cst)
+    } else {
+      throw new Error('暂不支持的类型：' + cst.name)
     }
     return left
   }
