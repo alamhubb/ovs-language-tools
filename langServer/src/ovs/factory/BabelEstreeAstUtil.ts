@@ -5,8 +5,6 @@ import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 
 export default class BabelEstreeAstUtil {
     static createOvsRenderDomViewDeclarationEstreeAst(ast: OvsAstRenderDomViewDeclaration): CallExpression {
-        JsonUtil.log('666')
-        JsonUtil.log(ast)
         const body = BabelEstreeAstUtil.createOvsAPICreateVNode(ast)
         const viewIIFE = BabelEstreeAstUtil.createIIFE(body)
         return viewIIFE

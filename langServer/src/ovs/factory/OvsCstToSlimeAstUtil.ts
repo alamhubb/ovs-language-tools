@@ -1,15 +1,15 @@
 import {SlimeCstToAst} from "slime-parser/src/language/SlimeCstToAstUtil.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
-import type {SlimeExpression} from "slime-ast/src/SlimeAstInterface.ts";
+import type {SlimeCallExpression, SlimeExpression} from "slime-ast/src/SlimeAstInterface.ts";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
 import SubhutiLexer from "subhuti/src/parser/SubhutiLexer.ts";
 import {es6Tokens} from "subhuti-ts/src/language/es2015/Es6Tokens.ts";
 import OvsParser from "../parser/OvsParser.ts";
-import type {CallExpression, ClassDeclaration, ExportDefaultDeclaration, Expression, Program} from "@babel/types";
+import {CallExpression, ClassDeclaration, ExportDefaultDeclaration, Expression, Program, Statement} from "@babel/types";
 import {checkCstName} from "subhuti-ts/src/language/es2015/Es6CstToEstreeAstUtil.ts";
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import {OvsAstLexicalBinding, OvsAstRenderDomViewDeclaration} from "../interface/OvsInterface";
-import BabelEstreeAstUtil from "./BabelEstreeAstUtil.ts";
+import * as babeType from "@babel/types";
 
 export class OvsCstToSlimeAst extends SlimeCstToAst {
   createExpressionAst(cst: SubhutiCst): SlimeExpression {
@@ -23,7 +23,7 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
     return left
   }
 
-  createOvsRenderDomViewDeclarationAst(cst: SubhutiCst): CallExpression {
+  createOvsRenderDomViewDeclarationAst(cst: SubhutiCst): SlimeCallExpression {
     const astName = checkCstName(cst, OvsParser.prototype.OvsRenderDomViewDeclaration.name);
     JsonUtil.log(cst)
     let children = []
@@ -38,9 +38,36 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
       // children: this.createAssignmentExpressionAst(cst.children[2])
     } as any
 
-    const res = BabelEstreeAstUtil.createOvsRenderDomViewDeclarationEstreeAst(ast)
+    const res = this.createOvsRenderDomViewDeclarationEstreeAst(ast)
     // left = this.ovsRenderDomViewDeclarationAstToEstreeAst(left)
     return res
+  }
+
+  static createOvsRenderDomViewDeclarationEstreeAst(ast: OvsAstRenderDomViewDeclaration): SlimeCallExpression {
+    const body = this.createOvsAPICreateVNode(ast)
+    const viewIIFE = this.createIIFE(body)
+    return viewIIFE
+  }
+
+  static createIIFE(body: Array<Statement>): SlimeCallExpression {
+    const blockStatement = babeType.blockStatement(body)
+    const functionExpression = babeType.functionExpression(null, [], blockStatement)
+    const callExpression = babeType.callExpression(functionExpression, [])
+    return callExpression
+  }
+
+  static createOvsAPICreateVNode(ast: OvsAstRenderDomViewDeclaration): Statement[] {
+    const memberExpressionObject = babeType.identifier('OvsAPI')
+    const memberExpressionProperty = babeType.identifier('createVNode')
+    const memberExpression = babeType.memberExpression(memberExpressionObject, memberExpressionProperty)
+    const OvsAPICreateVNodeFirstParamsViewName = babeType.stringLiteral(ast.id.name)
+
+    const OvsAPICreateVNodeSecondParamsChildren = babeType.arrayExpression(ast.children)
+
+    const callExpression = babeType.callExpression(memberExpression, [OvsAPICreateVNodeFirstParamsViewName, OvsAPICreateVNodeSecondParamsChildren])
+    const ReturnStatement = babeType.returnStatement(callExpression)
+
+    return [ReturnStatement]
   }
 
   createOvsRenderDomViewDeclaratorAst(cst: SubhutiCst): SlimeExpression {
