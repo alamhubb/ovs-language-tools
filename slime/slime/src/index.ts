@@ -4,7 +4,7 @@ import {es6Tokens} from "slime-parser/src/language/es2015/Es6Tokens";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser";
 import SlimeGenerator from "slime-generator/src/SlimeGenerator";
 import JsonUtil from "subhuti/src/utils/JsonUtil";
-import SlimeCstToAstUtil from "slime-parser/src/language/SlimeLiteralAstUtil";
+import SlimeCstToAstUtil from "slime-parser/src/language/SlimeCstToAstUtil";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
     if (!currentNode || !currentNode.children || !currentNode.children.length)

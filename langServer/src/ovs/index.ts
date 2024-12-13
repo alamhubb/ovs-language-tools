@@ -5,10 +5,11 @@ import {es6Tokens} from 'subhuti-ts/src/language/es2015/Es6Tokens.ts'
 import SubhutiCst from "../../../subhuti/src/struct/SubhutiCst.ts";
 import JsonUtil from "../../../subhuti/src/utils/JsonUtil.ts";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
-import SlimeCstToAstUtil from "slime-parser/src/language/SlimeLiteralAstUtil.ts";
+import SlimeCstToAstUtil from "slime-parser/src/language/SlimeCstToAstUtil.ts";
 import SlimeGenerator from "slime-generator/src/SlimeGenerator";
 import SlimeCodeMapping, {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping";
 import OvsParser from "./parser/OvsParser.ts";
+import OvsCstToSlimeAstUtil from "./factory/OvsCstToSlimeAstUtil.ts";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
   if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -60,7 +61,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   // JsonUtil.log(7777)
   // curCst = traverseClearTokens(curCst)
   JsonUtil.log(curCst)
-  const ast = SlimeCstToAstUtil.toProgram(curCst)
+  const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
   JsonUtil.log(ast)
   const code11 = SlimeGenerator.generator(ast)
   // console.log(computedIndex(code11.mapping))

@@ -58,7 +58,7 @@ export function throwNewError(errorMsg: string = 'syntax error') {
   throw new Error(errorMsg)
 }
 
-class CstToAstUtil {
+export class SlimeCstToAst {
   createIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
     const astName = checkCstName(cst, Es6TokenConsumer.prototype.Identifier.name);
     const identifier = SlimeAstUtil.createIdentifier(cst.value)
@@ -633,6 +633,6 @@ class CstToAstUtil {
   }
 }
 
-const SlimeCstToAstUtil = new CstToAstUtil()
+const SlimeCstToAstUtil = new SlimeCstToAst()
 
 export default SlimeCstToAstUtil
