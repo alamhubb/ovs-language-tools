@@ -31,7 +31,7 @@ const tsdkPath = getLocalTsdkPath();
 LogUtil.log('onInitialize')
 connection.onInitialize(params => {
 	LogUtil.log('params')
-	LogUtil.log(params)
+	// LogUtil.log(params)
 	try {
 		const tsdk = loadTsdkByPath(tsdkPath, params.locale);
 		const languagePlugins = [ovsLanguagePlugin]

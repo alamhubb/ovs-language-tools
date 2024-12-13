@@ -105,49 +105,33 @@ export class OvsVirtualCode implements VirtualCode {
       },
     }];
     const styleText = snapshot.getText(0, snapshot.getLength());
-    // let newCode = styleText
-    // LogUtil.log('styleTextstyleTextstyleTextstyleText')
-    // let mapping = []
-    // try {
-    //   LogUtil.log('3333')
-    //   const res = vitePluginOvsTransform(styleText)
-    //   newCode = res.code
-    //   mapping = res.mapping
-    // } catch (e: any) {
-    //   LogUtil.log('styleErrrrrrrr')
-    //   LogUtil.log(styleText)
-    //   LogUtil.log(e.message)
-    // }
-    // const offsets = MappingConverter.convertMappings(mapping)
-    // LogUtil.log(offsets)
-
-
-    //将ovscode转为js代码，传给ts
-    /*this.embeddedCodes = [{
-        id: 'ts',
-        languageId: 'qqqts',
-        snapshot: {
-            getText: (start, end) => styleText.substring(start, end),
-            getLength: () => styleText.length,
-            getChangeRange: () => undefined,
-        },
-        mappings: []
-    }];*/
-
-
+    let newCode = styleText
+    LogUtil.log('styleTextstyleTextstyleTextstyleText')
+    let mapping = []
+    try {
+      LogUtil.log('3333')
+      const res = vitePluginOvsTransform(styleText)
+      newCode = res.code
+      mapping = res.mapping
+    } catch (e: any) {
+      LogUtil.log('styleErrrrrrrr')
+      LogUtil.log(styleText)
+      LogUtil.log(e.message)
+    }
+    const offsets = MappingConverter.convertMappings(mapping)
 
     LogUtil.log('mappings ascopy mapping')
 
     LogUtil.log(styleText)
-    // LogUtil.log(newCode)
+    LogUtil.log(newCode)
     const mappings = [{
-      // sourceOffsets: offsets.map(item => item.original.offset),
-      // generatedOffsets: offsets.map(item => item.generated.offset),
-      // lengths: offsets.map(item => item.original.length),
-      // generatedLengths: offsets.map(item => item.generated.length),
-      sourceOffsets: [0],
-      generatedOffsets: [0],
-      lengths: [styleText.length],
+      sourceOffsets: offsets.map(item => item.original.offset),
+      generatedOffsets: offsets.map(item => item.generated.offset),
+      lengths: offsets.map(item => item.original.length),
+      generatedLengths: offsets.map(item => item.generated.length),
+      // sourceOffsets: [0],
+      // generatedOffsets: [0],
+      // lengths: [styleText.length],
       data: {
         completion: true,
         format: true,
@@ -161,8 +145,8 @@ export class OvsVirtualCode implements VirtualCode {
       id: 'ts1',
       languageId: 'qqqts',
       snapshot: {
-        getText: (start, end) => styleText.substring(start, end),
-        getLength: () => styleText.length,
+        getText: (start, end) => newCode.substring(start, end),
+        getLength: () => newCode.length,
         getChangeRange: () => undefined,
       },
       // sourceOffsets: number[];

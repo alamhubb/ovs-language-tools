@@ -354,7 +354,7 @@ export function create(
           LogUtil.log('ctx.languageService.getCompletionsAtPosition')
           LogUtil.log(fileName)
           LogUtil.log(offset)
-          LogUtil.log(opts)
+          // LogUtil.log(opts)
           const info = safeCall(() => ctx.languageService.getCompletionsAtPosition(fileName, offset, opts));
           LogUtil.log('languageService.getCompletionsAtPosition(')
           if (info) {

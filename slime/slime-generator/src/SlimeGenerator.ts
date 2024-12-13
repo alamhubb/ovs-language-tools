@@ -61,10 +61,14 @@ export default class SlimeGenerator {
   }
 
   private static generatorStatements(nodes: SlimeStatement[]) {
-    for (const node of nodes) {
+
+    nodes.forEach((node, index) => {
+      if (this.generateLine !== 0 || index !== 0) {
+        this.addNewLine()
+      }
       this.generatorStatement(node)
       this.addSemicolon()
-    }
+    })
   }
 
 
@@ -108,7 +112,7 @@ export default class SlimeGenerator {
   private static generatorExpression(node: SlimeExpression) {
     if (node.type === SlimeAstType.NumberLiteral) {
       this.generatorNumberLiteral(node as SlimeNumberLiteral)
-    }else if (node.type === SlimeAstType.Identifier) {
+    } else if (node.type === SlimeAstType.Identifier) {
       this.generatorIdentifier(node as SlimeIdentifier)
     }
   }
