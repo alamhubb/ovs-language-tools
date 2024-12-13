@@ -105,20 +105,20 @@ export class OvsVirtualCode implements VirtualCode {
       },
     }];
     const styleText = snapshot.getText(0, snapshot.getLength());
-    let newCode = styleText
-    LogUtil.log('styleTextstyleTextstyleTextstyleText')
-    let mapping = []
-    try {
-      LogUtil.log('3333')
-      const res = vitePluginOvsTransform(styleText)
-      newCode = res.code
-      mapping = res.mapping
-    } catch (e: any) {
-      LogUtil.log('styleErrrrrrrr')
-      LogUtil.log(styleText)
-      LogUtil.log(e.message)
-    }
-    const offsets = MappingConverter.convertMappings(mapping)
+    // let newCode = styleText
+    // LogUtil.log('styleTextstyleTextstyleTextstyleText')
+    // let mapping = []
+    // try {
+    //   LogUtil.log('3333')
+    //   const res = vitePluginOvsTransform(styleText)
+    //   newCode = res.code
+    //   mapping = res.mapping
+    // } catch (e: any) {
+    //   LogUtil.log('styleErrrrrrrr')
+    //   LogUtil.log(styleText)
+    //   LogUtil.log(e.message)
+    // }
+    // const offsets = MappingConverter.convertMappings(mapping)
     // LogUtil.log(offsets)
 
 
@@ -134,6 +134,12 @@ export class OvsVirtualCode implements VirtualCode {
         mappings: []
     }];*/
 
+
+
+    LogUtil.log('mappings ascopy mapping')
+
+    LogUtil.log(styleText)
+    // LogUtil.log(newCode)
     const mappings = [{
       // sourceOffsets: offsets.map(item => item.original.offset),
       // generatedOffsets: offsets.map(item => item.generated.offset),
@@ -151,16 +157,12 @@ export class OvsVirtualCode implements VirtualCode {
         verification: true
       },
     }]
-
-    LogUtil.log('mappings ascopy mapping')
-    LogUtil.log(mappings)
-
     this.embeddedCodes = [{
       id: 'ts1',
       languageId: 'qqqts',
       snapshot: {
-        getText: (start, end) => newCode.substring(start, end),
-        getLength: () => newCode.length,
+        getText: (start, end) => styleText.substring(start, end),
+        getLength: () => styleText.length,
         getChangeRange: () => undefined,
       },
       // sourceOffsets: number[];

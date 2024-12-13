@@ -35,6 +35,7 @@ export default class SlimeGenerator {
     this.generateLine = 0
     this.generateColumn = 0
     this.generateIndex = 0
+    this.generateCode = ''
     this.generatorSlimeAst(node)
     return {
       mapping: this.mappings,
@@ -143,10 +144,15 @@ export default class SlimeGenerator {
   }
 
   private static addSemicolon() {
-    this.generateCode += ';\n'
+    // this.generateCode += ';'
+    // this.generateIndex += 1
+  }
+
+  private static addNewLine() {
+    this.generateCode += '\n'
     this.generateLine++
     this.generateColumn = 0
-    this.generateIndex += 2
+    this.generateIndex += 1
   }
 
   private static addCodeSpacing() {
