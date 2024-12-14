@@ -53,17 +53,22 @@ import {
     UpdateExpression,
     YieldExpression,
 } from '@babel/types';
-import {SlimeAssignmentExpression, SlimeExpression, SlimeIdentifier} from "slime-ast/src/SlimeAstInterface.ts";
+import {
+    SlimeAssignmentExpression,
+    SlimeBaseNode,
+    SlimeExpression,
+    SlimeIdentifier
+} from "slime-ast/src/SlimeAstInterface.ts";
 
 // 自定义声明类型
-export interface OvsAstRenderDomViewDeclaration {
+export interface OvsAstRenderDomViewDeclaration extends SlimeBaseNode {
     type: "OvsRenderDomViewDeclaration";
-    id: Identifier;
+    id: SlimeIdentifier;
     children: SlimeAssignmentExpression[];
     arguments: SlimeExpression[];
 }
 
-export interface OvsAstLexicalBinding {
+export interface OvsAstLexicalBinding extends SlimeBaseNode {
     type: "OvsLexicalBinding";
     id: SlimeIdentifier;
     init?: SlimeExpression | null | undefined;

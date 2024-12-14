@@ -32,14 +32,21 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
         if (cst.children.length > 1) {
             children = cst.children[2].children.filter(item => item.name === OvsParser.prototype.OvsRenderDomViewDeclarator.name).map(item => this.createOvsRenderDomViewDeclaratorAst(item)) as any[]
         }
+
+        const id = this.createIdentifierAst(cst.children[0])
+        id.loc = cst.children[0].loc
+
         const ast: OvsAstRenderDomViewDeclaration = {
             type: astName as any,
-            id: this.createIdentifierAst(cst.children[0]) as any,
+            id: id,
             // children: cst.children[2].children.filter(item => item.name === OvsParser.prototype.OvsRenderDomViewDeclarator.name),
-            children: children
+            children: children,
+            loc: cst.loc
             // children: this.createAssignmentExpressionAst(cst.children[2])
         } as any
 
+        JsonUtil.log(33333)
+        JsonUtil.log(ast)
         const res = this.createOvsRenderDomViewDeclarationEstreeAst(ast)
         // left = this.ovsRenderDomViewDeclarationAstToEstreeAst(left)
         return res
@@ -60,15 +67,23 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
 
     createOvsAPICreateVNode(ast: OvsAstRenderDomViewDeclaration): SlimeStatement[] {
         const memberExpressionObject = SlimeAstUtil.createIdentifier('OvsAPI')
+        memberExpressionObject.loc = ast.id.loc
+
         const memberExpressionProperty = SlimeAstUtil.createIdentifier('createVNode')
+        memberExpressionProperty.loc = ast.id.loc
+
         const memberExpression = SlimeAstUtil.createMemberExpression(memberExpressionObject, memberExpressionProperty)
+        memberExpression.loc = ast.id.loc
+
         const OvsAPICreateVNodeFirstParamsViewName = SlimeAstUtil.createStringLiteral(ast.id.name)
+        OvsAPICreateVNodeFirstParamsViewName.loc = ast.id.loc
 
         const OvsAPICreateVNodeSecondParamsChildren = SlimeAstUtil.createArrayExpression(ast.children)
 
         const callExpression = SlimeAstUtil.createCallExpression(memberExpression, [OvsAPICreateVNodeFirstParamsViewName, OvsAPICreateVNodeSecondParamsChildren])
         const ReturnStatement = SlimeAstUtil.createReturnStatement(callExpression)
 
+        ReturnStatement.loc = ast.loc
         return [ReturnStatement]
     }
 

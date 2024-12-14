@@ -73,9 +73,22 @@ class SlimeAst {
     }
 
     createBlockStatement(body: Array<SlimeStatement>): SlimeBlockStatement {
+        let index
+        let startLoc
+        let endLoc
+        if (body.length) {
+            index = body[0].loc.index
+            startLoc = body[0].loc.start
+            endLoc = (body[body.length - 1] || body[0]).loc.end
+        }
         return {
             type: SlimeAstType.BlockStatement,
-            body: body
+            body: body,
+            loc: {
+                index: index,
+                start: startLoc,
+                end: endLoc
+            }
         }
     }
 
@@ -83,7 +96,8 @@ class SlimeAst {
         return {
             type: SlimeAstType.FunctionExpression,
             id: id,
-            body: body
+            body: body,
+            loc: id?.loc || body.loc
         }
     }
 

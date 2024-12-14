@@ -57,7 +57,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 
   let curCst = parser.Program()
   curCst = traverseClearTokens(curCst)
-  curCst = traverseClearLoc(curCst)
+  // curCst = traverseClearLoc(curCst)
   // JsonUtil.log(7777)
   // curCst = traverseClearTokens(curCst)
   JsonUtil.log(curCst)
