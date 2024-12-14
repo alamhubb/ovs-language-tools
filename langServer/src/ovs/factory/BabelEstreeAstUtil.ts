@@ -1,5 +1,5 @@
 import * as babeType from "@babel/types";
-import {OvsAstRenderDomViewDeclaration, OvsRenderDomViewDeclarator} from "../interface/OvsInterface";
+import {OvsAstRenderDomViewDeclaration} from "../interface/OvsInterface";
 import {CallExpression, ExpressionStatement, Statement} from '@babel/types';
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 

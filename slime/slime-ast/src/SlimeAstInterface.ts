@@ -1,7 +1,7 @@
 import {
-    type AssignmentOperator,
-    type BinaryOperator,
-    type LogicalOperator,
+    type AssignmentOperator, BaseExpression,
+    type BinaryOperator, Expression,
+    type LogicalOperator, NewExpression, SpreadElement, Super,
     type UnaryOperator,
     type UpdateOperator
 } from "estree";
@@ -376,12 +376,12 @@ export interface SlimeBaseCallExpression extends SlimeBaseNode {
 
 export type SlimeCallExpression = SlimeSimpleCallExpression | SlimeNewExpression;
 
-export interface SlimeSimpleCallExpression extends SlimeBaseNode {
+export interface SlimeSimpleCallExpression extends SlimeBaseCallExpression {
     type: "CallExpression";
     optional: boolean;
 }
 
-export interface SlimeNewExpression extends SlimeBaseNode {
+export interface SlimeNewExpression extends SlimeBaseCallExpression {
     type: "NewExpression";
 }
 
