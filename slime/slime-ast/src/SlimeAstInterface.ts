@@ -1,7 +1,7 @@
 import {
-    type AssignmentOperator, BaseExpression,
-    type BinaryOperator, Expression,
-    type LogicalOperator, NewExpression, SpreadElement, Super,
+    type AssignmentOperator, BaseExpression, BaseNode,
+    type BinaryOperator, BlockStatement, Expression,
+    type LogicalOperator, NewExpression, Pattern, SpreadElement, Super,
     type UnaryOperator,
     type UpdateOperator
 } from "estree";
@@ -315,7 +315,7 @@ export interface SlimePropertyDefinition extends SlimeBaseNode {
     static: boolean;
 }
 
-export interface SlimeFunctionExpression extends SlimeBaseNode {
+export interface SlimeFunctionExpression extends SlimeBaseFunction {
     type: "FunctionExpression";
     id?: SlimeIdentifier | null | undefined;
     body: SlimeBlockStatement;

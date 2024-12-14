@@ -20,7 +20,7 @@ import {
 import {SlimeAstType} from "slime-ast/src/SlimeAstType";
 import SlimeCodeMapping, {SlimeCodeLocation, SlimeGeneratorResult} from "./SlimeCodeMapping";
 import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst";
-import {ReturnStatement} from "typescript";
+import {Identifier, ReturnStatement} from "typescript";
 import JsonUtil from "subhuti/src/utils/JsonUtil";
 
 export function checkAstName(astName: string, cst: SlimeBaseNode) {
@@ -75,9 +75,9 @@ export default class SlimeGenerator {
 
     private static generatorStatements(nodes: SlimeStatement[]) {
         nodes.forEach((node, index) => {
-            if (this.generateLine !== 0 || index !== 0) {
-                this.addNewLine()
-            }
+            // if (this.generateLine !== 0 || index !== 0) {
+            //     this.addNewLine()
+            // }
             this.generatorStatement(node)
             this.addSemicolon()
         })
@@ -103,20 +103,38 @@ export default class SlimeGenerator {
     }
 
     private static generatorCallExpression(node: SlimeCallExpression) {
-        this.generatorExpression(node.callee)
-        JsonUtil.log(444)
-        JsonUtil.log(node.callee)
-        this.addCodeAndMappings('(', node.callee.loc)
-        for (const argument of node.arguments) {
-            this.generatorExpression(argument)
+        if (node.callee.type === SlimeAstType.FunctionExpression){
+            this.addCode('(')
         }
+        this.generatorExpression(node.callee)
+        if (node.callee.type === SlimeAstType.FunctionExpression){
+            this.addCode(')')
+        }
+        this.addCodeAndMappings('(', node.callee.loc)
+        node.arguments.forEach((argument, index) => {
+            if (index !== 0) {
+                this.addCode(',')
+            }
+            this.generatorExpression(argument)
+        })
         this.addCodeAndMappings(')', node.callee.loc)
     }
 
     private static generatorFunctionExpression(node: SlimeFunctionExpression) {
+        this.addCode('function ')
         if (node.id) {
             this.generatorIdentifier(node.id)
         }
+        this.addCode('(')
+        if (node.params) {
+            node.params.forEach((param, index) => {
+                if (index !== 0) {
+                    this.addCode(',')
+                }
+                this.generatorIdentifier(param as SlimeIdentifier)
+            })
+        }
+        this.addCode(')')
         this.generatorBlockStatement(node.body)
 
     }
@@ -128,7 +146,11 @@ export default class SlimeGenerator {
     }
 
     private static generatorBlockStatement(node: SlimeBlockStatement) {
+        this.addCode('{')
+        this.addNewLine()
         this.generatorStatements(node.body)
+        this.addNewLine()
+        this.addCode('}')
     }
 
     private static generatorReturnStatement(node: SlimeReturnStatement) {
@@ -140,7 +162,6 @@ export default class SlimeGenerator {
         this.addCodeAndMappings('.', node.loc)
         this.generatorExpression(node.property)
     }
-
 
     private static generatorVariableDeclaration(node: SlimeVariableDeclaration) {
         checkAstName(SlimeAstType.VariableDeclaration, node)
