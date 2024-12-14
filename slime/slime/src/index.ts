@@ -48,7 +48,7 @@ export function vitePluginOvsTransform(code) {
     JsonUtil.log(ast)
     const code11 = SlimeGenerator.generator(ast)
     console.log(code11.code)
-    console.log(code11.mappings)
+    console.log(code11.mapping)
 }
 
 const code = `let abd=1`

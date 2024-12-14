@@ -298,28 +298,6 @@ importers:
         specifier: ^3.0.8
         version: 3.0.8
 
-  packages/monaco:
-    dependencies:
-      '@volar/language-service':
-        specifier: 2.4.10
-        version: link:../language-service
-      '@volar/typescript':
-        specifier: 2.4.10
-        version: link:../typescript
-      monaco-languageserver-types:
-        specifier: ^0.4.0
-        version: 0.4.0
-      monaco-types:
-        specifier: ^0.1.0
-        version: 0.1.0
-      vscode-uri:
-        specifier: ^3.0.8
-        version: 3.0.8
-    devDependencies:
-      monaco-editor-core:
-        specifier: latest
-        version: 0.52.0
-
   packages/source-map: {}
 
   packages/test-utils:
@@ -2769,15 +2747,6 @@ packages:
     resolution: {integrity: sha512-2IUgKDhc3J7Uug+FxMXuqIyYzH7gJjXECKe/w43IGgQHTSj3InJi+yAA7T24L9bQMRKiUEHxEX37G5JpVUGLcQ==}
     engines: {node: '>= 4.0.0'}
     hasBin: true
-
-  monaco-editor-core@0.52.0:
-    resolution: {integrity: sha512-Ur6BNCVgBcmOc4ZizEBl+rGiYtuozztOi4fgRFnAV64sRgKOxkwC1RxGfvJa3pHedoJ2eepV8Frjnr4PbhLcYA==}
-
-  monaco-languageserver-types@0.4.0:
-    resolution: {integrity: sha512-QQ3BZiU5LYkJElGncSNb5AKoJ/LCs6YBMCJMAz9EA7v+JaOdn3kx2cXpPTcZfKA5AEsR0vc97sAw+5mdNhVBmw==}
-
-  monaco-types@0.1.0:
-    resolution: {integrity: sha512-aWK7SN9hAqNYi0WosPoMjenMeXJjwCxDibOqWffyQ/qXdzB/86xshGQobRferfmNz7BSNQ8GB0MD0oby9/5fTQ==}
 
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -6317,16 +6286,6 @@ snapshots:
       minimatch: 3.0.4
       mkdirp: 0.5.1
       supports-color: 5.4.0
-
-  monaco-editor-core@0.52.0: {}
-
-  monaco-languageserver-types@0.4.0:
-    dependencies:
-      monaco-types: 0.1.0
-      vscode-languageserver-protocol: 3.17.5
-      vscode-uri: 3.0.8
-
-  monaco-types@0.1.0: {}
 
   ms@2.0.0: {}
 
