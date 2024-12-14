@@ -92,9 +92,10 @@ class SlimeAst {
         }
     }
 
-    createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null): SlimeFunctionExpression {
+    createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null, params?: SlimePattern[]): SlimeFunctionExpression {
         return {
             type: SlimeAstType.FunctionExpression,
+            params: params,
             id: id,
             body: body,
             loc: id?.loc || body.loc
