@@ -6,7 +6,7 @@ import SubhutiCst from "../../../subhuti/src/struct/SubhutiCst.ts";
 import JsonUtil from "../../../subhuti/src/utils/JsonUtil.ts";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
 import SlimeCstToAstUtil from "slime-parser/src/language/SlimeCstToAstUtil.ts";
-import SlimeGenerator from "slime-generator/src/SlimeGenerator";
+import SlimeGenerator from "slime-generator/src/SlimeGenerator.ts";
 import SlimeCodeMapping, {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping";
 import OvsParser from "./parser/OvsParser.ts";
 import OvsCstToSlimeAstUtil from "./factory/OvsCstToSlimeAstUtil.ts";

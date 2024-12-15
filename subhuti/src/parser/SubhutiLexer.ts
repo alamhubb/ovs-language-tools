@@ -1,6 +1,5 @@
 import {SubhutiCreateToken, SubhutiCreateTokenGroupType} from "../struct/SubhutiCreateToken.ts"
 import SubhutiMatchToken, {createMatchToken} from "../struct/SubhutiMatchToken.ts"
-import JsonUtil from "../utils/JsonUtil.ts";
 
 export default class SubhutiLexer {
   constructor(tokens: SubhutiCreateToken[]) {

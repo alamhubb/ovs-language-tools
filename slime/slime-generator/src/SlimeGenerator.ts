@@ -16,12 +16,11 @@ import {
     type SlimeStatement, SlimeStringLiteral,
     SlimeVariableDeclaration,
     type SlimeVariableDeclarator
-} from "slime-ast/src/SlimeAstInterface";
-import {SlimeAstType} from "slime-ast/src/SlimeAstType";
-import SlimeCodeMapping, {SlimeCodeLocation, SlimeGeneratorResult} from "./SlimeCodeMapping";
-import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst";
-import {Identifier, ReturnStatement} from "typescript";
-import JsonUtil from "subhuti/src/utils/JsonUtil";
+} from "slime-ast/src/SlimeAstInterface.ts";
+import {SlimeAstType} from "slime-ast/src/SlimeAstType.ts";
+import SlimeCodeMapping, {SlimeCodeLocation, SlimeGeneratorResult} from "./SlimeCodeMapping.ts";
+import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
+import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 
 export function checkAstName(astName: string, cst: SlimeBaseNode) {
     if (cst.type !== astName) {

@@ -1,5 +1,3 @@
-import {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst";
-
 export class SlimeCodeLocation {
   line: number = 0
   column: number = 0
