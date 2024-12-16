@@ -15,7 +15,6 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   IdentifierReference() {
     this.Or([
       {alt: () => this.tokenConsumer.Identifier()},
-      {alt: () => this.tokenConsumer.YieldTok()}
     ])
   }
 
@@ -23,7 +22,6 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   BindingIdentifier() {
     this.Or([
       {alt: () => this.tokenConsumer.Identifier()},
-      {alt: () => this.tokenConsumer.YieldTok()}
     ])
   }
 
@@ -31,7 +29,6 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   LabelIdentifier() {
     this.Or([
       {alt: () => this.tokenConsumer.Identifier()},
-      {alt: () => this.tokenConsumer.YieldTok()}
     ])
   }
 
