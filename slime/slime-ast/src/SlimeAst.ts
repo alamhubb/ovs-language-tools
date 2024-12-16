@@ -1,12 +1,20 @@
 import {
   type SlimeArrayExpression,
-  type SlimeBaseNode, type SlimeBlockStatement,
+  type SlimeBaseNode,
+  type SlimeBlockStatement,
   type SlimeBooleanLiteral,
   type SlimeCallExpression,
-  type SlimeEqualOperator, type SlimeFunctionExpression,
-  type SlimeMemberExpression, type SlimeObjectExpression,
+  type SlimeEqualOperator,
+  type SlimeFunctionExpression,
+  type SlimeMemberExpression,
+  type SlimeMethodDefinition,
+  type SlimeObjectExpression,
   type SlimePrivateIdentifier,
-  SlimeProgramSourceType, type SlimeProperty, type SlimeReturnStatement, type SlimeSimpleCallExpression,
+  SlimeProgramSourceType,
+  type SlimeProperty,
+  type SlimeRestElement,
+  type SlimeReturnStatement,
+  type SlimeSimpleCallExpression,
   type SlimeSpreadElement,
   type SlimeSuper,
   SlimeVariableDeclarationKind
@@ -130,6 +138,20 @@ class SlimeAst {
     }
   }
 
+  createRestElement(argument: SlimePattern): SlimeRestElement {
+    return {
+      type: SlimeAstType.RestElement,
+      argument: argument
+    }
+  }
+
+  createSpreadElement(argument: SlimeExpression): SlimeSpreadElement {
+    return {
+      type: SlimeAstType.SpreadElement,
+      argument: argument
+    }
+  }
+
   createEqualOperator(loc?: SubhutiSourceLocation): SlimeEqualOperator {
     return {
       type: SlimeAstType.EqualOperator,
@@ -192,6 +214,17 @@ class SlimeAst {
     return {
       type: SlimeAstType.BooleanLiteral,
       value: value
+    }
+  }
+
+  createMethodDefinition(key: SlimeExpression | SlimePrivateIdentifier, value: SlimeFunctionExpression): SlimeMethodDefinition {
+    return {
+      type: SlimeAstType.MethodDefinition,
+      key: key,
+      value: value,
+      kind: "method",
+      computed: false,
+      static: false,
     }
   }
 }

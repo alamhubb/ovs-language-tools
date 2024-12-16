@@ -10,6 +10,7 @@ export enum SlimeAstType {
     ExpressionStatement = 'ExpressionStatement',
     EmptyStatement = 'EmptyStatement',
     VariableDeclaration = 'VariableDeclaration',
+    SpreadElement = 'SpreadElement',
     Identifier = 'Identifier',
     ObjectPattern = 'ObjectPattern',
     ArrayPattern = 'ArrayPattern',

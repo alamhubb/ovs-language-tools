@@ -1268,7 +1268,11 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   FunctionDeclaration() {
     this.tokenConsumer.FunctionTok()
     this.BindingIdentifier()
-    this.FunctionFormalParameters()
+    this.FunctionFormalParametersBodyDefine()
+  }
+
+  @SubhutiRule
+  FunctionBodyDefine() {
     this.tokenConsumer.LBrace()
     this.FunctionBody()
     this.tokenConsumer.RBrace()
@@ -1278,17 +1282,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   FunctionExpression() {
     this.tokenConsumer.FunctionTok()
     this.Option(() => this.BindingIdentifier())
-    this.FunctionFormalParameters()
-    this.tokenConsumer.LBrace()
-    this.FunctionBody()
-    this.tokenConsumer.RBrace()
-  }
-
-  @SubhutiRule
-  FormalParameters() {
-    this.Option(() => {
-      this.FormalParameterList()
-    })
+    this.FunctionFormalParametersBodyDefine()
   }
 
   @SubhutiRule
@@ -1297,14 +1291,25 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
       {alt: () => this.FunctionRestParameter()},
       {
         alt: () => {
-          this.FormalsList()
-          this.Option(() => {
-            this.tokenConsumer.Comma()
-            this.FunctionRestParameter()
-          })
+          this.FormalParameterListFormalsList()
         }
       }
     ])
+  }
+
+  @SubhutiRule
+  FormalParameterListFormalsList() {
+    this.FormalsList()
+    this.Option(() => {
+      this.CommaFunctionRestParameter()
+    })
+  }
+
+
+  @SubhutiRule
+  CommaFunctionRestParameter() {
+    this.tokenConsumer.Comma()
+    this.FunctionRestParameter()
   }
 
   @SubhutiRule
@@ -1363,9 +1368,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
       },
       {
         alt: () => {
-          this.tokenConsumer.LBrace()
-          this.FunctionBody()
-          this.tokenConsumer.RBrace()
+          this.FunctionBodyDefine()
         }
       }
     ])
@@ -1380,10 +1383,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   @SubhutiRule
   PropertyNameMethodDefinition() {
     this.PropertyName()
-    this.FunctionFormalParameters()
-    this.tokenConsumer.LBrace()
-    this.FunctionBody()
-    this.tokenConsumer.RBrace()
+    this.FunctionFormalParametersBodyDefine()
   }
 
   @SubhutiRule
@@ -1392,9 +1392,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
     this.PropertyName()
     this.tokenConsumer.LParen()
     this.tokenConsumer.RParen()
-    this.tokenConsumer.LBrace()
-    this.FunctionBody()
-    this.tokenConsumer.RBrace()
+    this.FunctionBodyDefine()
   }
 
   @SubhutiRule
@@ -1429,11 +1427,12 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
     ])
   }
 
-
   @SubhutiRule
   FunctionFormalParameters() {
     this.tokenConsumer.LParen()
-    this.FormalParameters()
+    this.Option(() => {
+      this.FormalParameterList()
+    })
     this.tokenConsumer.RParen()
   }
 
@@ -1441,10 +1440,14 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   GeneratorMethod() {
     this.tokenConsumer.Asterisk()
     this.PropertyName()
+    this.FunctionFormalParametersBodyDefine()
+  }
+
+
+  @SubhutiRule
+  FunctionFormalParametersBodyDefine() {
     this.FunctionFormalParameters()
-    this.tokenConsumer.LBrace()
-    this.GeneratorBody()
-    this.tokenConsumer.RBrace()
+    this.FunctionBodyDefine()
   }
 
   @SubhutiRule
@@ -1455,9 +1458,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
     this.tokenConsumer.LParen()
     this.FormalParameterList()
     this.tokenConsumer.RParen()
-    this.tokenConsumer.LBrace()
-    this.GeneratorBody()
-    this.tokenConsumer.RBrace()
+    this.FunctionBodyDefine()
   }
 
   @SubhutiRule
@@ -1468,14 +1469,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
     this.tokenConsumer.LParen()
     this.FormalParameterList()
     this.tokenConsumer.RParen()
-    this.tokenConsumer.LBrace()
-    this.GeneratorBody()
-    this.tokenConsumer.RBrace()
-  }
-
-  @SubhutiRule
-  GeneratorBody() {
-    this.FunctionBody()
+    this.FunctionBodyDefine()
   }
 
   @SubhutiRule

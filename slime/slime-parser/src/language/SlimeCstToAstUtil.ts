@@ -31,7 +31,11 @@ import {
   type SlimeMethodDefinition,
   type SlimeMaybeNamedFunctionDeclaration,
   type SlimeMaybeNamedClassDeclaration,
-  type SlimeEqualOperator, type SlimeObjectExpression, type SlimeProperty, type SlimeNumericLiteral
+  type SlimeEqualOperator,
+  type SlimeObjectExpression,
+  type SlimeProperty,
+  type SlimeNumericLiteral,
+  type SlimeRestElement
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
@@ -238,9 +242,142 @@ export class SlimeCstToAst {
     return ast
   }
 
+  createFormalParameterListAst(cst: SubhutiCst): SlimePattern[] {
+    const astName = checkCstName(cst, Es6Parser.prototype.FormalParameterList.name);
+    const first = cst.children[0]
+    if (first.name === Es6Parser.prototype.FunctionRestParameter.name) {
+      return [this.createFunctionRestParameterAst(first)]
+    } else if (first.name === Es6Parser.prototype.FormalParameterListFormalsList.name) {
+      return this.createFormalParameterListFormalsListAst(first)
+    } else {
+      throw new Error('不支持的类型')
+    }
+  }
+
+  createFormalParameterListFormalsListAst(cst: SubhutiCst): SlimePattern[] {
+    const astName = checkCstName(cst, Es6Parser.prototype.FormalParameterListFormalsList.name);
+    const first = cst.children[0]
+    const ary: SlimePattern[] = []
+    for (const child of cst.children) {
+      if (child.name === Es6Parser.prototype.FormalsList.name) {
+        const childAry = this.createFormalsListAst(child)
+        ary.push(...childAry)
+      } else if (child.name === Es6Parser.prototype.CommaFunctionRestParameter.name) {
+        const child2 = child.children[1]
+        const childRes = this.createFunctionRestParameterAst(child2)
+        ary.push(childRes)
+      } else {
+        throw new Error('不支持的类型')
+      }
+    }
+    return ary
+  }
+
+  createFormalsListAst(cst: SubhutiCst): SlimeIdentifier[] {
+    const astName = checkCstName(cst, Es6Parser.prototype.FormalsList.name);
+    const ary = []
+    for (const child of cst.children) {
+      if (child.name === Es6Parser.prototype.FormalParameter.name) {
+        const item = this.createFormalParameterAst(child)
+        ary.push(item)
+      } else if (child.name === Es6TokenConsumer.prototype.Comma.name) {
+
+      } else {
+        throw new Error('不支持的类型')
+      }
+    }
+    return ary
+  }
+
+  createFormalParameterAst(cst: SubhutiCst): SlimeIdentifier {
+    const astName = checkCstName(cst, Es6Parser.prototype.FormalParameter.name);
+    //BindingElement
+    const first = cst.children[0]
+    return this.createBindingElementAst(first)
+  }
+
+  createBindingElementAst(cst: SubhutiCst): SlimeIdentifier {
+    const astName = checkCstName(cst, Es6Parser.prototype.BindingElement.name);
+    //SingleNameBinding
+    const first = cst.children[0]
+    return this.createSingleNameBindingAst(first)
+  }
+
+  createSingleNameBindingAst(cst: SubhutiCst): SlimeIdentifier {
+    const astName = checkCstName(cst, Es6Parser.prototype.SingleNameBinding.name);
+    //BindingIdentifier
+    const first = cst.children[0]
+    return this.createBindingIdentifierAst(first)
+  }
+
+  createBindingIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
+    const astName = checkCstName(cst, Es6Parser.prototype.BindingIdentifier.name);
+    //Identifier
+    const first = cst.children[0]
+    return SlimeAstUtil.createIdentifier(first.value)
+  }
+
+
+  createFunctionRestParameterAst(cst: SubhutiCst): SlimeRestElement {
+    const astName = checkCstName(cst, Es6Parser.prototype.FunctionRestParameter.name);
+    const first = cst.children[0]
+    return this.createBindingRestElementAst(first)
+  }
+
+  createBindingRestElementAst(cst: SubhutiCst): SlimeRestElement {
+    const astName = checkCstName(cst, Es6Parser.prototype.BindingRestElement.name);
+    const first1 = cst.children[1]
+    const id = this.createIdentifierAst(first1.children[0])
+    return SlimeAstUtil.createRestElement(id)
+  }
+
+  createPropertyNameMethodDefinitionAst(cst: SubhutiCst): SlimeFunctionExpression {
+    const astName = checkCstName(cst, Es6Parser.prototype.PropertyNameMethodDefinition.name);
+    const first = cst.children[0]
+    const PropertyNameAst = this.createPropertyNameAst(first)
+    const FunctionFormalParametersAst = this.createFunctionFormalParametersBodyDefineAst(cst.children[1])
+
+    const id = this.createIdentifierAst(first1.children[0])
+    return SlimeAstUtil.createFunctionExpression(id)
+  }
+
+  createFunctionFormalParametersBodyDefineAst(cst: SubhutiCst): SlimeFunctionExpression {
+    const astName = checkCstName(cst, Es6Parser.prototype.FunctionFormalParametersBodyDefine.name);
+    const first = cst.children[0]
+    const first1 = cst.children[1]
+
+    const params:SlimePattern[] = this.createFunctionFormalParametersBodyDefineAst(first)
+
+  }
+
+  createFunctionBodyDefineAst(cst: SubhutiCst){
+    const astName = checkCstName(cst, Es6Parser.prototype.FunctionBodyDefine.name);
+  }
+
+  createFunctionBodyAst(cst: SubhutiCst){
+    const astName = checkCstName(cst, Es6Parser.prototype.FunctionBody.name);
+  }
+
+  createFunctionFormalParametersAst(cst: SubhutiCst): SlimePattern[] {
+    const astName = checkCstName(cst, Es6Parser.prototype.FunctionFormalParameters.name);
+    if (cst.children.length > 2) {
+      const FormalParameterListCst = cst.children[1]
+      this.createFormalParameterListAst(FormalParameterListCst)
+    }
+    return []
+  }
+
+
   createMethodDefinitionAst(cst: SubhutiCst, staticCst?: SubhutiCst): SlimeMethodDefinition {
     const astName = checkCstName(cst, Es6Parser.prototype.MethodDefinition.name);
-    if (cst.children.length)
+    const first = cst.children[0]
+    if (first.name === Es6Parser.prototype.PropertyNameMethodDefinition.name) {
+
+    } else if (first.name === Es6Parser.prototype.PropertyNameMethodDefinition.name) {
+
+    } else {
+      throw new Error('不支持的类型')
+    }
 
 
     const ast: SlimeMethodDefinition = {
@@ -263,7 +400,7 @@ export class SlimeCstToAst {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionExpression.name);
     const cstParams: SubhutiCst = cst.children[1]
     const functionBodyCst: SubhutiCst = cst.children[3]
-    const params = this.createFormalParametersAst(cstParams.children[1])
+    const params = this.createFunctionFormalParametersAst(cstParams)
     const ast: SlimeFunctionExpression = {
       type: astName,
       id: null,
@@ -275,18 +412,6 @@ export class SlimeCstToAst {
       loc: cst.loc
     } as any
     return ast
-  }
-
-  createFormalParametersAst(cst: SubhutiCst): SlimePattern[] {
-    const astName = checkCstName(cst, Es6Parser.prototype.FormalParameters.name);
-    if (!cst.children) {
-      return []
-    }
-    // FormalParameterList.FormalsList
-    const params = cst.children[0].children[0].children.filter(item => item.name === Es6Parser.prototype.FormalParameter.name).map(item => {
-      return this.createIdentifierAst(item.children[0].children[0].children[0].children[0])
-    })
-    return params
   }
 
 
@@ -578,11 +703,6 @@ export class SlimeCstToAst {
         this.createPropertyDefinitionAst(child)
       }
     }
-
-    return {
-      type: SlimeAstType.ObjectExpression,
-      properties: properties
-    }
   }
 
   createPropertyDefinitionAst(cst: SubhutiCst): SlimeProperty {
@@ -599,8 +719,10 @@ export class SlimeCstToAst {
       const keyAst = SlimeAstUtil.createPropertyAst(key, value)
 
       return keyAst
+    } else if (first.name === Es6Parser.prototype.MethodDefinition.name) {
+      this.createMethodDefinitionAst(first)
     } else {
-
+      throw new Error('不支持的类型')
     }
   }
 
