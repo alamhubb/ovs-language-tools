@@ -1,4 +1,5 @@
 export const hello = {
+    name123:123,
     render() {
         return div{
            123

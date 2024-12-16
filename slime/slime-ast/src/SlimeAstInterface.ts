@@ -423,20 +423,20 @@ export interface SlimeIdentifier extends SlimeBaseNode {
 
 // Literal 相关定义
 export type SlimeLiteral =
-    SlimeNumberLiteral
+    SlimeNumericLiteral
     | SlimeStringLiteral
     | SlimeBooleanLiteral
     | SlimeNullLiteral
     | SlimeRegExpLiteral
     | SlimeBigIntLiteral
-    | SlimeCaretEqualsToken
+    // | SlimeCaretEqualsToken
 
-export interface SlimeCaretEqualsToken extends SlimeBaseNode {
+/*export interface SlimeCaretEqualsToken extends SlimeBaseNode {
     type: SlimeAstType.CaretEqualsToken;
-}
+}*/
 
-export interface SlimeNumberLiteral extends SlimeBaseNode {
-    type: SlimeAstType.NumberLiteral;
+export interface SlimeNumericLiteral extends SlimeBaseNode {
+    type: SlimeAstType.NumericLiteral;
     value: number;
 }
 

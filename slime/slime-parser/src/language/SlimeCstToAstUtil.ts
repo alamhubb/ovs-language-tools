@@ -31,7 +31,7 @@ import {
   type SlimeMethodDefinition,
   type SlimeMaybeNamedFunctionDeclaration,
   type SlimeMaybeNamedClassDeclaration,
-  type SlimeEqualOperator
+  type SlimeEqualOperator, type SlimeObjectExpression, type SlimeProperty, type SlimeNumericLiteral
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
@@ -58,6 +58,7 @@ export function throwNewError(errorMsg: string = 'syntax error') {
   throw new Error(errorMsg)
 }
 
+//应该根据cst名称命名，转换为ast
 export class SlimeCstToAst {
   createIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
     const astName = checkCstName(cst, Es6TokenConsumer.prototype.Identifier.name);
@@ -237,8 +238,11 @@ export class SlimeCstToAst {
     return ast
   }
 
-  createMethodDefinitionAst(staticCst: SubhutiCst, cst: SubhutiCst): SlimeMethodDefinition {
+  createMethodDefinitionAst(cst: SubhutiCst, staticCst?: SubhutiCst): SlimeMethodDefinition {
     const astName = checkCstName(cst, Es6Parser.prototype.MethodDefinition.name);
+    if (cst.children.length)
+
+
     const ast: SlimeMethodDefinition = {
       type: SlimeAstType.MethodDefinition,
       kind: 'method',
@@ -255,14 +259,16 @@ export class SlimeCstToAst {
     return ast
   }
 
-  createFunctionExpressionAst(cstParams: SubhutiCst, cst: SubhutiCst): SlimeFunctionExpression {
-    const astName = checkCstName(cst, Es6Parser.prototype.FunctionBody.name);
+  createFunctionExpressionAst(cst: SubhutiCst): SlimeFunctionExpression {
+    const astName = checkCstName(cst, Es6Parser.prototype.FunctionExpression.name);
+    const cstParams: SubhutiCst = cst.children[1]
+    const functionBodyCst: SubhutiCst = cst.children[3]
     const params = this.createFormalParametersAst(cstParams.children[1])
     const ast: SlimeFunctionExpression = {
-      type: Es6Parser.prototype.FunctionExpression.name as any,
+      type: astName,
       id: null,
       params: params,
-      body: this.createBlockStatementAst(cst.children[0]),
+      body: this.createBlockStatementAst(functionBodyCst.children[0]),
       generator: false,
       expression: false,
       async: false,
@@ -367,8 +373,10 @@ export class SlimeCstToAst {
       const eqCst = varCst.children[0]
       const eqAst = SlimeAstUtil.createEqualOperator(eqCst.loc)
       const initCst = varCst.children[1]
+      console.log('initCst')
       if (initCst) {
         const init = this.createAssignmentExpressionAst(initCst)
+        console.log(init)
         variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, eqAst, init)
       } else {
         variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, eqAst)
@@ -553,8 +561,81 @@ export class SlimeCstToAst {
     } else if (first.name === Es6Parser.prototype.ArrayLiteral.name) {
       return this.createArrayExpressionAst(first)
     } else if (first.name === Es6Parser.prototype.FunctionExpression.name) {
-      return this.createFunctionExpressionAst(first.children[1], first.children[3])
+      return this.createFunctionExpressionAst(first)
+    } else if (first.name === Es6Parser.prototype.ObjectLiteral.name) {
+      return this.createObjectExpressionAst(first)
+    } else {
+      throw new Error('未知的createPrimaryExpressionAst：' + first.name)
     }
+  }
+
+  createObjectExpressionAst(cst: SubhutiCst): SlimeObjectExpression {
+    const astName = checkCstName(cst, Es6Parser.prototype.ObjectLiteral.name);
+    if (cst.children.length > 2) {
+      const PropertyDefinitionListCst = cst.children[1]
+
+      for (const child of PropertyDefinitionListCst.children) {
+        this.createPropertyDefinitionAst(child)
+      }
+    }
+
+    return {
+      type: SlimeAstType.ObjectExpression,
+      properties: properties
+    }
+  }
+
+  createPropertyDefinitionAst(cst: SubhutiCst): SlimeProperty {
+    const astName = checkCstName(cst, Es6Parser.prototype.PropertyDefinition.name);
+    const first = cst.children[0]
+
+    if (cst.children.length > 2) {
+      const PropertyNameCst = cst.children[0]
+      const AssignmentExpressionCst = cst.children[2]
+
+      const key = this.createPropertyNameAst(PropertyNameCst)
+      const value = this.createAssignmentExpressionAst(AssignmentExpressionCst)
+
+      const keyAst = SlimeAstUtil.createPropertyAst(key, value)
+
+      return keyAst
+    } else {
+
+    }
+  }
+
+
+  createPropertyNameAst(cst: SubhutiCst): SlimeIdentifier | SlimeLiteral {
+    const astName = checkCstName(cst, Es6Parser.prototype.PropertyName.name);
+    const first = cst.children[0]
+    if (first.name === Es6Parser.prototype.LiteralPropertyName.name) {
+      return this.createLiteralPropertyNameAst(first)
+    }
+  }
+
+  createLiteralPropertyNameAst(cst: SubhutiCst): SlimeIdentifier | SlimeLiteral {
+    const astName = checkCstName(cst, Es6Parser.prototype.LiteralPropertyName.name);
+    const first = cst.children[0]
+    if (first.name === Es6TokenConsumer.prototype.Identifier.name) {
+      return this.createIdentifierAst(first)
+    } else if (first.name === Es6TokenConsumer.prototype.NumericLiteral.name) {
+      return this.createNumericLiteralAst(first)
+    } else if (first.name === Es6TokenConsumer.prototype.StringLiteral.name) {
+      return this.createStringLiteralAst(first)
+    }
+  }
+
+
+  createNumericLiteralAst(cst: SubhutiCst): SlimeNumericLiteral {
+    const astName = checkCstName(cst, Es6TokenConsumer.prototype.NumericLiteral.name);
+    return SlimeAstUtil.createNumericLiteral(Number(cst.value))
+  }
+
+  createStringLiteralAst(cst: SubhutiCst): SlimeStringLiteral {
+    const astName = checkCstName(cst, Es6TokenConsumer.prototype.StringLiteral.name);
+    const value = cst.value
+    const trimmed = value.replace(/^['"]|['"]$/g, '');
+    return SlimeAstUtil.createStringLiteral(trimmed)
   }
 
   createArrayExpressionAst(cst: SubhutiCst): SlimeArrayExpression {
