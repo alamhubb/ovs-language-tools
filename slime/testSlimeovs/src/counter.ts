@@ -1,9 +1,12 @@
-export function setupCounter(element: HTMLButtonElement) {
-  let counter = 0
-  const setCounter = (count: number) => {
-    counter = count
-    element.innerHTML = `count is ${counter}`
-  }
-  element.addEventListener('click', () => setCounter(counter + 1))
-  setCounter(0)
+import OvsAPI from '@/ovs/OvsAPI.ts'
+
+export const hello = {
+  name123: 123,
+  render: function render() {
+    (function () {
+      OvsAPI.createVNode(div, 123)
+    })()
+  },
+
 }
+

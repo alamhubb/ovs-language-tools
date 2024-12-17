@@ -4,7 +4,7 @@ import SubhutiLexer from 'subhuti/src/parser/SubhutiLexer.ts'
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import SlimeGenerator from "slime-generator/src/SlimeGenerator.ts";
-import  {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping.ts";
+import {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping.ts";
 import {es6Tokens} from "slime-parser/src/language/es2015/Es6Tokens.ts";
 import OvsParser from "./parser/OvsParser.ts";
 import OvsCstToSlimeAstUtil from "./factory/OvsCstToSlimeAstUtil.ts";
@@ -58,13 +58,8 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   // curCst = traverseClearLoc(curCst)
   // JsonUtil.log(7777)
   // curCst = traverseClearTokens(curCst)
-  JsonUtil.log(666)
-  JsonUtil.log(curCst)
   const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
-  JsonUtil.log(777)
-  JsonUtil.log(ast)
   const code11 = SlimeGenerator.generator(ast)
-  console.log(code11.code)
   // console.log(computedIndex(code11.mapping))
 
   return code11
@@ -111,7 +106,10 @@ export default function vitePluginOvs(): Plugin {
       }
       const res = vitePluginOvsTransform(code)
 
-      return `import OvsAPI from '@/ovs/OvsAPI.ts'\n${res.code}`
+      const resCode = `import OvsAPI from '@/ovs/OvsAPI.ts'\n${res.code}`
+
+      console.log(resCode)
+      return resCode
     }
   }
 }

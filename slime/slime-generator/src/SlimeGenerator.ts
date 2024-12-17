@@ -98,6 +98,7 @@ export default class SlimeGenerator {
   }
 
   private static generatorExportNamedDeclaration(node: SlimeExportNamedDeclaration) {
+    this.addCode('export ')
     this.generatorDeclaration(node.declaration)
   }
 
@@ -371,7 +372,7 @@ export default class SlimeGenerator {
   }
 
   private static generatorStringLiteral(node: SlimeStringLiteral) {
-    this.addCodeAndMappings(node.value, node.loc)
+    this.addCodeAndMappings(`'${node.value}'`, node.loc)
   }
 
   static cstLocationToSlimeLocation(cstLocation: SubhutiSourceLocation, sourceLength?: number) {
