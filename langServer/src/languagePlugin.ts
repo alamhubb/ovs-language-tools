@@ -2,10 +2,9 @@ import {CodeMapping, forEachEmbeddedCode, LanguagePlugin, VirtualCode} from '@vo
 import type {TypeScriptExtraServiceScript} from '@volar/typescript';
 import ts from 'typescript';
 import {URI} from 'vscode-uri';
-import * as console from "node:console";
 import {LogUtil} from "./logutil.js";
-import {vitePluginOvsTransform} from "./ovs";
 import SlimeCodeMapping from "slime-generator/src/SlimeCodeMapping";
+import {vitePluginOvsTransform} from "ovsjs/src";
 
 export const ovsLanguagePlugin: LanguagePlugin<URI> = {
   getLanguageId(uri) {
