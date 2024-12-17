@@ -1,39 +1,38 @@
 import {
-  SlimeArrayExpression,
-  SlimeBaseNode,
-  SlimeBlockStatement,
-  SlimeCallExpression, type SlimeDirective,
-  type SlimeExportAllDeclaration,
-  type SlimeExportDefaultDeclaration,
+  type SlimeArrayExpression,
+  type SlimeArrayPattern,
+  type SlimeAssignmentPattern,
+  type SlimeBaseNode,
+  type SlimeBlockStatement,
+  type SlimeCallExpression,
+  type SlimeClassDeclaration,
+  type SlimeDeclaration,
   type SlimeExportNamedDeclaration,
   type SlimeExpression,
-  SlimeExpressionStatement,
-  SlimeFunctionExpression,
-  SlimeIdentifier,
-  type SlimeImportDeclaration,
-  SlimeMemberExpression,
+  type SlimeExpressionStatement,
+  type SlimeFunctionDeclaration,
+  type SlimeFunctionExpression,
+  type SlimeIdentifier,
+  type SlimeMemberExpression,
   type SlimeModuleDeclaration,
-  SlimeNumericLiteral,
+  type SlimeNumericLiteral,
+  type SlimeObjectExpression,
+  type SlimeObjectPattern,
   type SlimePattern,
-  SlimeProgram,
+  type SlimePrivateIdentifier,
+  type SlimeProgram,
   SlimeProgramSourceType,
-  SlimeReturnStatement,
+  type SlimeProperty,
+  type SlimeRestElement,
+  type SlimeReturnStatement,
   type SlimeStatement,
-  SlimeStringLiteral,
-  SlimeVariableDeclaration,
+  type SlimeStringLiteral,
+  type SlimeVariableDeclaration,
   type SlimeVariableDeclarator
 } from "slime-ast/src/SlimeAstInterface.ts";
 import {SlimeAstType} from "slime-ast/src/SlimeAstType.ts";
-import SlimeCodeMapping, {SlimeCodeLocation, SlimeGeneratorResult} from "./SlimeCodeMapping.ts";
+import SlimeCodeMapping, {SlimeCodeLocation, type SlimeGeneratorResult} from "./SlimeCodeMapping.ts";
 import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
-import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
-
-export function checkAstName(astName: string, cst: SlimeBaseNode) {
-  if (cst.type !== astName) {
-    console.log(cst)
-    throw new Error('syntax error' + cst.type)
-  }
-}
 
 export default class SlimeGenerator {
   static mappings: SlimeCodeMapping[] = null
@@ -68,19 +67,25 @@ export default class SlimeGenerator {
   }
 
   private static generatorProgram(node: SlimeProgram) {
-    checkAstName(SlimeAstType.Program, node)
     if (node.sourceType === SlimeProgramSourceType.script) {
       const body = node.body as SlimeStatement []
-      return this.generatorStatements(body)
+      this.generatorStatements(body)
     } else if (node.sourceType === SlimeProgramSourceType.module) {
       const body = node.body as SlimeStatement []
-      // return this.generatorModuleDeclarations(body)
+      this.generatorModuleDeclarations(body)
     } else {
       throw new Error('未知的')
       // const body = node.body as SlimeModuleDeclaration []
       // return this.generatorModuleDeclaration(body)
     }
   }
+
+  private static generatorModuleDeclarations(node: Array<SlimeStatement | SlimeModuleDeclaration>) {
+    for (const nodeElement of node) {
+      this.generatorModuleDeclaration(nodeElement)
+    }
+  }
+
 
   private static generatorModuleDeclaration(node: SlimeStatement | SlimeModuleDeclaration) {
     if (node.type === SlimeAstType.ExportNamedDeclaration) {
@@ -93,8 +98,29 @@ export default class SlimeGenerator {
   }
 
   private static generatorExportNamedDeclaration(node: SlimeExportNamedDeclaration) {
+    this.generatorDeclaration(node.declaration)
+  }
+
+  private static generatorFunctionDeclaration(node: SlimeFunctionDeclaration) {
 
   }
+
+  private static generatorClassDeclaration(node: SlimeClassDeclaration) {
+
+  }
+
+  private static generatorDeclaration(node: SlimeDeclaration) {
+    if (node.type === SlimeAstType.FunctionDeclaration) {
+      this.generatorFunctionDeclaration(node as SlimeFunctionDeclaration)
+    } else if (node.type === SlimeAstType.VariableDeclaration) {
+      this.generatorVariableDeclaration(node as SlimeVariableDeclaration)
+    } else if (node.type === SlimeAstType.ClassDeclaration) {
+      this.generatorClassDeclaration(node as SlimeClassDeclaration)
+    } else {
+      throw new Error('不支持的类型')
+    }
+  }
+
 
   private static generatorStatements(nodes: SlimeStatement[]) {
     nodes.forEach((node, index) => {
@@ -129,7 +155,7 @@ export default class SlimeGenerator {
     if (node.callee.type === SlimeAstType.FunctionExpression) {
       this.addCode('(')
     }
-    this.generatorExpression(node.callee)
+    this.generatorExpression(node.callee as SlimeExpression)
     if (node.callee.type === SlimeAstType.FunctionExpression) {
       this.addCode(')')
     }
@@ -138,13 +164,15 @@ export default class SlimeGenerator {
       if (index !== 0) {
         this.addCode(',')
       }
-      this.generatorExpression(argument)
+      this.generatorExpression(argument as SlimeExpression)
     })
     this.addCodeAndMappings(')', node.callee.loc)
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
     this.addCode('function ')
+    console.log(node)
+    console.log(node.id)
     if (node.id) {
       this.generatorIdentifier(node.id)
     }
@@ -164,8 +192,106 @@ export default class SlimeGenerator {
 
   private static generatorArrayExpression(node: SlimeArrayExpression) {
     for (const element of node.elements) {
-      this.generatorExpression(element)
+      this.generatorExpression(element as SlimeExpression)
     }
+  }
+
+  private static generatorObjectExpression(node: SlimeObjectExpression) {
+    this.addCode('{')
+    this.addNewLine()
+    for (const element of node.properties) {
+      this.generatorProperty(element as SlimeProperty)
+    }
+    this.addNewLine()
+    this.addCode('}')
+  }
+
+  private static generatorPrivateIdentifier(node: SlimePrivateIdentifier) {
+    this.addCode(node.name)
+  }
+
+  private static generatorProperty(node: SlimeProperty) {
+    if (node.key.type === SlimeAstType.PrivateIdentifier) {
+      this.generatorPrivateIdentifier(node.key)
+    } else {
+      this.generatorExpression(node.key as SlimeExpression)
+    }
+    this.addCode(": ")
+    const type = node.value.type as SlimeAstType
+    if (this.patternTypes.includes(type)) {
+      this.generatorPattern(node.value as SlimePattern)
+    } else {
+      this.generatorExpression(node.value as SlimeExpression)
+    }
+    this.addCode(",")
+    this.addNewLine()
+  }
+
+
+  private static patternTypes = [
+    SlimeAstType.Identifier,
+    SlimeAstType.ObjectPattern,
+    SlimeAstType.ArrayPattern,
+    SlimeAstType.RestElement,
+    SlimeAstType.AssignmentPattern,
+    SlimeAstType.MemberExpression,
+  ]
+
+
+  private static generatorPattern(node: SlimePattern) {
+    if (node.type === SlimeAstType.Identifier) {
+      this.generatorIdentifier(node as SlimeIdentifier)
+
+    } else if (node.type === SlimeAstType.ObjectPattern) {
+      this.generatorObjectPattern(node as SlimeObjectPattern)
+
+    } else if (node.type === SlimeAstType.ArrayPattern) {
+      this.generatorArrayPattern(node as SlimeArrayPattern)
+
+    } else if (node.type === SlimeAstType.RestElement) {
+      this.generatorRestElement(node as SlimeRestElement)
+
+    } else if (node.type === SlimeAstType.AssignmentPattern) {
+      this.generatorAssignmentPattern(node as SlimeAssignmentPattern)
+
+    } else if (node.type === SlimeAstType.MemberExpression) {
+      this.generatorMemberExpression(node as SlimeMemberExpression)
+
+    } else {
+      throw new Error('不支持的类型：')
+    }
+  }
+
+
+  private static generatorIdentifier(node: SlimeIdentifier) {
+    this.addCodeAndMappings(node.name, node.loc)
+  }
+
+  private static generatorObjectPattern(node: SlimeObjectPattern) {
+    for (const property of node.properties) {
+      if (property.type === SlimeAstType.Property) {
+        this.generatorProperty(property)
+      } else if (property.type === SlimeAstType.RestElement) {
+        this.generatorRestElement(property)
+      } else {
+        throw new Error('不支持的类型：')
+      }
+    }
+  }
+
+  private static generatorArrayPattern(node: SlimeArrayPattern) {
+    for (const element of node.elements) {
+      this.generatorPattern(element)
+    }
+  }
+
+  private static generatorRestElement(node: SlimeRestElement) {
+    this.generatorPattern(node.argument)
+  }
+
+  private static generatorAssignmentPattern(node: SlimeAssignmentPattern) {
+    this.generatorPattern(node.left)
+    this.generatorExpression(node.right)
   }
 
   private static generatorBlockStatement(node: SlimeBlockStatement) {
@@ -181,14 +307,16 @@ export default class SlimeGenerator {
   }
 
   private static generatorMemberExpression(node: SlimeMemberExpression) {
-    this.generatorExpression(node.object)
+    this.generatorExpression(node.object as SlimeExpression)
     this.addCodeAndMappings('.', node.loc)
-    this.generatorExpression(node.property)
+    if (node.property.type === SlimeAstType.PrivateIdentifier) {
+      this.generatorPrivateIdentifier(node.property)
+    } else {
+      this.generatorExpression(node.property)
+    }
   }
 
   private static generatorVariableDeclaration(node: SlimeVariableDeclaration) {
-    checkAstName(SlimeAstType.VariableDeclaration, node)
-
     this.addCodeAndMappings(node.kind.toString(), node.loc)
     this.addCodeSpacing()
     for (const declaration of node.declarations) {
@@ -205,7 +333,6 @@ export default class SlimeGenerator {
 
 
   private static generatorVariableDeclarator(node: SlimeVariableDeclarator) {
-    checkAstName(SlimeAstType.VariableDeclarator, node)
     this.generatorPattern(node.id)
     this.addCodeSpacing()
     if (node.operator) {
@@ -232,18 +359,18 @@ export default class SlimeGenerator {
       this.generatorStringLiteral(node as SlimeStringLiteral)
     } else if (node.type === SlimeAstType.ArrayExpression) {
       this.generatorArrayExpression(node as SlimeArrayExpression)
+    } else if (node.type === SlimeAstType.ObjectExpression) {
+      this.generatorObjectExpression(node)
     } else {
       throw new Error('不支持的类型：' + node.type)
     }
   }
 
   private static generatorNumberLiteral(node: SlimeNumericLiteral) {
-    checkAstName(SlimeAstType.NumericLiteral, node)
     this.addCodeAndMappings(node.value.toString(), node.loc)
   }
 
   private static generatorStringLiteral(node: SlimeStringLiteral) {
-    checkAstName(SlimeAstType.StringLiteral, node)
     this.addCodeAndMappings(node.value, node.loc)
   }
 
@@ -302,19 +429,6 @@ export default class SlimeGenerator {
       source: sourcePosition,
       generate: generate
     })
-  }
-
-  private static generatorPattern(node: SlimePattern) {
-    if (node.type === SlimeAstType.Identifier) {
-      this.generatorIdentifier(node)
-    }
-  }
-
-  private static generatorIdentifier(node: SlimeIdentifier) {
-    checkAstName(SlimeAstType.Identifier, node)
-    JsonUtil.log(111)
-    JsonUtil.log(node)
-    this.addCodeAndMappings(node.name, node.loc)
   }
 
   /*private static generatorModuleDeclaration(node: SlimeModuleDeclaration[]) {

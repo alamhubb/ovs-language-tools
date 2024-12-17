@@ -170,10 +170,11 @@ class SlimeAst {
     }
   }
 
-  createIdentifier(name: string): SlimeIdentifier {
+  createIdentifier(name: string, loc?: SubhutiSourceLocation): SlimeIdentifier {
     return {
       type: SlimeAstType.Identifier,
-      name: name
+      name: name,
+      loc: loc
     }
   }
 

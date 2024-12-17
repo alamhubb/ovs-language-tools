@@ -1,7 +1,7 @@
 import {
     type AssignmentOperator, BaseExpression, BaseNode,
     type BinaryOperator, BlockStatement, Expression,
-    type LogicalOperator, NewExpression, Pattern, SpreadElement, Super,
+    type LogicalOperator, MaybeNamedFunctionDeclaration, NewExpression, Pattern, Property, SpreadElement, Super,
     type UnaryOperator,
     type UpdateOperator
 } from "estree";
@@ -198,7 +198,7 @@ export interface SlimeMaybeNamedFunctionDeclaration extends SlimeBaseNode {
     body: SlimeBlockStatement;
 }
 
-export interface SlimeFunctionDeclaration extends SlimeBaseNode {
+export interface SlimeFunctionDeclaration extends SlimeMaybeNamedFunctionDeclaration {
     id: SlimeIdentifier;
 }
 
@@ -523,7 +523,7 @@ export interface SlimeTemplateElement extends SlimeBaseNode {
 }
 
 // Pattern 相关定义
-export interface SlimeAssignmentProperty extends SlimeBaseNode {
+export interface SlimeAssignmentProperty extends SlimeProperty {
     value: SlimePattern;
     kind: "init";
     method: false;

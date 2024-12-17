@@ -341,7 +341,7 @@ export class SlimeCstToAst {
     checkCstName(LiteralPropertyName, Es6Parser.prototype.LiteralPropertyName.name);
     const LiteralPropertyNameFirst = LiteralPropertyName.children[0]
     const functionName = LiteralPropertyNameFirst.value
-    functionExpression.id = SlimeAstUtil.createIdentifier(functionName)
+    functionExpression.id = SlimeAstUtil.createIdentifier(functionName, LiteralPropertyNameFirst.loc)
 
     return functionExpression
   }
