@@ -304,6 +304,7 @@ export default class SlimeGenerator {
   }
 
   private static generatorReturnStatement(node: SlimeReturnStatement) {
+    this.addCode('return ')
     this.generatorExpression(node.argument)
   }
 

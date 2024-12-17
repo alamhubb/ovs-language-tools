@@ -40,6 +40,8 @@ const vNodeExtend = {
 
 export default class OvsAPI {
     static createVNode(tagName: string, children, props?) {
+        console.log('chufale')
+        console.log(tagName)
         let vueChildren = null
         if (Array.isArray(children)) {
             vueChildren = children
@@ -48,6 +50,7 @@ export default class OvsAPI {
         }
         let ho = h(tagName, vueChildren)
         ho = Object.assign({}, vNodeExtend, ho)
+        console.log(ho)
         return ho
     }
 }
