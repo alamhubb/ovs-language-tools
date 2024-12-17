@@ -333,12 +333,17 @@ export class SlimeCstToAst {
 
   createPropertyNameMethodDefinitionAst(cst: SubhutiCst): SlimeFunctionExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.PropertyNameMethodDefinition.name);
-    const first = cst.children[0]
-    const PropertyNameAst = this.createPropertyNameAst(first)
-    const FunctionFormalParametersAst = this.createFunctionFormalParametersBodyDefineAst(cst.children[1])
+    const PropertyName = cst.children[0]
+    // const PropertyNameAst = this.createPropertyNameAst(first)
+    const functionExpression = this.createFunctionFormalParametersBodyDefineAst(cst.children[1])
 
-    const id = this.createIdentifierAst(first1.children[0])
-    return SlimeAstUtil.createFunctionExpression(id)
+    const LiteralPropertyName = PropertyName.children[0]
+    checkCstName(LiteralPropertyName, Es6Parser.prototype.LiteralPropertyName.name);
+    const LiteralPropertyNameFirst = LiteralPropertyName.children[0]
+    const functionName = LiteralPropertyNameFirst.value
+    functionExpression.id = SlimeAstUtil.createIdentifier(functionName)
+
+    return functionExpression
   }
 
   createFunctionFormalParametersBodyDefineAst(cst: SubhutiCst): SlimeFunctionExpression {
@@ -346,16 +351,26 @@ export class SlimeCstToAst {
     const first = cst.children[0]
     const first1 = cst.children[1]
 
-    const params:SlimePattern[] = this.createFunctionFormalParametersBodyDefineAst(first)
+    const params: SlimePattern[] = this.createFunctionFormalParametersAst(first)
+    const body: SlimeBlockStatement = this.createFunctionBodyDefineAst(first1)
 
+    return SlimeAstUtil.createFunctionExpression(body, null, params)
   }
 
-  createFunctionBodyDefineAst(cst: SubhutiCst){
+  createFunctionBodyDefineAst(cst: SubhutiCst): SlimeBlockStatement {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionBodyDefine.name);
+    if (cst.children.length > 2) {
+      const first1 = cst.children[1]
+      const body = this.createFunctionBodyAst(first1)
+      return SlimeAstUtil.createBlockStatement(body)
+    }
+    return SlimeAstUtil.createBlockStatement([])
   }
 
-  createFunctionBodyAst(cst: SubhutiCst){
+  createFunctionBodyAst(cst: SubhutiCst): Array<SlimeStatement> {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionBody.name);
+    const first = cst.children[0]
+    return this.createStatementListAst(first)
   }
 
   createFunctionFormalParametersAst(cst: SubhutiCst): SlimePattern[] {
@@ -372,28 +387,13 @@ export class SlimeCstToAst {
     const astName = checkCstName(cst, Es6Parser.prototype.MethodDefinition.name);
     const first = cst.children[0]
     if (first.name === Es6Parser.prototype.PropertyNameMethodDefinition.name) {
-
+      const SlimeFunctionExpression = this.createPropertyNameMethodDefinitionAst(first)
+      return SlimeAstUtil.createMethodDefinition(SlimeFunctionExpression.id, SlimeFunctionExpression)
     } else if (first.name === Es6Parser.prototype.PropertyNameMethodDefinition.name) {
 
     } else {
       throw new Error('不支持的类型')
     }
-
-
-    const ast: SlimeMethodDefinition = {
-      type: SlimeAstType.MethodDefinition,
-      kind: 'method',
-      static: true,
-      computed: false,
-      key: this.createIdentifierAst(cst.children[0].children[0].children[0]),
-      value: null
-      // generator: false,
-      // async: false,
-      // params: this.createFormalParametersAst(cst.children[2]),
-      // body: this.createBlockStatementAst(cst.children[5].children[0]),
-      // loc: cst.loc
-    }
-    return ast
   }
 
   createFunctionExpressionAst(cst: SubhutiCst): SlimeFunctionExpression {
@@ -498,10 +498,8 @@ export class SlimeCstToAst {
       const eqCst = varCst.children[0]
       const eqAst = SlimeAstUtil.createEqualOperator(eqCst.loc)
       const initCst = varCst.children[1]
-      console.log('initCst')
       if (initCst) {
         const init = this.createAssignmentExpressionAst(initCst)
-        console.log(init)
         variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, eqAst, init)
       } else {
         variableDeclarator = SlimeAstUtil.createVariableDeclarator(id, eqAst)
@@ -696,13 +694,17 @@ export class SlimeCstToAst {
 
   createObjectExpressionAst(cst: SubhutiCst): SlimeObjectExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.ObjectLiteral.name);
+    const ary: Array<SlimeProperty> = []
     if (cst.children.length > 2) {
       const PropertyDefinitionListCst = cst.children[1]
-
       for (const child of PropertyDefinitionListCst.children) {
-        this.createPropertyDefinitionAst(child)
+        if (child.name === Es6Parser.prototype.PropertyDefinition.name) {
+          const property = this.createPropertyDefinitionAst(child)
+          ary.push(property)
+        }
       }
     }
+    return SlimeAstUtil.createObjectExpression(ary)
   }
 
   createPropertyDefinitionAst(cst: SubhutiCst): SlimeProperty {
@@ -720,7 +722,11 @@ export class SlimeCstToAst {
 
       return keyAst
     } else if (first.name === Es6Parser.prototype.MethodDefinition.name) {
-      this.createMethodDefinitionAst(first)
+      const SlimeMethodDefinition = this.createMethodDefinitionAst(first)
+
+      const keyAst = SlimeAstUtil.createPropertyAst(SlimeMethodDefinition.key, SlimeMethodDefinition.value)
+
+      return keyAst
     } else {
       throw new Error('不支持的类型')
     }
@@ -756,8 +762,7 @@ export class SlimeCstToAst {
   createStringLiteralAst(cst: SubhutiCst): SlimeStringLiteral {
     const astName = checkCstName(cst, Es6TokenConsumer.prototype.StringLiteral.name);
     const value = cst.value
-    const trimmed = value.replace(/^['"]|['"]$/g, '');
-    return SlimeAstUtil.createStringLiteral(trimmed)
+    return SlimeAstUtil.createStringLiteral(value)
   }
 
   createArrayExpressionAst(cst: SubhutiCst): SlimeArrayExpression {
@@ -788,8 +793,7 @@ export class SlimeCstToAst {
     } else if (firstChild.name === Es6TokenConsumer.prototype.FalseTok.name) {
       value = SlimeAstUtil.createBooleanLiteral(false)
     } else {
-      const trimmed = firstValue.replace(/^['"]|['"]$/g, '');
-      value = SlimeAstUtil.createStringLiteral(trimmed)
+      value = SlimeAstUtil.createStringLiteral(firstValue)
     }
     value.loc = firstChild.loc
     return value

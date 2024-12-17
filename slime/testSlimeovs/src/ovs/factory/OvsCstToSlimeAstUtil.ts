@@ -1,15 +1,22 @@
 import {SlimeCstToAst} from "slime-parser/src/language/SlimeCstToAstUtil.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import type {SlimeCallExpression, SlimeExpression, SlimeStatement} from "slime-ast/src/SlimeAstInterface.ts";
-import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
-import SubhutiLexer from "subhuti/src/parser/SubhutiLexer.ts";
 import OvsParser from "../parser/OvsParser.ts";
-import {CallExpression, ClassDeclaration, ExportDefaultDeclaration, Expression, Program, Statement} from "@babel/types";
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import {OvsAstLexicalBinding, OvsAstRenderDomViewDeclaration} from "../interface/OvsInterface";
-import * as babeType from "@babel/types";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
-import {SlimeAstType} from "slime-ast/src/SlimeAstType.ts";
+
+export function checkCstName(cst: SubhutiCst, cstName: string) {
+    if (cst.name !== cstName) {
+        console.log(cst)
+        throwNewError(cst.name)
+    }
+    return cstName
+}
+
+export function throwNewError(errorMsg: string = 'syntax error') {
+    throw new Error(errorMsg)
+}
 
 export class OvsCstToSlimeAst extends SlimeCstToAst {
     createExpressionAst(cst: SubhutiCst): SlimeExpression {

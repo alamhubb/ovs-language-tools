@@ -89,7 +89,8 @@ class SlimeAst {
       type: SlimeAstType.CallExpression,
       callee: callee,
       arguments: args,
-      optional: false
+      optional: false,
+      loc: callee.loc
     }
   }
 
@@ -199,7 +200,7 @@ class SlimeAst {
   createStringLiteral(value: string): SlimeStringLiteral {
     return {
       type: SlimeAstType.StringLiteral,
-      value: value
+      value: value.replace(/^['"]|['"]$/g, '')
     }
   }
 

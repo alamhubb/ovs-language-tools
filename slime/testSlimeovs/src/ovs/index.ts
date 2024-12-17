@@ -55,14 +55,14 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 
   let curCst = parser.Program()
   curCst = traverseClearTokens(curCst)
-  curCst = traverseClearLoc(curCst)
+  // curCst = traverseClearLoc(curCst)
   // JsonUtil.log(7777)
   // curCst = traverseClearTokens(curCst)
   JsonUtil.log(666)
   JsonUtil.log(curCst)
   const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
   JsonUtil.log(777)
-  // JsonUtil.log(ast)
+  JsonUtil.log(ast)
   const code11 = SlimeGenerator.generator(ast)
   // console.log(computedIndex(code11.mapping))
 
