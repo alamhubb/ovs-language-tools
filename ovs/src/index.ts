@@ -47,6 +47,8 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   const lexer = new SubhutiLexer(es6Tokens)
   const tokens = lexer.lexer(code)
 
+  JsonUtil.log(tokens)
+
   if (!tokens.length) return {
     code: code,
     mapping: []
@@ -72,10 +74,8 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 }
 
 // const code = `let a = 'di
-const code = `let a = 1
-let b = 
-let c = 3
-
+// const code = `console.log(123)
+const code = `let a = ;let b = 1
 `
 //
 // let div1 = function() {

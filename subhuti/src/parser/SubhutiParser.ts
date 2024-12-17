@@ -245,6 +245,9 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     return
   }
 
+  //记录失败的匹配
+  failMatchList: SubhutiCst[] = []
+
   //执行语法，将语法入栈，执行语法，语法执行完毕，语法出栈
   processCst(ruleName: string, targetFun: Function): SubhutiCst {
 
@@ -262,6 +265,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
       parentCst = this.cstStack[this.cstStack.length - 1]
       parentCst.children.push(cst)
     }
+    const oldTokensLength = this.tokens.length
     this.setCurCst(cst)
     this.cstStack.push(cst)
     this.ruleExecErrorStack.push(ruleName)
@@ -269,7 +273,9 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     let res: SubhutiCst = targetFun.apply(this)
     this.cstStack.pop()
     this.ruleExecErrorStack.pop()
-    if (this.continueMatch) {
+    //如果匹配成功，保留子节点，失败删除
+    if (this.continueMatch || this.tokens.length < oldTokensLength) {
+      this.setContinueMatch(true)
       if (cst.children[0]) {
         if (!cst.children[0].loc) {
           console.log(cst.children[0])
@@ -283,6 +289,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
       }
       return cst
     }
+    //代表成功触发了一个
     if (parentCst) {
       parentCst.children.pop()
     }
@@ -346,7 +353,11 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     let backData = JsonUtil.cloneDeep(this.backData)
     fun()
     //If the match fails, the tokens are reset.
+    let thisBackData: SubhutiBackData
     if (!this.continueMatch) {
+      if (this.tokens.length < backData.tokens.length) {
+        thisBackData = JsonUtil.cloneDeep(this.backData)
+      }
       this.setBackData(backData)
     }
     let curFlag = this.orBreakFlag
@@ -354,6 +365,11 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
       this.setOrBreakFlag(true)
     }
     this.setAllowErrorLastStateAndPop()
+
+    if (thisBackData) {
+      this.setBackData(thisBackData)
+      return this.getCurCst()
+    }
     if (!curFlag) {
       return
     }
@@ -445,6 +461,9 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     this.allowErrorStack.push(this.curCst.name)
   }
 
+  orBackDataAryStack: Array<SubhutiBackData[]> = []
+
+
   //or语法，遍历匹配语法，语法匹配成功，则跳出匹配，执行下一规则
   Or(subhutiParserOrs: SubhutiParserOr[]): SubhutiCst {
     if (!this.checkMethodCanExec) {
@@ -455,6 +474,9 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     let index = 0
 
     let lastBreakFlag = this.orBreakFlag
+
+    const thisBackAry: SubhutiBackData[] = []
+    this.orBackDataAryStack.push(thisBackAry)
 
     // const uuid = generateUUID()
 
@@ -478,6 +500,11 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
         //别的while都是，没token，才break，这个满足一次就必须break，无论有没有tokens还
         break
       } else if (!this.continueForAndNoBreak) {
+        if (this.tokens.length < backData.tokens.length) {
+          console.log('zhixingle 111')
+          const thisBackData = JsonUtil.cloneDeep(this.backData)
+          thisBackAry.push(thisBackData)
+        }
         //匹配失败
         if (index !== funLength) {
           //只要不为最后一次，都设为true
@@ -494,10 +521,19 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     }
     //必须放这里，放this.continueExec可能不执行，放index === funLength  也有可能this.continueExec 时不执行，俩地方都放可能执行两次，只能放这里
     this.setAllowErrorLastStateAndPop()
-    if (!curFlag) {
-      return
+    if (curFlag) {
+      return this.getCurCst()
     }
-    return this.getCurCst()
+    if (thisBackAry.length) {
+      this.orBackDataAryStack.pop()
+      const res = thisBackAry.sort((a, b) => {
+        return a.tokens.length - b.tokens.length
+      })[0]
+      this.setBackData(res)
+      JsonUtil.log(this.getCurCst())
+      return this.getCurCst()
+    }
+    return
   }
 
   get continueForAndNoBreak() {
