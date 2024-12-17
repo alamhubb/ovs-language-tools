@@ -75,7 +75,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 
 // const code = `let a = 'di
 // const code = `console.log(123)
-const code = `let a = ;let b = 1
+const code = `console. let a = 1
 `
 //
 // let div1 = function() {

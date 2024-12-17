@@ -501,7 +501,6 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
         break
       } else if (!this.continueForAndNoBreak) {
         if (this.tokens.length < backData.tokens.length) {
-          console.log('zhixingle 111')
           const thisBackData = JsonUtil.cloneDeep(this.backData)
           thisBackAry.push(thisBackData)
         }
