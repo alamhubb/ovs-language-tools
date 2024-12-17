@@ -88,7 +88,7 @@ const code = `export const hello = {
 //             true
 //         }
 // `
-// const res = vitePluginOvsTransform(code)
+const res = vitePluginOvsTransform(code)
 // console.log(res)
 
 export default function vitePluginOvs(): Plugin {

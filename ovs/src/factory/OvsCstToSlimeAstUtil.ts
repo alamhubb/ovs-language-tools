@@ -3,8 +3,8 @@ import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import type {SlimeCallExpression, SlimeExpression, SlimeStatement} from "slime-ast/src/SlimeAstInterface.ts";
 import OvsParser from "../parser/OvsParser.ts";
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
-import {OvsAstLexicalBinding, OvsAstRenderDomViewDeclaration} from "../interface/OvsInterface";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
+import type {OvsAstLexicalBinding, OvsAstRenderDomViewDeclaration} from "../interface/OvsInterface";
 
 export function checkCstName(cst: SubhutiCst, cstName: string) {
     if (cst.name !== cstName) {
