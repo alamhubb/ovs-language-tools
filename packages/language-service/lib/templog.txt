@@ -76502,3 +76502,3126 @@ const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
 [2024-12-13T06:28:30.917Z]
 []
 ================================================================================
+
+[2024-12-17T07:55:41.131Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:41.132Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 7
+      },
+      "end": {
+        "line": 1,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:41.436Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:41.436Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 7
+      },
+      "end": {
+        "line": 1,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:41.448Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:41.448Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:42.292Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-17T07:55:42.292Z]
+{
+  "line": 1,
+  "character": 26
+}
+================================================================================
+
+[2024-12-17T07:55:42.375Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:42.375Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 7
+      },
+      "end": {
+        "line": 1,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:42.376Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:42.376Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:43.739Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:43.739Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 6,
+        "character": 0
+      },
+      "end": {
+        "line": 6,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'let'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:43.750Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:43.750Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:44.130Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:44.131Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 6,
+        "character": 0
+      },
+      "end": {
+        "line": 6,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'let'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:44.142Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:44.142Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:44.573Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-17T07:55:44.573Z]
+{
+  "line": 0,
+  "character": 59
+}
+================================================================================
+
+[2024-12-17T07:55:44.804Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:44.804Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'c' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 53
+      },
+      "end": {
+        "line": 0,
+        "character": 57
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'flet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:44.804Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:44.805Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:45.891Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:45.891Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 61
+      },
+      "end": {
+        "line": 0,
+        "character": 61
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1109,
+    "message": "Expression expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 53
+      },
+      "end": {
+        "line": 0,
+        "character": 57
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'flet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:45.903Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:45.903Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:47.328Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-17T07:55:47.328Z]
+{
+  "line": 1,
+  "character": 26
+}
+================================================================================
+
+[2024-12-17T07:55:47.557Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:47.557Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 53
+      },
+      "end": {
+        "line": 0,
+        "character": 57
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'flet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 7
+      },
+      "end": {
+        "line": 1,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:47.558Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:47.558Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:49.187Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:49.187Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 53
+      },
+      "end": {
+        "line": 0,
+        "character": 57
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'flet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 7
+      },
+      "end": {
+        "line": 1,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:49.199Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:49.199Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:49.376Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-17T07:55:49.376Z]
+{
+  "line": 1,
+  "character": 26
+}
+================================================================================
+
+[2024-12-17T07:55:49.606Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:49.607Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 53
+      },
+      "end": {
+        "line": 0,
+        "character": 57
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'flet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 7
+      },
+      "end": {
+        "line": 1,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:49.607Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:49.607Z]
+[]
+================================================================================
+
+[2024-12-17T07:55:50.620Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:50.620Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 53
+      },
+      "end": {
+        "line": 0,
+        "character": 57
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'flet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 7
+      },
+      "end": {
+        "line": 1,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-17T07:55:50.631Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-17T07:55:50.632Z]
+[]
+================================================================================

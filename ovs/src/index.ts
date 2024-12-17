@@ -1,12 +1,13 @@
 // Vite 插件
-import {createFilter, Plugin} from "vite"
+import {createFilter, type Plugin} from "vite"
 import SubhutiLexer from 'subhuti/src/parser/SubhutiLexer.ts'
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import SlimeGenerator from "slime-generator/src/SlimeGenerator.ts";
-import {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping.ts";
 import {es6Tokens} from "slime-parser/src/language/es2015/Es6Tokens.ts";
 import OvsParser from "./parser/OvsParser.ts";
 import OvsCstToSlimeAstUtil from "./factory/OvsCstToSlimeAstUtil.ts";
+import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
+import type {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping.ts";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
   if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -54,14 +55,16 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 
   let curCst = parser.Program()
   curCst = traverseClearTokens(curCst)
-  // curCst = traverseClearLoc(curCst)
-  // JsonUtil.log(7777)
-  // curCst = traverseClearTokens(curCst)
-  const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
-  const code11 = SlimeGenerator.generator(ast)
+  curCst = traverseClearLoc(curCst)
+  JsonUtil.log(7777)
+  curCst = traverseClearTokens(curCst)
+  JsonUtil.log(curCst)
+  // const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
+  // const code11 = SlimeGenerator.generator(ast)
   // console.log(computedIndex(code11.mapping))
+  // console.log(code11)
 
-  return code11
+  // return code11
   /*    return `
       // import OvsAPI from "@/ovs/OvsAPI.ts";\n
       ${code1.code}
@@ -69,14 +72,9 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 }
 
 // const code = `let a = 'di
-const code = `export const hello = {
-    name123:123,
-    render() {
-        return div{
-           123
-       }
-    }
-}
+const code = `let a = 1
+let b = 
+let c = 3
 
 `
 //
