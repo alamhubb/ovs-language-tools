@@ -61,28 +61,27 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   JsonUtil.log(7777)
   JsonUtil.log(curCst)
   curCst = traverseClearTokens(curCst)
-  curCst = traverseClearLoc(curCst)
+  // curCst = traverseClearLoc(curCst)
   JsonUtil.log(88)
   JsonUtil.log(curCst)
   const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
-  // JsonUtil.log(444)
-  // JsonUtil.log(ast)
-  // const code11 = SlimeGenerator.generator(ast)
+  JsonUtil.log(444)
+  JsonUtil.log(ast)
+  const code11 = SlimeGenerator.generator(ast)
   // console.log(computedIndex(code11.mapping))
-  // console.log(code11)
-  // return code11
+  console.log(code11)
+  return code11
   // return `import OvsAPI from "@/ovs/OvsAPI.ts";\n ${code11.code}`
 }
 
 // const code = `let a = 'di
 // const code = `console.log(123)
 // const code = `console.  let a = 1
-const code = `export const hello = {
-    name123:123,
+const code = `const hello = {
     render() {
         return div{
-           123789
-       }
+           12378
+        }
     }
 }
 `
