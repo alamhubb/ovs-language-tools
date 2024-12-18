@@ -79625,3 +79625,788 @@ const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
 [2024-12-17T07:55:50.632Z]
 []
 ================================================================================
+
+[2024-12-18T17:01:10.466Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:10.467Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 31
+      },
+      "end": {
+        "line": 0,
+        "character": 32
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 40
+      },
+      "end": {
+        "line": 0,
+        "character": 41
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 49
+      },
+      "end": {
+        "line": 0,
+        "character": 50
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 17
+      },
+      "end": {
+        "line": 0,
+        "character": 21
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'alet'. Did you mean 'alert'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "file:///c%3A/Users/qinkaiyuan/AppData/Roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+          "range": {
+            "start": {
+              "line": 27209,
+              "character": 17
+            },
+            "end": {
+              "line": 27209,
+              "character": 22
+            }
+          }
+        },
+        "message": "'alert' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 22
+      },
+      "end": {
+        "line": 0,
+        "character": 23
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 26
+      },
+      "end": {
+        "line": 0,
+        "character": 30
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'blet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 35
+      },
+      "end": {
+        "line": 0,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'clet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 44
+      },
+      "end": {
+        "line": 0,
+        "character": 48
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'elet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 53
+      },
+      "end": {
+        "line": 0,
+        "character": 57
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2552,
+    "message": "Cannot find name 'flet'. Did you mean 'let'?",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 9
+            },
+            "end": {
+              "line": 0,
+              "character": 12
+            }
+          }
+        },
+        "message": "'let' is declared here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 58
+      },
+      "end": {
+        "line": 0,
+        "character": 59
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'c'."
+  }
+]
+================================================================================
+
+[2024-12-18T17:01:10.939Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:10.939Z]
+[]
+================================================================================
+
+[2024-12-18T17:01:10.951Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:10.951Z]
+[]
+================================================================================
+
+[2024-12-18T17:01:12.383Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-18T17:01:12.383Z]
+{
+  "line": 0,
+  "character": 10
+}
+================================================================================
+
+[2024-12-18T17:01:12.481Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:12.482Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 10
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 10
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'l' implicitly has an 'any' type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-18T17:01:12.482Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:12.482Z]
+[]
+================================================================================
+
+[2024-12-18T17:01:13.815Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:13.815Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 0
+      },
+      "end": {
+        "line": 1,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'let'."
+  }
+]
+================================================================================
+
+[2024-12-18T17:01:13.825Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:13.826Z]
+[]
+================================================================================
+
+[2024-12-18T17:01:14.122Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:14.122Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 0
+      },
+      "end": {
+        "line": 1,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'let'."
+  }
+]
+================================================================================
+
+[2024-12-18T17:01:14.132Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:14.132Z]
+[]
+================================================================================
+
+[2024-12-18T17:01:14.239Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-18T17:01:14.239Z]
+{
+  "line": 0,
+  "character": 14
+}
+================================================================================
+
+[2024-12-18T17:01:14.251Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-18T17:01:14.251Z]
+{
+  "line": 0,
+  "character": 14
+}
+================================================================================
+
+[2024-12-18T17:01:14.251Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-18T17:01:14.251Z]
+{
+  "line": 0,
+  "character": 14
+}
+================================================================================
+
+[2024-12-18T17:01:14.251Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-18T17:01:14.251Z]
+{
+  "line": 1,
+  "character": 5
+}
+================================================================================
+
+[2024-12-18T17:01:14.252Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-18T17:01:14.252Z]
+{
+  "line": 1,
+  "character": 5
+}
+================================================================================
+
+[2024-12-18T17:01:14.252Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-18T17:01:14.252Z]
+{
+  "line": 1,
+  "character": 5
+}
+================================================================================
+
+[2024-12-18T17:01:14.892Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:14.892Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 16
+      },
+      "end": {
+        "line": 0,
+        "character": 16
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1109,
+    "message": "Expression expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-18T17:01:14.893Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:14.893Z]
+[]
+================================================================================
+
+[2024-12-18T17:01:15.896Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:15.896Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 16
+      },
+      "end": {
+        "line": 0,
+        "character": 16
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1109,
+    "message": "Expression expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-18T17:01:15.907Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:15.907Z]
+[]
+================================================================================
+
+[2024-12-18T17:01:16.757Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-18T17:01:16.757Z]
+{
+  "line": 0,
+  "character": 18
+}
+================================================================================
+
+[2024-12-18T17:01:16.998Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:16.998Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1351,
+    "message": "An identifier or keyword cannot immediately follow a numeric literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 13
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 12
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'let' implicitly has an 'any' type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-18T17:01:16.999Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-18T17:01:16.999Z]
+[]
+================================================================================
