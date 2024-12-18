@@ -8,6 +8,7 @@ import OvsParser from "./parser/OvsParser.ts";
 import OvsCstToSlimeAstUtil from "./factory/OvsCstToSlimeAstUtil.ts";
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import type {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping.ts";
+import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
   if (!currentNode || !currentNode.children || !currentNode.children.length)
@@ -53,9 +54,9 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
     code: code,
     mapping: []
   }
-  const parser = new OvsParser(tokens)
+  const parser = new Es6Parser(tokens)
 
-  let curCst = parser.VariableDeclaration()
+  let curCst = parser.Program()
   // console.log(curCst)
   JsonUtil.log(7777)
   JsonUtil.log(curCst)
@@ -63,7 +64,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   curCst = traverseClearLoc(curCst)
   JsonUtil.log(88)
   JsonUtil.log(curCst)
-  JsonUtil.log(111)
+  JsonUtil.log(222)
   JsonUtil.log(999)
   // const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
   // const code11 = SlimeGenerator.generator(ast)
@@ -80,7 +81,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 // const code = `let a = 'di
 // const code = `console.log(123)
 // const code = `console.  let a = 1
-const code = `let a =
+const code = `console. let a = 1
 `
 //
 // let div1 = function() {
