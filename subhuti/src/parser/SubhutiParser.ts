@@ -271,12 +271,22 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     this.setCurCst(cst)
     this.cstStack.push(cst)
     this.ruleExecErrorStack.push(ruleName)
+    // console.log(ruleName)
     // 规则解析，如果自定义了返回内容，则有返回，则用自定义返回覆盖默认节点
     let res: SubhutiCst = targetFun.apply(this)
     this.cstStack.pop()
     this.ruleExecErrorStack.pop()
+    if (ruleName === 'Declaration'){
+    // if (ruleName === 'VariableDeclarationList' || 'Declaration'===ruleName){
+      console.log(ruleName)
+      console.log(this.continueMatch)
+      console.log(this.tokens.length)
+      console.log(oldTokensLength)
+      console.log((this.faultTolerance && this.tokens.length < oldTokensLength))
+    }
     //如果匹配成功，保留子节点，失败删除
     if (this.continueMatch || (this.faultTolerance && this.tokens.length < oldTokensLength)) {
+      console.log(ruleName)
       if (cst.children[0]) {
         if (!cst.children[0].loc) {
           console.log(cst.children[0])
@@ -489,10 +499,22 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
 
       //考虑到执行空的话，如果执行了空元素，应该是跳出的
       this.setOrBreakFlag(false)
+      if (this.curCst.name === 'Declaration'){
+        console.log('fasdfsadfsd shewei false')
+        console.log(this.orBreakFlag)
+        console.log(75457754)
+        console.log(thisBackAry.length)
+      }
       subhutiParserOr.alt()
       // If the processing is successful, then exit the loop
       // 执行成功，则完成任务，做多一次，则必须跳出
       // 只有有成功的匹配才跳出循环，否则就一直执行，直至循环结束
+      if (this.curCst.name === 'Declaration'){
+        console.log(this.orBreakFlag)
+        console.log(this.continueForAndNoBreak)
+        console.log(75457754)
+        console.log(thisBackAry.length)
+      }
       if (this.continueForAndNoBreak) {
         //别的while都是，没token，才break，这个满足一次就必须break，无论有没有tokens还
         break
@@ -513,15 +535,28 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
         // this.printTokens()
       }
     }
+    if (this.curCst.name === 'Declaration'){
+      console.log(this.orBreakFlag)
+      console.log(75457754)
+      console.log(thisBackAry.length)
+    }
+    // console.log('fasdfasfd')
+    // console.log(this.orBreakFlag)
+    // console.log(lastBreakFlag)
     let curFlag = this.orBreakFlag
     //本级和上级有一个为true则改为true，or的情况为什么需要上级的情况来决定，如果or之后，是失败，就应该是匹配失败了呀，如果是在many中呢
-    if (this.orBreakFlag || lastBreakFlag) {
-      this.setOrBreakFlag(true)
-    }
+    //不需要啊，结果是什么就是什么
+    // if (this.orBreakFlag || lastBreakFlag) {
+    //   this.setOrBreakFlag(true)
+    // }
     //必须放这里，放this.continueExec可能不执行，放index === funLength  也有可能this.continueExec 时不执行，俩地方都放可能执行两次，只能放这里
     this.setAllowErrorLastStateAndPop()
     if (curFlag) {
       return this.getCurCst()
+    }
+    if (this.curCst.name === 'Declaration'){
+      console.log(75457754)
+      console.log(thisBackAry.length)
     }
     if (this.faultTolerance && thisBackAry.length) {
       const res = thisBackAry.sort((a, b) => {
@@ -601,6 +636,9 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
       }
       matchCount++
     }
+    console.log(matchCount)
+    console.log(this.orBreakFlag)
+    console.log(lastBreakFlag)
     if (matchCount || this.orBreakFlag || lastBreakFlag) {
       this.setOrBreakFlag(true)
     }
