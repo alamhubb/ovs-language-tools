@@ -111,7 +111,7 @@ export default function vitePluginOvs(): Plugin {
       }
       const res = vitePluginOvsTransform(code)
 
-      const resCode = `import OvsAPI from '@/ovs/OvsAPI.ts'\n${res.code}`
+      const resCode = `import OvsAPI from 'ovsjs/src/OvsAPI'\n${res.code}`
 
       console.log(resCode)
       return resCode
