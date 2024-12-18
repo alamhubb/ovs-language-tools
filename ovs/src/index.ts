@@ -54,7 +54,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
     code: code,
     mapping: []
   }
-  const parser = new Es6Parser(tokens)
+  const parser = new OvsParser(tokens)
 
   let curCst = parser.Program()
   // console.log(curCst)
