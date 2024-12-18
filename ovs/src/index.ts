@@ -11,7 +11,7 @@ import type {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping.ts
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
   if (!currentNode || !currentNode.children || !currentNode.children.length)
-    return
+    return currentNode
   // 将当前节点添加到 Map 中
   // 递归遍历子节点
   if (currentNode.children && currentNode.children.length > 0) {
@@ -56,11 +56,13 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   const parser = new OvsParser(tokens)
 
   let curCst = parser.Program()
+  // console.log(curCst)
   curCst = traverseClearTokens(curCst)
   curCst = traverseClearLoc(curCst)
   JsonUtil.log(7777)
-  curCst = traverseClearTokens(curCst)
   JsonUtil.log(curCst)
+  JsonUtil.log(999)
+  JsonUtil.log(88)
   // const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
   // const code11 = SlimeGenerator.generator(ast)
   // console.log(computedIndex(code11.mapping))
@@ -75,7 +77,8 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 
 // const code = `let a = 'di
 // const code = `console.log(123)
-const code = `console. let a = 1
+// const code = `console.  let a = 1
+const code = `let a =
 `
 //
 // let div1 = function() {

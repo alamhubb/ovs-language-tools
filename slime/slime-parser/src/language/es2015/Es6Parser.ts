@@ -307,7 +307,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
       }
     ])
     // 使用 Many 处理多个后缀操作（. IdentifierName, [ Expression ], TemplateLiteral）
-    this.Many(() => {
+    // this.Many(() => {
       this.Or([
         {
           alt: () => {
@@ -328,7 +328,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
           }
         }
       ])
-    })
+    // })
   }
 
   @SubhutiRule
@@ -396,7 +396,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
         }
       }
     ])
-    this.Many(() => {
+    // this.Many(() => {
       this.Or([
         {alt: () => this.Arguments()},
         {
@@ -414,7 +414,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
         },
         {alt: () => this.TemplateLiteral()}
       ])
-    })
+    // })
   }
 
 
@@ -1543,18 +1543,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
 
   @SubhutiRule
   Program() {
-    this.Or([
-      {
-        alt: () => {
-          this.StatementList()
-        }
-      },
-      {
-        alt: () => {
-          this.ModuleItemList()
-        }
-      },
-    ])
+    this.StatementList()
     return this.getCurCst()
   }
 
@@ -1571,7 +1560,6 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
 
   @SubhutiRule
   StatementList() {
-
     this.Many(() => {
       this.StatementListItem()
     })
@@ -1582,9 +1570,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
     this.Or([
       {
         alt: () => {
-
           this.Statement()
-
         }
       },
       {

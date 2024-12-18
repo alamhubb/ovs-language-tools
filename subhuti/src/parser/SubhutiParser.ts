@@ -52,6 +52,7 @@ function generateUUID() {
 }
 
 export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiTokenConsumer> {
+  faultTolerance = false
   tokenConsumer: T
   _tokens: SubhutiMatchToken[] = []
   initFlag = true
@@ -62,6 +63,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
   uuid: string
 
   //只针对or，特殊，many有可能没匹配就触发true导致不执行下面的，避免这种情况
+  //记录是否匹配成功，用来未匹配成功则pop子节点的记录
   private _orBreakFlag = false
 
   get orBreakFlag(): boolean {
@@ -162,7 +164,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     //这考虑的是什么情况，option、many，都有可能token处理完了，执行option、many，设置token时，需要为可匹配状态
     //如果可以匹配，
     //如果可以匹配，
-    this.checkTokensOnly()
+    // this.checkTokensOnly()
   }
 
   checkTokensOnly() {
@@ -191,7 +193,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
 
   get checkMethodCanExec() {
     //如果不能匹配，测判断允许错误，则直接返回，无法继续匹配只能返回，避免递归
-    return this.continueMatch && !this.tokenIsEmpty
+    return (this.continueMatch)
   }
 
   public get tokenIsEmpty() {
@@ -274,8 +276,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     this.cstStack.pop()
     this.ruleExecErrorStack.pop()
     //如果匹配成功，保留子节点，失败删除
-    if (this.continueMatch || this.tokens.length < oldTokensLength) {
-      this.setContinueMatch(true)
+    if (this.continueMatch || (this.faultTolerance && this.tokens.length < oldTokensLength)) {
       if (cst.children[0]) {
         if (!cst.children[0].loc) {
           console.log(cst.children[0])
@@ -366,8 +367,8 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     }
     this.setAllowErrorLastStateAndPop()
 
-    if (thisBackData) {
-      this.setBackData(thisBackData)
+    if (this.faultTolerance && thisBackData) {
+      this.setBackDataNoContinueMatch(thisBackData)
       return this.getCurCst()
     }
     if (!curFlag) {
@@ -461,9 +462,6 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     this.allowErrorStack.push(this.curCst.name)
   }
 
-  orBackDataAryStack: Array<SubhutiBackData[]> = []
-
-
   //or语法，遍历匹配语法，语法匹配成功，则跳出匹配，执行下一规则
   Or(subhutiParserOrs: SubhutiParserOr[]): SubhutiCst {
     if (!this.checkMethodCanExec) {
@@ -476,7 +474,6 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     let lastBreakFlag = this.orBreakFlag
 
     const thisBackAry: SubhutiBackData[] = []
-    this.orBackDataAryStack.push(thisBackAry)
 
     // const uuid = generateUUID()
 
@@ -504,17 +501,20 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
           const thisBackData = JsonUtil.cloneDeep(this.backData)
           thisBackAry.push(thisBackData)
         }
+        //最后一边有可能成功，但是不跳出，匹配空的情况
         //匹配失败
         if (index !== funLength) {
           //只要不为最后一次，都设为true
           //没逃出，则重置数据，继续执行
           this.setBackData(backData)
+        } else {
+          this.setBackDataNoContinueMatch(backData)
         }
         // this.printTokens()
       }
     }
     let curFlag = this.orBreakFlag
-    //本级和上级有一个为true则改为true
+    //本级和上级有一个为true则改为true，or的情况为什么需要上级的情况来决定，如果or之后，是失败，就应该是匹配失败了呀，如果是在many中呢
     if (this.orBreakFlag || lastBreakFlag) {
       this.setOrBreakFlag(true)
     }
@@ -523,13 +523,11 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     if (curFlag) {
       return this.getCurCst()
     }
-    if (thisBackAry.length) {
-      this.orBackDataAryStack.pop()
+    if (this.faultTolerance && thisBackAry.length) {
       const res = thisBackAry.sort((a, b) => {
         return a.tokens.length - b.tokens.length
       })[0]
-      this.setBackData(res)
-      JsonUtil.log(this.getCurCst())
+      this.setBackDataNoContinueMatch(res)
       return this.getCurCst()
     }
     return
@@ -551,6 +549,11 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
   // backData: any
 
   setBackData(backData: SubhutiBackData) {
+    this.setContinueMatch(true)
+    this.setBackDataNoContinueMatch(backData)
+  }
+
+  setBackDataNoContinueMatch(backData: SubhutiBackData) {
     this.setTokensAndParentChildren(backData.tokens, backData.curCstTokens, backData.curCstChildren)
   }
 
@@ -564,7 +567,6 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
   }
 
   private setTokensAndParentChildren(tokensBackup: SubhutiMatchToken[], parentTokensBackup: SubhutiMatchToken[], parentChildrenBack: SubhutiCst[]) {
-    this.setContinueMatch(true)
     this.setTokens(tokensBackup)
     this.reSetParentChildren(parentTokensBackup, parentChildrenBack)
   }
@@ -589,7 +591,9 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
       fun()
       //If the match fails, the tokens are reset.
       if (!this.continueForAndNoBreak) {
-        this.setBackData(backData)
+        if (!this.faultTolerance) {
+          this.setBackData(backData)
+        }
         //如果匹配失败则跳出
         //如果跳出，则重置
         //orBreakFlag 为false则 continueMatch 也肯定为false，肯定会触发这里
