@@ -459,7 +459,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     return popToken
   }
 
-  consumeMatchToken(tokenName: string) {
+  consumeMatchToken(tokenName?: string) {
     const token = this.tokens.shift()
     return token
   }
@@ -622,6 +622,60 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     this.reSetParentChildren(parentTokensBackup, parentChildrenBack)
   }
 
+
+  FaultToleranceMany(fun: Function) {
+    if (!this.checkMethodCanExec) {
+      return
+    }
+    //不需要 再循环内部修改，因为如果子节点改了，退出子节点时也会重置回来的
+    this.setAllowErrorNewState()
+
+    let lastBreakFlag = this.orBreakFlag
+
+    let backData = JsonUtil.cloneDeep(this.backData)
+
+    let matchCount = 0
+
+    this.setContinueMatchAndNoBreak(true)
+    while (this.continueForAndNoBreak || (this.faultTolerance && this.tokens.length)) {
+      const continueState = this.continueForAndNoBreak
+      this.setOrBreakFlag(false)
+      backData = JsonUtil.cloneDeep(this.backData)
+      fun()
+      //If the match fails, the tokens are reset.
+      if (!this.continueForAndNoBreak) {
+        let thisBackData
+        if (this.tokens.length < backData.tokens.length) {
+          thisBackData = JsonUtil.cloneDeep(this.backData)
+        }
+        this.setBackData(backData)
+        if (this.faultTolerance) {
+          if (thisBackData) {
+            this.setBackDataNoContinueMatch(thisBackData)
+          } else if (!continueState) {
+            this.consumeMatchToken()
+          }
+          continue
+        } else {
+          break
+        }
+        //如果匹配失败则跳出
+        //如果跳出，则重置
+        //orBreakFlag 为false则 continueMatch 也肯定为false，肯定会触发这里
+      }
+      matchCount++
+    }
+    if (matchCount || this.orBreakFlag || lastBreakFlag) {
+      this.setOrBreakFlag(true)
+    }
+    //只能放这里，放循环里会重复pop，，many允许多次 if (this.continueExec)，第一次执行后有tokens，就会触发了，会有问题
+    this.setAllowErrorLastStateAndPop()
+    if (!matchCount) {
+      return
+    }
+    return this.getCurCst()
+  }
+
   Many(fun: Function) {
     if (!this.checkMethodCanExec) {
       return
@@ -642,13 +696,22 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
       fun()
       //If the match fails, the tokens are reset.
       if (!this.continueForAndNoBreak) {
-        if (!this.faultTolerance) {
-          this.setBackData(backData)
+        let thisBackData
+        if (this.tokens.length < backData.tokens.length) {
+          thisBackData = JsonUtil.cloneDeep(this.backData)
+        }
+        this.setBackData(backData)
+        if (this.faultTolerance) {
+          if (thisBackData) {
+            this.setBackDataNoContinueMatch(thisBackData)
+          }
+          continue
+        } else {
+          break
         }
         //如果匹配失败则跳出
         //如果跳出，则重置
         //orBreakFlag 为false则 continueMatch 也肯定为false，肯定会触发这里
-        break
       }
       matchCount++
     }

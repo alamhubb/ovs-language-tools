@@ -1571,8 +1571,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
 
   @SubhutiRule
   StatementList() {
-
-      this.Many(() => {
+      this.FaultToleranceMany(() => {
         this.StatementListItem()
       })
   }
