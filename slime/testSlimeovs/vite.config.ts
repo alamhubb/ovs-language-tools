@@ -1,6 +1,6 @@
 import {defineConfig} from 'vite'
 import {fileURLToPath, URL} from "node:url";
-import vitePluginOvs from "./src/ovs";
+import vitePluginOvs from "ovsjs/src";
 
 // https://vitejs.dev/config/
 export default defineConfig({
