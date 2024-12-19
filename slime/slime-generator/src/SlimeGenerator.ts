@@ -120,6 +120,8 @@ export default class SlimeGenerator {
     } else {
       throw new Error('不支持的类型')
     }
+    this.addSemicolon()
+    this.addNewLine()
   }
 
 
@@ -129,7 +131,6 @@ export default class SlimeGenerator {
       //     this.addNewLine()
       // }
       this.generatorStatement(node)
-      this.addSemicolon()
     })
   }
 
@@ -146,6 +147,8 @@ export default class SlimeGenerator {
     } else {
       throw new Error('不支持的类型：' + node.type)
     }
+    this.addSemicolon()
+    this.addNewLine()
   }
 
   private static generatorExpressionStatement(node: SlimeExpressionStatement) {
@@ -299,7 +302,6 @@ export default class SlimeGenerator {
     this.addCode('{')
     this.addNewLine()
     this.generatorStatements(node.body)
-    this.addNewLine()
     this.addCode('}')
   }
 
