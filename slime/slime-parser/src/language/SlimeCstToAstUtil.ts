@@ -398,20 +398,9 @@ export class SlimeCstToAst {
 
   createFunctionExpressionAst(cst: SubhutiCst): SlimeFunctionExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionExpression.name);
-    const cstParams: SubhutiCst = cst.children[1]
-    const functionBodyCst: SubhutiCst = cst.children[3]
-    const params = this.createFunctionFormalParametersAst(cstParams)
-    const ast: SlimeFunctionExpression = {
-      type: astName,
-      id: null,
-      params: params,
-      body: this.createBlockStatementAst(functionBodyCst.children[0]),
-      generator: false,
-      expression: false,
-      async: false,
-      loc: cst.loc
-    } as any
-    return ast
+    const FunctionFormalParametersBodyDefineCst: SubhutiCst = cst.children[1]
+    const FunctionFormalParametersBodyDefineAst = this.createFunctionFormalParametersBodyDefineAst(FunctionFormalParametersBodyDefineCst)
+    return FunctionFormalParametersBodyDefineAst
   }
 
 

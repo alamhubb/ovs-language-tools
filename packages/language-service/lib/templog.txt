@@ -80410,3 +80410,3610 @@ const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
 [2024-12-18T17:01:16.999Z]
 []
 ================================================================================
+
+[2024-12-19T02:54:55.428Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:54:55.429Z]
+[]
+================================================================================
+
+[2024-12-19T02:54:55.439Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:54:55.440Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:30.611Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:30.611Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:30.621Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:30.621Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:31.322Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:31.323Z]
+{
+  "line": 2,
+  "character": 1
+}
+================================================================================
+
+[2024-12-19T02:55:31.427Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:31.427Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 1
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'l'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:31.427Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:31.428Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:32.717Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:32.717Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:32.728Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:32.728Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:33.417Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:33.417Z]
+{
+  "line": 1,
+  "character": 10
+}
+================================================================================
+
+[2024-12-19T02:55:33.649Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:33.649Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 10
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'al'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:33.650Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:33.650Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:33.879Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:33.879Z]
+{
+  "line": 1,
+  "character": 9
+}
+================================================================================
+
+[2024-12-19T02:55:34.124Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:34.125Z]
+{
+  "line": 1,
+  "character": 9
+}
+================================================================================
+
+[2024-12-19T02:55:34.362Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:34.362Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:34.362Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:34.362Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:37.435Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:37.436Z]
+{
+  "line": 2,
+  "character": 1
+}
+================================================================================
+
+[2024-12-19T02:55:37.535Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:37.535Z]
+{
+  "line": 2,
+  "character": 2
+}
+================================================================================
+
+[2024-12-19T02:55:37.773Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:37.773Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 2
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'le'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:37.773Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:37.773Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:38.376Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:38.377Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'let'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:38.388Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:38.388Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:38.757Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:38.758Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'let'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:38.758Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:38.758Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:40.248Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:40.248Z]
+{
+  "line": 2,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:40.259Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:40.259Z]
+{
+  "line": 2,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:40.259Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:40.259Z]
+{
+  "line": 2,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:40.260Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:40.260Z]
+{
+  "line": 2,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:40.260Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:40.260Z]
+{
+  "line": 2,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:40.260Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:40.260Z]
+{
+  "line": 2,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:41.142Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:41.142Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 7
+      },
+      "end": {
+        "line": 2,
+        "character": 7
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1109,
+    "message": "Expression expected."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:41.142Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:41.142Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:43.421Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:43.421Z]
+{
+  "line": 2,
+  "character": 9
+}
+================================================================================
+
+[2024-12-19T02:55:43.657Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:43.658Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:43.658Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:43.658Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:53.681Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:53.681Z]
+{
+  "line": 3,
+  "character": 1
+}
+================================================================================
+
+[2024-12-19T02:55:54.175Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:54.175Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 2
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'di'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:54.175Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:54.175Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:54.547Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:54.547Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'div'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:54.558Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:54.559Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:55.590Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:55.590Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1434,
+    "message": "Unexpected keyword or identifier."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 5,
+        "character": 0
+      },
+      "end": {
+        "line": 5,
+        "character": 0
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "'}' expected.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 3,
+              "character": 3
+            },
+            "end": {
+              "line": 3,
+              "character": 4
+            }
+          }
+        },
+        "message": "The parser expected to find a '}' to match the '{' token here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'div'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:55.602Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:55.602Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:56.170Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:56.170Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1434,
+    "message": "Unexpected keyword or identifier."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 6,
+        "character": 0
+      },
+      "end": {
+        "line": 6,
+        "character": 0
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "'}' expected.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 3,
+              "character": 3
+            },
+            "end": {
+              "line": 3,
+              "character": 4
+            }
+          }
+        },
+        "message": "The parser expected to find a '}' to match the '{' token here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'div'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:56.182Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:56.182Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:57.194Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:57.194Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1434,
+    "message": "Unexpected keyword or identifier."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'div'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:57.194Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:57.194Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:57.893Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:57.893Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1434,
+    "message": "Unexpected keyword or identifier."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'div'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:57.893Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:57.893Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:58.281Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:58.281Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1434,
+    "message": "Unexpected keyword or identifier."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'div'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:58.282Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:58.282Z]
+[]
+================================================================================
+
+[2024-12-19T02:55:58.449Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:58.449Z]
+{
+  "line": 4,
+  "character": 24
+}
+================================================================================
+
+[2024-12-19T02:55:58.465Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:58.465Z]
+{
+  "line": 4,
+  "character": 24
+}
+================================================================================
+
+[2024-12-19T02:55:58.465Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:58.465Z]
+{
+  "line": 4,
+  "character": 24
+}
+================================================================================
+
+[2024-12-19T02:55:58.466Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:58.466Z]
+{
+  "line": 4,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:58.466Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:58.466Z]
+{
+  "line": 4,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:58.466Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:55:58.466Z]
+{
+  "line": 4,
+  "character": 5
+}
+================================================================================
+
+[2024-12-19T02:55:58.690Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:58.690Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 8
+      },
+      "end": {
+        "line": 2,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 8
+            },
+            "end": {
+              "line": 2,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 7
+      },
+      "end": {
+        "line": 4,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:55:58.691Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:55:58.691Z]
+[]
+================================================================================
+
+[2024-12-19T02:56:00.092Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:56:00.092Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1434,
+    "message": "Unexpected keyword or identifier."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 0
+      },
+      "end": {
+        "line": 3,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'div'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:56:00.092Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:56:00.092Z]
+[]
+================================================================================
+
+[2024-12-19T02:56:05.708Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:56:05.708Z]
+{
+  "line": 4,
+  "character": 23
+}
+================================================================================
+
+[2024-12-19T02:56:05.716Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:56:05.716Z]
+{
+  "line": 4,
+  "character": 23
+}
+================================================================================
+
+[2024-12-19T02:56:05.716Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:56:05.717Z]
+{
+  "line": 4,
+  "character": 23
+}
+================================================================================
+
+[2024-12-19T02:56:05.717Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:56:05.717Z]
+{
+  "line": 4,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T02:56:05.717Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:56:05.717Z]
+{
+  "line": 4,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T02:56:05.717Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T02:56:05.718Z]
+{
+  "line": 4,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T02:56:05.948Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:56:05.948Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 8
+      },
+      "end": {
+        "line": 2,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 8
+            },
+            "end": {
+              "line": 2,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 7
+      },
+      "end": {
+        "line": 4,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T02:56:05.949Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T02:56:05.949Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:03.166Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:03.166Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:03.177Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:03.178Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:05.255Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:05.256Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1127,
+    "message": "Invalid character."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 11
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 14
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 10
+      },
+      "end": {
+        "line": 0,
+        "character": 11
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'n' implicitly has an 'any' type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:05.268Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:05.268Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:05.755Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:05.755Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 9
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1127,
+    "message": "Invalid character."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 11
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 14
+      },
+      "end": {
+        "line": 0,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 13
+      },
+      "end": {
+        "line": 1,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1127,
+    "message": "Invalid character."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 15
+      },
+      "end": {
+        "line": 1,
+        "character": 18
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "',' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 18
+      },
+      "end": {
+        "line": 1,
+        "character": 18
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 10
+      },
+      "end": {
+        "line": 0,
+        "character": 11
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'n' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 14
+      },
+      "end": {
+        "line": 1,
+        "character": 15
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7043,
+    "message": "Variable 'n' implicitly has an 'any' type, but a better type may be inferred from usage."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 10
+      },
+      "end": {
+        "line": 0,
+        "character": 11
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'n'."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 14
+      },
+      "end": {
+        "line": 1,
+        "character": 15
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2451,
+    "message": "Cannot redeclare block-scoped variable 'n'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:05.766Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:05.766Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:09.848Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:09.848Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 14
+      },
+      "end": {
+        "line": 2,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 18
+      },
+      "end": {
+        "line": 3,
+        "character": 18
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:09.858Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:09.858Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:12.198Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:12.198Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 14
+      },
+      "end": {
+        "line": 2,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 18
+      },
+      "end": {
+        "line": 3,
+        "character": 18
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:12.210Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:12.210Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:13.069Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:13.069Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 14
+      },
+      "end": {
+        "line": 2,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 18
+      },
+      "end": {
+        "line": 3,
+        "character": 18
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:13.080Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:13.081Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:14.462Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:14.463Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 14
+      },
+      "end": {
+        "line": 2,
+        "character": 14
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 18
+      },
+      "end": {
+        "line": 3,
+        "character": 18
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:14.463Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:14.463Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:17.821Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:17.822Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 3,
+        "character": 18
+      },
+      "end": {
+        "line": 3,
+        "character": 18
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:17.833Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:17.833Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:18.678Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:18.678Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 5,
+        "character": 10
+      },
+      "end": {
+        "line": 5,
+        "character": 10
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "'}' expected.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 3,
+              "character": 16
+            },
+            "end": {
+              "line": 3,
+              "character": 17
+            }
+          }
+        },
+        "message": "The parser expected to find a '}' to match the '{' token here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 12
+      },
+      "end": {
+        "line": 2,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 12
+            },
+            "end": {
+              "line": 2,
+              "character": 13
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:18.690Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:18.690Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:25.790Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:25.790Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 38
+      },
+      "end": {
+        "line": 4,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "';' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 39
+      },
+      "end": {
+        "line": 4,
+        "character": 39
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1002,
+    "message": "Unterminated string literal."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 5,
+        "character": 10
+      },
+      "end": {
+        "line": 5,
+        "character": 10
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "'}' expected.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 3,
+              "character": 16
+            },
+            "end": {
+              "line": 3,
+              "character": 17
+            }
+          }
+        },
+        "message": "The parser expected to find a '}' to match the '{' token here."
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 38
+      },
+      "end": {
+        "line": 5,
+        "character": 10
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7027,
+    "message": "Unreachable code detected.",
+    "tags": [
+      1
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 12
+      },
+      "end": {
+        "line": 2,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 12
+            },
+            "end": {
+              "line": 2,
+              "character": 13
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 11
+      },
+      "end": {
+        "line": 4,
+        "character": 17
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:25.802Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:25.802Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:28.037Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:28.037Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 12
+      },
+      "end": {
+        "line": 2,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 12
+            },
+            "end": {
+              "line": 2,
+              "character": 13
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 11
+      },
+      "end": {
+        "line": 4,
+        "character": 17
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:28.038Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:28.038Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:29.640Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:29.640Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 12
+      },
+      "end": {
+        "line": 2,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 12
+            },
+            "end": {
+              "line": 2,
+              "character": 13
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 11
+      },
+      "end": {
+        "line": 4,
+        "character": 17
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:29.650Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:29.650Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:36.254Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:36.254Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 8
+      },
+      "end": {
+        "line": 2,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 8
+            },
+            "end": {
+              "line": 2,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 4,
+        "character": 11
+      },
+      "end": {
+        "line": 4,
+        "character": 17
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:36.254Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:36.254Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:36.855Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:36.855Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 11
+      },
+      "end": {
+        "line": 2,
+        "character": 17
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:36.868Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:36.868Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:38.324Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:38.324Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 11
+      },
+      "end": {
+        "line": 2,
+        "character": 17
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:38.324Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:38.324Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:40.684Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:40.684Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 7
+      },
+      "end": {
+        "line": 2,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:40.694Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:40.694Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:41.855Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:41.855Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 7
+      },
+      "end": {
+        "line": 2,
+        "character": 13
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'OvsAPI'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:41.856Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:41.856Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:43.288Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:43.289Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:43.289Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:43.289Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:44.389Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:44.390Z]
+{
+  "line": 2,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T03:00:44.390Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:44.390Z]
+{
+  "line": 2,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T03:00:44.390Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:44.390Z]
+{
+  "line": 2,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T03:00:44.396Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:44.396Z]
+{
+  "line": 2,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T03:00:44.396Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:44.396Z]
+{
+  "line": 2,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T03:00:44.397Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:44.397Z]
+{
+  "line": 2,
+  "character": 4
+}
+================================================================================
+
+[2024-12-19T03:00:44.625Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:44.625Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 1
+      },
+      "end": {
+        "line": 2,
+        "character": 4
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'con'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:44.625Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:44.625Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:46.328Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:46.329Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:46.329Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:46.329Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:46.957Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:46.957Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:46.957Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:46.957Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:47.194Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:47.194Z]
+{
+  "line": 2,
+  "character": 1
+}
+================================================================================
+
+[2024-12-19T03:00:47.195Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:47.195Z]
+{
+  "line": 2,
+  "character": 1
+}
+================================================================================
+
+[2024-12-19T03:00:47.195Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:47.195Z]
+{
+  "line": 2,
+  "character": 1
+}
+================================================================================
+
+[2024-12-19T03:00:47.582Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:47.582Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 2
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'co'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:47.583Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:47.583Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:48.247Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:48.247Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 8
+      },
+      "end": {
+        "line": 0,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2349,
+    "message": "This expression is not callable.\n  Type 'Number' has no call signatures.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 0,
+              "character": 8
+            },
+            "end": {
+              "line": 0,
+              "character": 9
+            }
+          }
+        },
+        "message": "Are you missing a semicolon?"
+      }
+    ]
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:48.247Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:48.248Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:49.848Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:49.848Z]
+{
+  "line": 1,
+  "character": 1
+}
+================================================================================
+
+[2024-12-19T03:00:50.085Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:50.086Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 0
+      },
+      "end": {
+        "line": 1,
+        "character": 1
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'f'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:50.086Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:50.086Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:51.556Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:51.556Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 0
+      },
+      "end": {
+        "line": 1,
+        "character": 4
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'func'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:51.557Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:51.557Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:51.834Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:51.834Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 8
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 8
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7050,
+    "message": "'(Missing)' implicitly has an 'any' return type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:51.834Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:51.834Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:52.356Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:52.356Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 8
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7050,
+    "message": "'(Missing)' implicitly has an 'any' return type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:52.357Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:52.357Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:52.742Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:52.742Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 9
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "')' expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 8
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7050,
+    "message": "'(Missing)' implicitly has an 'any' return type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:52.743Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:52.743Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:53.762Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:53.762Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 8
+      }
+    },
+    "severity": 4,
+    "source": "ts",
+    "code": 7050,
+    "message": "'(Missing)' implicitly has an 'any' return type, but a better type may be inferred from usage."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:53.762Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:53.762Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:54.117Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:54.118Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 11
+      },
+      "end": {
+        "line": 1,
+        "character": 11
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "'}' expected.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 1,
+              "character": 10
+            },
+            "end": {
+              "line": 1,
+              "character": 11
+            }
+          }
+        },
+        "message": "The parser expected to find a '}' to match the '{' token here."
+      }
+    ]
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:54.118Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:54.118Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:54.632Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:54.632Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 0
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "'}' expected.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 1,
+              "character": 10
+            },
+            "end": {
+              "line": 1,
+              "character": 11
+            }
+          }
+        },
+        "message": "The parser expected to find a '}' to match the '{' token here."
+      }
+    ]
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:54.632Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:54.632Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:55.200Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:55.200Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 1
+      },
+      "end": {
+        "line": 2,
+        "character": 1
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1005,
+    "message": "'}' expected.",
+    "relatedInformation": [
+      {
+        "location": {
+          "uri": "volar-embedded-content://ts1/file%253A%252F%252F%252Fc%25253A%252FUsers%252Fqinkaiyuan%252FIdeaProjects%252Ftestlspovs%252Fsrc%252Ffasdf.ovs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 0
+            },
+            "end": {
+              "line": 2,
+              "character": 1
+            }
+          }
+        },
+        "message": "The parser expected to find a '}' to match the '{' token here."
+      }
+    ]
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:55.200Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:55.201Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:56.223Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:56.223Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:56.223Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:56.223Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:56.864Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:56.864Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:56.865Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:56.865Z]
+[]
+================================================================================
+
+[2024-12-19T03:00:57.620Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:57.620Z]
+{
+  "line": 2,
+  "character": 3
+}
+================================================================================
+
+[2024-12-19T03:00:57.620Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:57.620Z]
+{
+  "line": 2,
+  "character": 3
+}
+================================================================================
+
+[2024-12-19T03:00:57.620Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:57.620Z]
+{
+  "line": 2,
+  "character": 3
+}
+================================================================================
+
+[2024-12-19T03:00:57.623Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:57.623Z]
+{
+  "line": 2,
+  "character": 3
+}
+================================================================================
+
+[2024-12-19T03:00:57.624Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:57.624Z]
+{
+  "line": 2,
+  "character": 3
+}
+================================================================================
+
+[2024-12-19T03:00:57.624Z]
+await plugin[1].provideCompletionItems(document, position, completionContext, token)
+================================================================================
+
+[2024-12-19T03:00:57.624Z]
+{
+  "line": 2,
+  "character": 3
+}
+================================================================================
+
+[2024-12-19T03:00:57.867Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:57.867Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'con'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:00:57.879Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:00:57.879Z]
+[]
+================================================================================
+
+[2024-12-19T03:30:04.313Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:30:04.313Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'con'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:30:04.323Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:30:04.324Z]
+[]
+================================================================================
+
+[2024-12-19T03:30:05.056Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:30:05.056Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  }
+]
+================================================================================
+
+[2024-12-19T03:30:05.056Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:30:05.056Z]
+[]
+================================================================================
+
+[2024-12-19T03:30:05.658Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:30:05.659Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  }
+]
+================================================================================
+
+[2024-12-19T03:30:05.659Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:30:05.659Z]
+[]
+================================================================================
+
+[2024-12-19T03:30:07.272Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:30:07.272Z]
+[
+  {
+    "range": {
+      "start": {
+        "line": 1,
+        "character": 8
+      },
+      "end": {
+        "line": 1,
+        "character": 9
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 1003,
+    "message": "Identifier expected."
+  },
+  {
+    "range": {
+      "start": {
+        "line": 2,
+        "character": 0
+      },
+      "end": {
+        "line": 2,
+        "character": 3
+      }
+    },
+    "severity": 1,
+    "source": "ts",
+    "code": 2304,
+    "message": "Cannot find name 'con'."
+  }
+]
+================================================================================
+
+[2024-12-19T03:30:07.283Z]
+const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
+================================================================================
+
+[2024-12-19T03:30:07.283Z]
+[]
+================================================================================
