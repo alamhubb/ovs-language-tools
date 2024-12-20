@@ -6,6 +6,7 @@ export enum SlimeAstType {
     ClassDeclaration = 'ClassDeclaration',
     ObjectExpression = 'ObjectExpression',
     Property = 'Property',
+    ArgumentList = 'ArgumentList',
     ExportDefaultDeclaration = 'ExportDefaultDeclaration',
     ExportAllDeclaration = 'ExportAllDeclaration',
     MethodDefinition = 'MethodDefinition',

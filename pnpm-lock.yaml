@@ -427,6 +427,9 @@ importers:
       slime-ast:
         specifier: ^0.0.1
         version: link:../slime-ast
+      slime-parser:
+        specifier: ^0.0.1
+        version: link:../slime-parser
       subhuti:
         specifier: ^0.1.3
         version: link:../../subhuti

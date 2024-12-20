@@ -47,13 +47,14 @@ class SlimeAst {
     }
   }
 
-  createMemberExpression(object: SlimeExpression | SlimeSuper, property: SlimeExpression | SlimeIdentifier): SlimeMemberExpression {
+  createMemberExpression(object: SlimeExpression | SlimeSuper, property?: SlimeExpression | SlimePrivateIdentifier): SlimeMemberExpression {
     return {
       type: SlimeAstType.MemberExpression,
       object: object,
       property: property,
       computed: false,
       optional: false,
+      loc: object.loc
     }
   }
 
@@ -101,33 +102,22 @@ class SlimeAst {
     }
   }
 
-  createBlockStatement(body: Array<SlimeStatement>): SlimeBlockStatement {
-    let index
-    let startLoc
-    let endLoc
-    if (body.length) {
-      index = body[0].loc.index
-      startLoc = body[0].loc.start
-      endLoc = (body[body.length - 1] || body[0]).loc.end
-    }
+  createBlockStatement(body: Array<SlimeStatement>, loc?: SubhutiSourceLocation): SlimeBlockStatement {
+
     return {
       type: SlimeAstType.BlockStatement,
       body: body,
-      loc: {
-        index: index,
-        start: startLoc,
-        end: endLoc
-      }
+      loc: loc
     }
   }
 
-  createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null, params?: SlimePattern[]): SlimeFunctionExpression {
+  createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null, params?: SlimePattern[], loc?: SubhutiSourceLocation): SlimeFunctionExpression {
     return {
       type: SlimeAstType.FunctionExpression,
       params: params,
       id: id,
       body: body,
-      loc: id?.loc || body.loc
+      loc: loc
     }
   }
 
@@ -165,7 +155,7 @@ class SlimeAst {
     return {
       type: SlimeAstType.VariableDeclarator,
       id: id,
-      operator: operator,
+      equal: operator,
       init: init,
     }
   }

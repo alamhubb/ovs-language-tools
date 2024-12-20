@@ -57,7 +57,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
       {alt: () => this.GeneratorExpression()},
       {alt: () => this.tokenConsumer.RegularExpressionLiteral()},
       {alt: () => this.TemplateLiteral()},
-      {alt: () => this.CoverParenthesizedExpressionAndArrowParameterList()}
+      // {alt: () => this.CoverParenthesizedExpressionAndArrowParameterList()}
     ])
   }
 
@@ -292,6 +292,14 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
     })
   }
 
+
+  @SubhutiRule
+  NewMemberExpressionArguments() {
+    this.tokenConsumer.NewTok()
+    this.MemberExpression()
+    this.Arguments()
+  }
+
   @SubhutiRule
   MemberExpression() {
     this.Or([
@@ -300,9 +308,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
       {alt: () => this.MetaProperty()},
       {
         alt: () => {
-          this.tokenConsumer.NewTok()
-          this.MemberExpression()
-          this.Arguments()
+          this.NewMemberExpressionArguments()
         }
       }
     ])
@@ -1351,10 +1357,10 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
 
   @SubhutiRule
   ArrowParameters() {
-    this.Or([
-      {alt: () => this.BindingIdentifier()},
-      {alt: () => this.CoverParenthesizedExpressionAndArrowParameterList()}
-    ])
+    /* this.Or([
+       {alt: () => this.BindingIdentifier()},
+       {alt: () => this.CoverParenthesizedExpressionAndArrowParameterList()}
+     ])*/
   }
 
   @SubhutiRule
@@ -1555,20 +1561,20 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
 
   @SubhutiRule
   ModuleItemList() {
-      this.FaultToleranceMany(() => {
-        this.Or([
-          {alt: () => this.ImportDeclaration()},
-          {alt: () => this.ExportDeclaration()},
-          {alt: () => this.StatementListItem()},
-        ])
-      })
+    this.FaultToleranceMany(() => {
+      this.Or([
+        {alt: () => this.ImportDeclaration()},
+        {alt: () => this.ExportDeclaration()},
+        {alt: () => this.StatementListItem()},
+      ])
+    })
   }
 
   @SubhutiRule
   StatementList() {
-      this.Many(() => {
-        this.StatementListItem()
-      })
+    this.Many(() => {
+      this.StatementListItem()
+    })
   }
 
   @SubhutiRule

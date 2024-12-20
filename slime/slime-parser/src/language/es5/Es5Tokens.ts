@@ -95,7 +95,8 @@ export const Es5TokensName = {
     NumericLiteral: 'NumericLiteral',
     StringLiteral: 'StringLiteral',
     RegularExpressionLiteral: 'RegularExpressionLiteral',
-    Whitespace: 'Whitespace'
+    Spacing: 'Spacing',
+    LineBreak: 'LineBreak'
 };
 export const es5TokensObj = {
 
@@ -198,10 +199,17 @@ export const es5TokensObj = {
         Es5TokensName.RegularExpressionLiteral,
         /\/(?:\\.|[^\\\/])+\/[gimuy]*/
     ),
-    Whitespace: createToken({
-        name: Es5TokensName.Whitespace,
-        pattern: /\s+/,
-        group: SubhutiCreateTokenGroupType.skip
-    }),
+    Spacing: createValueRegToken(
+         Es5TokensName.Spacing,
+         /[\t\f\v]/,
+        ' ',
+        SubhutiCreateTokenGroupType.skip
+    ),
+    LineBreak: createValueRegToken(
+      Es5TokensName.LineBreak,
+      /[\n\r]/,
+      '\n',
+      SubhutiCreateTokenGroupType.skip
+    ),
 };
 export const es5Tokens = Object.values(es5TokensObj);

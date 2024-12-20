@@ -1,36 +1,39 @@
 import SubhutiMatchToken from "./SubhutiMatchToken.ts";
 
 export interface SubhutiSourceLocation {
-    index: number;
-    start: SubhutiPosition;
-    end: SubhutiPosition;
-    filename?: string;
-    identifierName?: string | undefined | null;
+  // index?: number;
+  value?: string;
+  type?: string;
+  start: SubhutiPosition;
+  end: SubhutiPosition;
+  filename?: string;
+  identifierName?: string | undefined | null;
 }
 
 export interface SubhutiPosition {
-    line: number;
-    column: number;
+  index: number;
+  line: number;
+  column: number;
 }
 
 export default class SubhutiCst {
-    // pathName: string;
-    name: string;
-    children?: SubhutiCst[]
-    loc: SubhutiSourceLocation
-    tokens?: SubhutiMatchToken[]
-    value?: string;
+  // pathName: string;
+  name: string;
+  children?: SubhutiCst[]
+  loc: SubhutiSourceLocation
+  tokens?: SubhutiMatchToken[]
+  value?: string;
 
-    constructor(cst?: SubhutiCst) {
-        if (cst) {
-            this.name = cst.name;
-            // this.pathName = cst.pathName;
-            this.children = cst.children;
-            this.value = cst.value;
-        }
+  constructor(cst?: SubhutiCst) {
+    if (cst) {
+      this.name = cst.name;
+      // this.pathName = cst.pathName;
+      this.children = cst.children;
+      this.value = cst.value;
     }
+  }
 
-    pushCstToken?(popToken: SubhutiMatchToken) {
-        this.tokens.push(popToken);
-    }
+  pushCstToken?(popToken: SubhutiMatchToken) {
+    this.tokens.push(popToken);
+  }
 }

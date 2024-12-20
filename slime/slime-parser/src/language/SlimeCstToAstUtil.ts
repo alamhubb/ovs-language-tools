@@ -35,13 +35,14 @@ import {
   type SlimeObjectExpression,
   type SlimeProperty,
   type SlimeNumericLiteral,
-  type SlimeRestElement
+  type SlimeRestElement, type SlimeSuper
 } from "slime-ast/src/SlimeAstInterface.ts";
-import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
+import SubhutiCst, {type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
 import Es6TokenConsumer from "./es2015/Es6Tokens.ts";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
 import {SlimeAstType} from "slime-ast/src/SlimeAstType.ts";
+import type {SubhutiHighlithSourceLocation} from "slime-ast/src/fsadfasast.ts";
 
 export const EsTreeAstType: {
   ExportDefaultDeclaration: 'ExportDefaultDeclaration',
@@ -335,7 +336,8 @@ export class SlimeCstToAst {
     const astName = checkCstName(cst, Es6Parser.prototype.PropertyNameMethodDefinition.name);
     const PropertyName = cst.children[0]
     // const PropertyNameAst = this.createPropertyNameAst(first)
-    const functionExpression = this.createFunctionFormalParametersBodyDefineAst(cst.children[1])
+    const FunctionFormalParametersBodyDefineCst: SubhutiCst = cst.children[1]
+    const functionExpression = this.createFunctionFormalParametersBodyDefineAst(FunctionFormalParametersBodyDefineCst, cst.children[0].loc)
 
     const LiteralPropertyName = PropertyName.children[0]
     checkCstName(LiteralPropertyName, Es6Parser.prototype.LiteralPropertyName.name);
@@ -346,7 +348,7 @@ export class SlimeCstToAst {
     return functionExpression
   }
 
-  createFunctionFormalParametersBodyDefineAst(cst: SubhutiCst): SlimeFunctionExpression {
+  createFunctionFormalParametersBodyDefineAst(cst: SubhutiCst, startLoc: SubhutiSourceLocation): SlimeFunctionExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionFormalParametersBodyDefine.name);
     const first = cst.children[0]
     const first1 = cst.children[1]
@@ -354,15 +356,26 @@ export class SlimeCstToAst {
     const params: SlimePattern[] = this.createFunctionFormalParametersAst(first)
     const body: SlimeBlockStatement = this.createFunctionBodyDefineAst(first1)
 
-    return SlimeAstUtil.createFunctionExpression(body, null, params)
+    console.log('body.loc')
+    console.log(body.loc)
+
+    let loc: SubhutiSourceLocation = {
+      // index: startLoc.index,
+      start: startLoc.start,
+      end: cst.children[cst.children.length - 1].loc.end
+    }
+
+    console.log('let loc: SubhutiSourceLocation')
+    console.log(startLoc)
+    return SlimeAstUtil.createFunctionExpression(body, null, params, loc)
   }
 
   createFunctionBodyDefineAst(cst: SubhutiCst): SlimeBlockStatement {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionBodyDefine.name);
-    if (cst.children.length > 2) {
+    if (cst.children[1].name === Es6Parser.prototype.FunctionBody.name) {
       const first1 = cst.children[1]
       const body = this.createFunctionBodyAst(first1)
-      return SlimeAstUtil.createBlockStatement(body)
+      return SlimeAstUtil.createBlockStatement(body, cst.loc)
     }
     return SlimeAstUtil.createBlockStatement([])
   }
@@ -399,7 +412,7 @@ export class SlimeCstToAst {
   createFunctionExpressionAst(cst: SubhutiCst): SlimeFunctionExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionExpression.name);
     const FunctionFormalParametersBodyDefineCst: SubhutiCst = cst.children[1]
-    const FunctionFormalParametersBodyDefineAst = this.createFunctionFormalParametersBodyDefineAst(FunctionFormalParametersBodyDefineCst)
+    const FunctionFormalParametersBodyDefineAst = this.createFunctionFormalParametersBodyDefineAst(FunctionFormalParametersBodyDefineCst, cst.children[0].loc)
     return FunctionFormalParametersBodyDefineAst
   }
 
@@ -439,41 +452,57 @@ export class SlimeCstToAst {
     const astName = checkCstName(cst, Es6Parser.prototype.CallExpression.name);
     if (cst.children.length > 1) {
       const argumentsCst = cst.children[1]
-      let argumentsAst: any[] = []
-
-      if (argumentsCst.children.length > 2) {
-        const ArgumentListCst = argumentsCst.children[1]
-        const assignParams = ArgumentListCst.children.filter(item => item.name === Es6Parser.prototype.AssignmentExpression.name)
-        argumentsAst = assignParams.map(item => this.createAssignmentExpressionAst(item)) as any[]
-      }
+      let argumentsAst: SlimeExpression[] = this.createArgumentsAst(argumentsCst)
       const callee = this.createMemberExpressionAst(cst.children[0])
 
-
-      const ast: SlimeCallExpression = {
-        type: astName as any,
-        callee: callee,
-        arguments: argumentsAst,
-        optional: false,
-        loc: cst.loc
-      } as any
-      return ast
+      return SlimeAstUtil.createCallExpression(callee, argumentsAst)
     }
     return this.createExpressionAst(cst.children[0])
   }
 
+  createArgumentsAst(cst: SubhutiCst): Array<SlimeExpression> {
+    const astName = checkCstName(cst, Es6Parser.prototype.Arguments.name);
+    const first1 = cst.children[1]
+    if (first1.name === Es6Parser.prototype.ArgumentList.name) {
+      const res = this.createArgumentListAst(first1)
+      return res
+    }
+    return []
+  }
+
+  createArgumentListAst(cst: SubhutiCst): Array<SlimeExpression> {
+    const astName = checkCstName(cst, Es6Parser.prototype.ArgumentList.name);
+    const ArgumentList: SlimeExpression[] = []
+    for (const child of cst.children) {
+      if (child.name === Es6Parser.prototype.AssignmentExpression.name) {
+        const res = this.createAssignmentExpressionAst(child)
+        ArgumentList.push(res)
+      }
+    }
+    return ArgumentList
+  }
+
+  createMemberExpressionFirstOr(cst: SubhutiCst): SlimeExpression | SlimeSuper {
+    if (cst.name === Es6Parser.prototype.PrimaryExpression.name) {
+      return this.createPrimaryExpressionAst(cst)
+    } else if (cst.name === Es6Parser.prototype.SuperProperty.name) {
+      return this.createPrimaryExpressionAst(cst)
+    } else if (cst.name === Es6Parser.prototype.MetaProperty.name) {
+      return this.createPrimaryExpressionAst(cst)
+    } else if (cst.name === Es6Parser.prototype.NewMemberExpressionArguments.name) {
+      return this.createPrimaryExpressionAst(cst)
+    } else {
+      throw new Error('不支持的类型')
+    }
+  }
 
   createMemberExpressionAst(cst: SubhutiCst): SlimeExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.MemberExpression.name);
     if (cst.children.length > 1) {
-      const ast: SlimeMemberExpression = {
-        type: astName as any,
-        object: this.createIdentifierAst(cst.children[0].children[0].children[0]),
-        property: this.createIdentifierAst(cst.children[2]),
-        computed: false,
-        optional: false,
-        loc: cst.loc
-      } as any
-      return ast
+      const memberExpressionObject = this.createMemberExpressionFirstOr(cst.children[0])
+      const memberExpressionProperty = cst.children[2] && this.createIdentifierAst(cst.children[2])
+      const memberExpression = SlimeAstUtil.createMemberExpression(memberExpressionObject, memberExpressionProperty)
+      return memberExpression
     }
     return this.createExpressionAst(cst.children[0])
   }

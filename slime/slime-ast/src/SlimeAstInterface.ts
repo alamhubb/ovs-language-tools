@@ -205,7 +205,7 @@ export interface SlimeFunctionDeclaration extends SlimeMaybeNamedFunctionDeclara
 export interface SlimeVariableDeclarator extends SlimeBaseNode {
     type: "VariableDeclarator";
     id: SlimePattern;
-    operator: SlimeEqualOperator;
+    equal: SlimeEqualOperator;
     init?: SlimeExpression | null | undefined;
 }
 

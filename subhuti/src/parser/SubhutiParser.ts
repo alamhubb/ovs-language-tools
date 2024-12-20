@@ -284,7 +284,7 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
           return cst
         }
         cst.loc = {
-          index: cst.children[0].loc.index,
+          // index: cst.children[0].loc.index,
           start: cst.children[0].loc.start,
           end: cst.children[cst.children.length - 1].loc.end,
         }
@@ -424,12 +424,16 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
     cst.name = popToken.tokenName
     cst.value = popToken.tokenValue
     cst.loc = {
-      index: popToken.index,
+      // index: popToken.index,
+      value: popToken.tokenValue,
+      type: popToken.tokenName,
       start: {
+        index: popToken.index,
         line: popToken.rowNum,
         column: popToken.columnStartNum,
       },
       end: {
+        index: popToken.index + popToken.tokenValue.length,
         line: popToken.rowNum,
         column: popToken.columnEndNum
       }
@@ -503,6 +507,15 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
       // 执行成功，则完成任务，做多一次，则必须跳出
       // 只有有成功的匹配才跳出循环，否则就一直执行，直至循环结束
       if (this.continueForAndNoBreak) {
+        //容错模式下，如果错误匹配的数量大于
+        if (this.faultTolerance) {
+          const res = this.getTokensLengthMin(thisBackAry)
+          if (res) {
+            if (res.tokens.length < this.tokens.length) {
+              this.setBackDataNoContinueMatch(res)
+            }
+          }
+        }
         //别的while都是，没token，才break，这个满足一次就必须break，无论有没有tokens还
         break
       } else if (!this.continueForAndNoBreak) {
@@ -534,13 +547,18 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
       return this.getCurCst()
     }
     if (this.faultTolerance && thisBackAry.length) {
-      const res = thisBackAry.sort((a, b) => {
-        return a.tokens.length - b.tokens.length
-      })[0]
+      const res = this.getTokensLengthMin(thisBackAry)
       this.setBackDataNoContinueMatch(res)
       return this.getCurCst()
     }
     return
+  }
+
+  getTokensLengthMin(thisBackAry: SubhutiBackData[]) {
+    const res = thisBackAry.sort((a, b) => {
+      return a.tokens.length - b.tokens.length
+    })[0]
+    return res
   }
 
   get continueForAndNoBreak() {
