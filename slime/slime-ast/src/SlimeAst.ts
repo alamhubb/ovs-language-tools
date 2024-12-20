@@ -112,6 +112,7 @@ class SlimeAst {
   }
 
   createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null, params?: SlimePattern[], loc?: SubhutiSourceLocation): SlimeFunctionExpression {
+    loc.type = SlimeAstType.FunctionExpression
     return {
       type: SlimeAstType.FunctionExpression,
       params: params,
