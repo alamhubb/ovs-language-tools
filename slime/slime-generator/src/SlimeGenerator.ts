@@ -391,7 +391,6 @@ export default class SlimeGenerator {
   }
 
   static cstLocationToSlimeLocation(cstLocation: SubhutiSourceLocation, sourceLength: number) {
-    console.trace(cstLocation)
     const sourcePosition: SlimeCodeLocation = {
       type: cstLocation.type,
       index: cstLocation.start.index,
