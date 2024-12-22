@@ -20,7 +20,6 @@ import {
   SlimeVariableDeclarationKind
 } from "./SlimeAstInterface.ts";
 import {
-  type SlimeCaretEqualsToken,
   type SlimeDirective,
   type SlimeExpression,
   type SlimeIdentifier,
@@ -182,11 +181,11 @@ class SlimeAst {
   }
 
 
-  createNullLiteralToken(): SlimeCaretEqualsToken {
+/*  createNullLiteralToken(): SlimeCaretEqualsToken {
     return {
       type: SlimeAstType.NullLiteral
     }
-  }
+  }*/
 
 
   createStringLiteral(value: string): SlimeStringLiteral {
