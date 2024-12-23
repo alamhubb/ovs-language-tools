@@ -660,7 +660,7 @@ export interface SlimeBaseModuleSpecifier extends SlimeBaseNode {
 export interface SlimeImportDeclaration extends SlimeBaseNode {
   type: "ImportDeclaration";
   specifiers: Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>;
-  source: SlimeLiteral;
+  source: SlimeStringLiteral;
 }
 
 export interface SlimeImportSpecifier extends SlimeBaseNode {

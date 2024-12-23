@@ -38,7 +38,11 @@ import {
   type SlimeDotOperator,
   type SlimeMemberExpression,
   type SlimeFunctionParams,
-  type SlimeLParen
+  type SlimeLParen,
+  type SlimeImportDeclaration,
+  type SlimeImportSpecifier,
+  type SlimeImportDefaultSpecifier,
+  type SlimeImportNamespaceSpecifier
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst, {type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
@@ -110,6 +114,114 @@ export class SlimeCstToAst {
     return astArr
   }
 
+  createImportDeclarationAst(cst: SubhutiCst): SlimeImportDeclaration {
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportDeclaration.name);
+    const first = cst.children[0]
+    const first1 = cst.children[1]
+
+
+    let specifiers: Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>
+    let FromClause: SlimeStringLiteral
+    if (first1.name === Es6Parser.prototype.ImportClause.name) {
+      specifiers = this.createImportClauseAst(first1)
+      FromClause = this.createImportClauseAst(cst.children[2])
+    } else if (first1.name === Es6Parser.prototype.ModuleSpecifier.name) {
+    }
+    return SlimeAstUtil.createImportDeclaration(specifiers)
+  }
+
+  createFromClauseAst(cst: SubhutiCst) {
+
+  }
+
+  createImportClauseAst(cst: SubhutiCst): SlimeImportDeclaration {
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportClause.name);
+    const first = cst.children[0]
+    if (first.name === Es6Parser.prototype.ImportedDefaultBinding.name) {
+      this.createImportedDefaultBindingAst(first)
+    } else if (first.name === Es6Parser.prototype.NameSpaceImport.name) {
+      this.createNameSpaceImportAst(first)
+    } else if (first.name === Es6Parser.prototype.NamedImports.name) {
+      this.createNameSpaceImportAst(first)
+    } else if (first.name === Es6Parser.prototype.ImportedDefaultBindingCommaNameSpaceImport.name) {
+      this.createNameSpaceImportAst(first)
+    } else if (first.name === Es6Parser.prototype.ImportedDefaultBindingCommaNamedImports.name) {
+      this.createNameSpaceImportAst(first)
+    }
+  }
+
+  createImportedDefaultBindingAst(cst: SubhutiCst): SlimeImportDeclaration {
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportedDefaultBinding.name);
+    const first = cst.children[0]
+    this.createImportedBindingAst(first)
+  }
+
+  createImportedBindingAst(cst: SubhutiCst) {
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportedBinding.name);
+    const first = cst.children[0]
+    this.createBindingIdentifierAst(first)
+  }
+
+  createNameSpaceImportAst(cst: SubhutiCst): SlimeImportDeclaration {
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportDeclaration.name);
+    const first = cst.children[0]
+    const first1 = cst.children[0]
+    if (first1.name === Es6Parser.prototype.ImportClause.name) {
+
+    } else if (first1.name === Es6Parser.prototype.ModuleSpecifier.name) {
+
+    }
+  }
+
+  createNamedImportsAst(cst: SubhutiCst): SlimeImportDeclaration {
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportDeclaration.name);
+    const first = cst.children[0]
+    const first1 = cst.children[0]
+    if (first1.name === Es6Parser.prototype.ImportClause.name) {
+
+    } else if (first1.name === Es6Parser.prototype.ModuleSpecifier.name) {
+
+    }
+  }
+
+  createImportedDefaultBindingCommaNameSpaceImportAst(cst: SubhutiCst): SlimeImportDeclaration {
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportDeclaration.name);
+    const first = cst.children[0]
+    const first1 = cst.children[0]
+    if (first1.name === Es6Parser.prototype.ImportClause.name) {
+
+    } else if (first1.name === Es6Parser.prototype.ModuleSpecifier.name) {
+
+    }
+  }
+
+  createImportedDefaultBindingCommaNamedImportsAst(cst: SubhutiCst): SlimeImportDeclaration {
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportDeclaration.name);
+    const first = cst.children[0]
+    const first1 = cst.children[0]
+    if (first1.name === Es6Parser.prototype.ImportClause.name) {
+
+    } else if (first1.name === Es6Parser.prototype.ModuleSpecifier.name) {
+
+    }
+  }
+
+
+  createBindingIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
+    const astName = checkCstName(cst, Es6Parser.prototype.BindingIdentifier.name);
+    //Identifier
+    const first = cst.children[0]
+    return SlimeAstUtil.createIdentifier(first.value)
+  }
+
+
+  /*createImportClauseAst(cst: SubhutiCst):Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>{
+    let astName = checkCstName(cst, Es6Parser.prototype.ImportClause.name);
+
+
+  }*/
+
+
   createStatementListAst(cst: SubhutiCst): Array<SlimeStatement> {
     const astName = checkCstName(cst, Es6Parser.prototype.StatementList.name);
     if (cst.children) {
@@ -140,7 +252,6 @@ export class SlimeCstToAst {
       return this.createReturnStatementAst(cst)
     }
   }
-
 
   createExportDeclarationAst(cst: SubhutiCst): SlimeExportDefaultDeclaration | SlimeExportNamedDeclaration {
     let astName = checkCstName(cst, Es6Parser.prototype.ExportDeclaration.name);
@@ -314,13 +425,6 @@ export class SlimeCstToAst {
     //BindingIdentifier
     const first = cst.children[0]
     return this.createBindingIdentifierAst(first)
-  }
-
-  createBindingIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
-    const astName = checkCstName(cst, Es6Parser.prototype.BindingIdentifier.name);
-    //Identifier
-    const first = cst.children[0]
-    return SlimeAstUtil.createIdentifier(first.value)
   }
 
 

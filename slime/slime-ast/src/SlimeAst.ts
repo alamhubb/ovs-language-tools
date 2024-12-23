@@ -35,7 +35,11 @@ import {
   type SlimeFunctionParams,
   type SlimeLParen,
   type SlimeRParen,
-  type SlimeLBrace, type SlimeRBrace,
+  type SlimeLBrace,
+  type SlimeRBrace,
+  type SlimeImportSpecifier,
+  type SlimeImportDefaultSpecifier,
+  type SlimeImportNamespaceSpecifier, type SlimeImportDeclaration,
 } from "./SlimeAstInterface.ts";
 
 import {SlimeAstType} from "./SlimeAstType.ts";
@@ -54,6 +58,15 @@ class SlimeAst {
     return this.commonLocType({
       type: SlimeAstType.Dot,
       value: '.',
+      loc: loc
+    })
+  }
+
+  createImportDeclaration(specifiers: Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>, source: SlimeStringLiteral, loc?: SubhutiSourceLocation): SlimeImportDeclaration {
+    return this.commonLocType({
+      type: SlimeAstType.ImportDeclaration,
+      source: source,
+      specifiers: specifiers,
       loc: loc
     })
   }

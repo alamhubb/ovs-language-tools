@@ -12,7 +12,7 @@ import {
   type SlimeExpressionStatement,
   type SlimeFunctionDeclaration,
   type SlimeFunctionExpression, type SlimeFunctionParams,
-  type SlimeIdentifier,
+  type SlimeIdentifier, type SlimeImportDeclaration, type SlimeLiteral,
   type SlimeMemberExpression,
   type SlimeModuleDeclaration,
   type SlimeNumericLiteral,
@@ -89,16 +89,26 @@ export default class SlimeGenerator {
     }
   }
 
-
   private static generatorModuleDeclaration(node: SlimeStatement | SlimeModuleDeclaration) {
     if (node.type === SlimeAstType.ExportNamedDeclaration) {
       this.generatorExportNamedDeclaration(node as SlimeExportNamedDeclaration)
     } else if (node.type === SlimeAstType.ExportDefaultDeclaration) {
 
+    } else if (node.type === SlimeAstType.ImportDeclaration) {
+      this.generatorImportDeclaration(node as SlimeImportDeclaration)
     } else {
       this.generatorStatement(node as SlimeStatement)
     }
   }
+
+  private static generatorImportDeclaration(node: SlimeImportDeclaration) {
+    this.addCodeAndMappings(es6TokensObj.ImportTok, node.loc)
+    this.addSpacing()
+    this.addCodeAndMappings(es6TokensObj.FromTok, node.loc)
+    this.addSpacing()
+    this.generatorStringLiteral(node.source)
+  }
+
 
   private static generatorExportNamedDeclaration(node: SlimeExportNamedDeclaration) {
     this.addCodeAndMappings(es6TokensObj.ExportTok, node.loc)

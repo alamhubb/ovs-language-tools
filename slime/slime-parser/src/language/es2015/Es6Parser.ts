@@ -1612,16 +1612,15 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
         alt: () => {
           this.ImportClause()
           this.FromClause()
-          this.EmptySemicolon()
         }
       },
       {
         alt: () => {
           this.ModuleSpecifier()
-          this.EmptySemicolon()
         }
       }
     ])
+    this.EmptySemicolon()
   }
 
   @SubhutiRule
@@ -1632,19 +1631,29 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
       {alt: () => this.NamedImports()},
       {
         alt: () => {
-          this.ImportedDefaultBinding()
-          this.tokenConsumer.Comma()
-          this.NameSpaceImport()
+          this.ImportedDefaultBindingCommaNameSpaceImport()
         }
       },
       {
         alt: () => {
-          this.ImportedDefaultBinding()
-          this.tokenConsumer.Comma()
-          this.NamedImports()
+          this.ImportedDefaultBindingCommaNamedImports()
         }
       }
     ])
+  }
+
+  @SubhutiRule
+  ImportedDefaultBindingCommaNameSpaceImport() {
+    this.ImportedDefaultBinding()
+    this.tokenConsumer.Comma()
+    this.NameSpaceImport()
+  }
+
+  @SubhutiRule
+  ImportedDefaultBindingCommaNamedImports() {
+    this.ImportedDefaultBinding()
+    this.tokenConsumer.Comma()
+    this.NameSpaceImport()
   }
 
   @SubhutiRule
