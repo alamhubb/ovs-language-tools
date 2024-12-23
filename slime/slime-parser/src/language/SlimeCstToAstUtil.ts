@@ -33,7 +33,7 @@ import {
   type SlimeObjectExpression,
   type SlimeProperty,
   type SlimeNumericLiteral,
-  type SlimeRestElement, type SlimeSuper, type SlimeDotOperator
+  type SlimeRestElement, type SlimeSuper, type SlimeDotOperator, type SlimeMemberExpression
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst, {type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
@@ -498,9 +498,13 @@ export class SlimeCstToAst {
     const astName = checkCstName(cst, Es6Parser.prototype.MemberExpression.name);
     if (cst.children.length > 1) {
       const memberExpressionObject = this.createMemberExpressionFirstOr(cst.children[0])
-      const SlimeDotOperator = this.createDotIdentifierAst(cst.children[1])
-      const memberExpressionProperty = cst.children[2] && this.createIdentifierAst(cst.children[2])
-      const memberExpression = SlimeAstUtil.createMemberExpression(memberExpressionObject, SlimeDotOperator, memberExpressionProperty)
+      const first1 = cst.children[1]
+      let memberExpression: SlimeMemberExpression
+      if (first1.name === Es6Parser.prototype.DotIdentifier.name) {
+        const SlimeDotOperator = SlimeAstUtil.createDotOperator(first1.children[0].loc)
+        const memberExpressionProperty = first1.children[1] && this.createIdentifierAst(first1.children[1])
+        memberExpression = SlimeAstUtil.createMemberExpression(memberExpressionObject, SlimeDotOperator, memberExpressionProperty)
+      }
       return memberExpression
     }
     return this.createExpressionAst(cst.children[0])
