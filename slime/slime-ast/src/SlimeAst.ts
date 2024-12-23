@@ -17,9 +17,7 @@ import {
   type SlimeSimpleCallExpression,
   type SlimeSpreadElement,
   type SlimeSuper,
-  SlimeVariableDeclarationKind
-} from "./SlimeAstInterface.ts";
-import {
+  SlimeVariableDeclarationKind,
   type SlimeDirective,
   type SlimeExpression,
   type SlimeIdentifier,
@@ -31,7 +29,8 @@ import {
   type SlimeStatement,
   type SlimeStringLiteral,
   type SlimeVariableDeclaration,
-  type SlimeVariableDeclarator
+  type SlimeVariableDeclarator,
+  type SlimeDotOperator, type SlimeNullLiteral,
 } from "./SlimeAstInterface.ts";
 
 import {SlimeAstType} from "./SlimeAstType.ts";
@@ -39,34 +38,51 @@ import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 
 class SlimeAst {
   createProgram(body: Array<SlimeDirective | SlimeStatement | SlimeModuleDeclaration>, sourceType: SlimeProgramSourceType = SlimeProgramSourceType.script): SlimeProgram {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.Program,
       sourceType: sourceType,
       body: body
-    }
+    })
   }
 
-  createMemberExpression(object: SlimeExpression | SlimeSuper, property?: SlimeExpression | SlimePrivateIdentifier): SlimeMemberExpression {
-    return {
+  createDotOperator(loc?: SubhutiSourceLocation): SlimeDotOperator {
+    return this.commonLocType({
+      type: SlimeAstType.Dot,
+      value: '.',
+      loc: loc
+    })
+  }
+
+  commonLocType<T extends SlimeBaseNode>(node: T): T {
+    console.log(node)
+    // if (node.loc) {
+    //   node.loc.type = node.type
+    // }
+    return node
+  }
+
+  createMemberExpression(object: SlimeExpression | SlimeSuper, dot: SlimeDotOperator, property?: SlimeExpression | SlimePrivateIdentifier): SlimeMemberExpression {
+    return this.commonLocType({
       type: SlimeAstType.MemberExpression,
       object: object,
+      dot: dot,
       property: property,
       computed: false,
       optional: false,
       loc: object.loc
-    }
+    })
   }
 
   createArrayExpression(elements?: Array<SlimeExpression | SlimeSpreadElement | null>): SlimeArrayExpression {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.ArrayExpression,
       elements: elements,
-    }
+    })
   }
 
 
   createPropertyAst(key: SlimeExpression | SlimePrivateIdentifier, value: SlimeExpression | SlimePattern): SlimeProperty {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.Property,
       key: key,
       value: value,
@@ -74,98 +90,98 @@ class SlimeAst {
       method: false,
       shorthand: false,
       computed: false,
-    }
+    })
   }
 
   createObjectExpression(properties: Array<SlimeProperty> = []): SlimeObjectExpression {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.ObjectExpression,
       properties: properties
-    }
+    })
   }
 
   createCallExpression(callee: SlimeExpression | SlimeSuper, args: Array<SlimeExpression | SlimeSpreadElement>): SlimeSimpleCallExpression {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.CallExpression,
       callee: callee,
       arguments: args,
       optional: false,
       loc: callee.loc
-    }
+    })
   }
 
   createReturnStatement(argument?: SlimeExpression | null): SlimeReturnStatement {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.ReturnStatement,
       argument: argument
-    }
+    })
   }
 
   createBlockStatement(body: Array<SlimeStatement>, loc?: SubhutiSourceLocation): SlimeBlockStatement {
 
-    return {
+    return this.commonLocType({
       type: SlimeAstType.BlockStatement,
       body: body,
       loc: loc
-    }
+    })
   }
 
   createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null, params?: SlimePattern[], loc?: SubhutiSourceLocation): SlimeFunctionExpression {
     loc.type = SlimeAstType.FunctionExpression
-    return {
+    return this.commonLocType({
       type: SlimeAstType.FunctionExpression,
       params: params,
       id: id,
       body: body,
       loc: loc
-    }
+    })
   }
 
   createVariableDeclaration(kind: SlimeVariableDeclarationKind, declarations: SlimeVariableDeclarator[]): SlimeVariableDeclaration {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.VariableDeclaration,
       declarations: declarations,
       kind: kind
-    }
+    })
   }
 
   createRestElement(argument: SlimePattern): SlimeRestElement {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.RestElement,
       argument: argument
-    }
+    })
   }
 
   createSpreadElement(argument: SlimeExpression): SlimeSpreadElement {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.SpreadElement,
       argument: argument
-    }
+    })
   }
 
   createEqualOperator(loc?: SubhutiSourceLocation): SlimeEqualOperator {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.EqualOperator,
       value: '=',
       loc: loc
-    }
+    })
   }
 
   createVariableDeclarator(id: SlimePattern, operator?: SlimeEqualOperator, init?: SlimeExpression): SlimeVariableDeclarator {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.VariableDeclarator,
       id: id,
       equal: operator,
       init: init,
-    }
+    })
   }
 
   createIdentifier(name: string, loc?: SubhutiSourceLocation): SlimeIdentifier {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.Identifier,
       name: name,
       loc: loc
-    }
+    })
   }
 
   createLiteral(value?: number | string): SlimeLiteral {
@@ -181,43 +197,44 @@ class SlimeAst {
   }
 
 
-/*  createNullLiteralToken(): SlimeCaretEqualsToken {
-    return {
-      type: SlimeAstType.NullLiteral
-    }
-  }*/
+  createNullLiteralToken(): SlimeNullLiteral {
+    return this.commonLocType({
+      type: SlimeAstType.NullLiteral,
+      value: null
+    })
+  }
 
 
   createStringLiteral(value: string): SlimeStringLiteral {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.StringLiteral,
       value: value.replace(/^['"]|['"]$/g, '')
-    }
+    })
   }
 
   createNumericLiteral(value: number): SlimeNumericLiteral {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.NumericLiteral,
       value: value
-    }
+    })
   }
 
   createBooleanLiteral(value: boolean): SlimeBooleanLiteral {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.BooleanLiteral,
       value: value
-    }
+    })
   }
 
   createMethodDefinition(key: SlimeExpression | SlimePrivateIdentifier, value: SlimeFunctionExpression): SlimeMethodDefinition {
-    return {
+    return this.commonLocType({
       type: SlimeAstType.MethodDefinition,
       key: key,
       value: value,
       kind: "method",
       computed: false,
       static: false,
-    }
+    })
   }
 }
 

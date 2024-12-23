@@ -32,4 +32,5 @@ export enum SlimeAstType {
     BooleanLiteral = 'BooleanLiteral',
     NullLiteral = 'NullLiteral',
     EqualOperator = 'EqualOperator',
+    Dot = 'Dot',
 }

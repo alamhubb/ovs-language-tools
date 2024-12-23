@@ -11,11 +11,9 @@ import {
   type SlimeExportNamedDeclaration,
   type SlimeExpression,
   type SlimeExpressionStatement,
-  type SlimeFunctionDeclaration,
   type SlimeFunctionExpression,
   type SlimeIdentifier,
   type SlimeLiteral,
-  type SlimeMemberExpression,
   type SlimeModuleDeclaration,
   type SlimePattern,
   type SlimeProgram,
@@ -35,7 +33,7 @@ import {
   type SlimeObjectExpression,
   type SlimeProperty,
   type SlimeNumericLiteral,
-  type SlimeRestElement, type SlimeSuper
+  type SlimeRestElement, type SlimeSuper, type SlimeDotOperator
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst, {type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
@@ -67,8 +65,7 @@ export function throwNewError(errorMsg: string = 'syntax error') {
 export class SlimeCstToAst {
   createIdentifierAst(cst: SubhutiCst): SlimeIdentifier {
     const astName = checkCstName(cst, Es6TokenConsumer.prototype.Identifier.name);
-    const identifier = SlimeAstUtil.createIdentifier(cst.value)
-    identifier.loc = cst.loc
+    const identifier = SlimeAstUtil.createIdentifier(cst.value, cst.loc)
     return identifier
   }
 
@@ -496,12 +493,20 @@ export class SlimeCstToAst {
     }
   }
 
+  createDotIdentifierAst(cst: SubhutiCst):SlimeDotOperator{
+    const astName = checkCstName(cst, Es6Parser.prototype.DotIdentifier.name);
+    const SlimeDotOperator = SlimeAstUtil.createDotOperator(cst.children[0].loc)
+    return SlimeDotOperator
+  }
+
+
   createMemberExpressionAst(cst: SubhutiCst): SlimeExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.MemberExpression.name);
     if (cst.children.length > 1) {
       const memberExpressionObject = this.createMemberExpressionFirstOr(cst.children[0])
+      const SlimeDotOperator = this.createDotIdentifierAst(cst.children[1])
       const memberExpressionProperty = cst.children[2] && this.createIdentifierAst(cst.children[2])
-      const memberExpression = SlimeAstUtil.createMemberExpression(memberExpressionObject, memberExpressionProperty)
+      const memberExpression = SlimeAstUtil.createMemberExpression(memberExpressionObject, SlimeDotOperator, memberExpressionProperty)
       return memberExpression
     }
     return this.createExpressionAst(cst.children[0])

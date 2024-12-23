@@ -317,15 +317,12 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
       this.Or([
         {
           alt: () => {
-            this.tokenConsumer.Dot()
-            this.tokenConsumer.Identifier()
+            this.DotIdentifier()
           }
         },
         {
           alt: () => {
-            this.tokenConsumer.LBracket()
-            this.Expression()
-            this.tokenConsumer.RBracket()
+            this.BracketExpression()
           }
         },
         {
@@ -338,14 +335,26 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   }
 
   @SubhutiRule
+  DotIdentifier() {
+    this.tokenConsumer.Dot()
+    this.tokenConsumer.Identifier()
+  }
+  @SubhutiRule
+  BracketExpression() {
+    this.tokenConsumer.LBracket()
+    this.Expression()
+    this.tokenConsumer.RBracket()
+  }
+
+
+
+  @SubhutiRule
   SuperProperty() {
     this.Or([
       {
         alt: () => {
           this.tokenConsumer.SuperTok()
-          this.tokenConsumer.LBracket()
-          this.Expression()
-          this.tokenConsumer.RBracket()
+          this.BracketExpression()
         }
       },
       {
@@ -407,9 +416,7 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
         {alt: () => this.Arguments()},
         {
           alt: () => {
-            this.tokenConsumer.LBracket()
-            this.Expression()
-            this.tokenConsumer.RBracket()
+            this.BracketExpression()
           }
         },
         {

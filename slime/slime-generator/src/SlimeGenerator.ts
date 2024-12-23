@@ -320,9 +320,10 @@ export default class SlimeGenerator {
   }
 
   private static generatorMemberExpression(node: SlimeMemberExpression) {
-    console.log(node)
     this.generatorExpression(node.object as SlimeExpression)
-    this.addCodeAndMappings(es6TokensObj.Dot, node.loc)
+    if (node.dot) {
+      this.addCodeAndMappings(es6TokensObj.Dot, node.dot.loc)
+    }
     if (node.property) {
       if (node.property.type === SlimeAstType.PrivateIdentifier) {
         this.generatorPrivateIdentifier(node.property)
