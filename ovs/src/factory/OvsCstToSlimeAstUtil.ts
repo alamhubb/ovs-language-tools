@@ -1,10 +1,16 @@
 import {SlimeCstToAst} from "slime-parser/src/language/SlimeCstToAstUtil.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
-import type {SlimeCallExpression, SlimeExpression, SlimeStatement} from "slime-ast/src/SlimeAstInterface.ts";
+import {
+  type SlimeCallExpression,
+  type SlimeExpression,
+  type SlimeProgram, SlimeProgramSourceType,
+  type SlimeStatement
+} from "slime-ast/src/SlimeAstInterface.ts";
 import OvsParser from "../parser/OvsParser.ts";
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
 import type {OvsAstLexicalBinding, OvsAstRenderDomViewDeclaration} from "../interface/OvsInterface";
+import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
 
 export function checkCstName(cst: SubhutiCst, cstName: string) {
   if (cst.name !== cstName) {
@@ -19,6 +25,24 @@ export function throwNewError(errorMsg: string = 'syntax error') {
 }
 
 export class OvsCstToSlimeAst extends SlimeCstToAst {
+  toProgram(cst: SubhutiCst): SlimeProgram {
+    const astName = checkCstName(cst, Es6Parser.prototype.Program.name);
+    //找到导入模块，看有没有导入ovs，没有的话则添加导入代码
+    const first = cst.children[0]
+    let program: SlimeProgram
+    if (first.name === Es6Parser.prototype.ModuleItemList.name) {
+      const body = this.createModuleItemListAst(first)
+      program = SlimeAstUtil.createProgram(body, SlimeProgramSourceType.module)
+    } else if (first.name === Es6Parser.prototype.StatementList.name) {
+      const body = this.createStatementListAst(first)
+      program = SlimeAstUtil.createProgram(body, SlimeProgramSourceType.script)
+    }
+    program.loc = cst.loc
+    return program
+  }
+
+
+
   createExpressionAst(cst: SubhutiCst): SlimeExpression {
     const astName = cst.name
     let left
