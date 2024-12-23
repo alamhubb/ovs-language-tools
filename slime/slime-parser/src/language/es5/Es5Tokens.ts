@@ -201,7 +201,7 @@ export const es5TokensObj = {
     ),
     Spacing: createValueRegToken(
          Es5TokensName.Spacing,
-         /[\t\f\v]/,
+         /[ \t\f\v]/,
         ' ',
         SubhutiCreateTokenGroupType.skip
     ),

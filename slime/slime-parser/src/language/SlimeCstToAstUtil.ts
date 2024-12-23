@@ -107,8 +107,11 @@ export class SlimeCstToAst {
 
   createStatementListAst(cst: SubhutiCst): Array<SlimeStatement> {
     const astName = checkCstName(cst, Es6Parser.prototype.StatementList.name);
-    const statements = cst.children.map(item => this.createStatementListItemAst(item)).flat()
-    return statements
+    if (cst.children) {
+      const statements = cst.children.map(item => this.createStatementListItemAst(item)).flat()
+      return statements
+    }
+    return []
   }
 
   createStatementListItemAst(cst: SubhutiCst): Array<SlimeStatement> {
@@ -484,7 +487,7 @@ export class SlimeCstToAst {
     }
   }
 
-  createDotIdentifierAst(cst: SubhutiCst):SlimeDotOperator{
+  createDotIdentifierAst(cst: SubhutiCst): SlimeDotOperator {
     const astName = checkCstName(cst, Es6Parser.prototype.DotIdentifier.name);
     const SlimeDotOperator = SlimeAstUtil.createDotOperator(cst.children[0].loc)
     return SlimeDotOperator
