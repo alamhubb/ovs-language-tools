@@ -54,10 +54,6 @@ class SlimeAst {
   }
 
   commonLocType<T extends SlimeBaseNode>(node: T): T {
-    console.log(node)
-    // if (node.loc) {
-    //   node.loc.type = node.type
-    // }
     return node
   }
 
@@ -127,7 +123,6 @@ class SlimeAst {
   }
 
   createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null, params?: SlimePattern[], loc?: SubhutiSourceLocation): SlimeFunctionExpression {
-    loc.type = SlimeAstType.FunctionExpression
     return this.commonLocType({
       type: SlimeAstType.FunctionExpression,
       params: params,

@@ -353,18 +353,7 @@ export class SlimeCstToAst {
     const params: SlimePattern[] = this.createFunctionFormalParametersAst(first)
     const body: SlimeBlockStatement = this.createFunctionBodyDefineAst(first1)
 
-    console.log('body.loc')
-    console.log(body.loc)
-
-    let loc: SubhutiSourceLocation = {
-      // index: startLoc.index,
-      start: startLoc.start,
-      end: cst.children[cst.children.length - 1].loc.end
-    }
-
-    console.log('let loc: SubhutiSourceLocation')
-    console.log(startLoc)
-    return SlimeAstUtil.createFunctionExpression(body, null, params, loc)
+    return SlimeAstUtil.createFunctionExpression(body, null, params, startLoc)
   }
 
   createFunctionBodyDefineAst(cst: SubhutiCst): SlimeBlockStatement {
@@ -409,7 +398,9 @@ export class SlimeCstToAst {
   createFunctionExpressionAst(cst: SubhutiCst): SlimeFunctionExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionExpression.name);
     const FunctionFormalParametersBodyDefineCst: SubhutiCst = cst.children[1]
-    const FunctionFormalParametersBodyDefineAst = this.createFunctionFormalParametersBodyDefineAst(FunctionFormalParametersBodyDefineCst, cst.children[0].loc)
+    console.log(5653121)
+    console.log(cst)
+    const FunctionFormalParametersBodyDefineAst = this.createFunctionFormalParametersBodyDefineAst(FunctionFormalParametersBodyDefineCst, cst.loc)
     return FunctionFormalParametersBodyDefineAst
   }
 

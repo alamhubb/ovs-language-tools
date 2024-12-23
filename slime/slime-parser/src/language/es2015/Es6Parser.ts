@@ -1285,17 +1285,18 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   }
 
   @SubhutiRule
-  FunctionBodyDefine() {
-    this.tokenConsumer.LBrace()
-    this.FunctionBody()
-    this.tokenConsumer.RBrace()
-  }
-
-  @SubhutiRule
   FunctionExpression() {
     this.tokenConsumer.FunctionTok()
     this.Option(() => this.BindingIdentifier())
     this.FunctionFormalParametersBodyDefine()
+  }
+
+
+  @SubhutiRule
+  FunctionBodyDefine() {
+    this.tokenConsumer.LBrace()
+    this.FunctionBody()
+    this.tokenConsumer.RBrace()
   }
 
   @SubhutiRule
