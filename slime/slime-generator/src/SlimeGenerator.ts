@@ -179,6 +179,7 @@ export default class SlimeGenerator {
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
+    console.log(node)
     this.addCodeAndMappings(es6TokensObj.FunctionTok, node.loc)
     if (node.id) {
       this.addSpacing()
@@ -396,6 +397,7 @@ export default class SlimeGenerator {
   }
 
   static cstLocationToSlimeLocation(cstLocation: SubhutiSourceLocation, sourceLength: number) {
+    console.log( cstLocation)
     const sourcePosition: SlimeCodeLocation = {
       type: cstLocation.type,
       index: cstLocation.start.index,
