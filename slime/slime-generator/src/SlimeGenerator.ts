@@ -11,7 +11,7 @@ import {
   type SlimeExpression,
   type SlimeExpressionStatement,
   type SlimeFunctionDeclaration,
-  type SlimeFunctionExpression,
+  type SlimeFunctionExpression, type SlimeFunctionParams,
   type SlimeIdentifier,
   type SlimeMemberExpression,
   type SlimeModuleDeclaration,
@@ -130,6 +130,7 @@ export default class SlimeGenerator {
 
 
   private static generatorStatements(nodes: SlimeStatement[]) {
+    console.log(nodes)
     nodes.forEach((node, index) => {
       // if (this.generateLine !== 0 || index !== 0) {
       //     this.addNewLine()
@@ -183,7 +184,12 @@ export default class SlimeGenerator {
       this.addSpacing()
       this.generatorIdentifier(node.id)
     }
-    this.addCode(es6TokensObj.LParen)
+    this.generatorFunctionParams(node.params)
+    this.generatorBlockStatement(node.body)
+  }
+
+  private static generatorFunctionParams(node: SlimeFunctionParams) {
+    this.addCodeAndMappings(es6TokensObj.LParen, node.lParen.loc)
     if (node.params) {
       node.params.forEach((param, index) => {
         if (index !== 0) {
@@ -192,9 +198,7 @@ export default class SlimeGenerator {
         this.generatorIdentifier(param as SlimeIdentifier)
       })
     }
-    this.addCode(es6TokensObj.RParen)
-    this.generatorBlockStatement(node.body)
-
+    this.addCodeAndMappings(es6TokensObj.RParen, node.rParen.loc)
   }
 
   private static generatorArrayExpression(node: SlimeArrayExpression) {

@@ -30,7 +30,12 @@ import {
   type SlimeStringLiteral,
   type SlimeVariableDeclaration,
   type SlimeVariableDeclarator,
-  type SlimeDotOperator, type SlimeNullLiteral,
+  type SlimeDotOperator,
+  type SlimeNullLiteral,
+  type SlimeFunctionParams,
+  type SlimeLParen,
+  type SlimeRParen,
+  type SlimeLBrace, type SlimeRBrace,
 } from "./SlimeAstInterface.ts";
 
 import {SlimeAstType} from "./SlimeAstType.ts";
@@ -52,6 +57,40 @@ class SlimeAst {
       loc: loc
     })
   }
+
+  createLParen(loc?: SubhutiSourceLocation): SlimeLParen {
+    return this.commonLocType({
+      type: SlimeAstType.LParen,
+      value: '(',
+      loc: loc
+    })
+  }
+
+  createRParen(loc?: SubhutiSourceLocation): SlimeRParen {
+    return this.commonLocType({
+      type: SlimeAstType.RParen,
+      value: ')',
+      loc: loc
+    })
+  }
+
+  creatLBrace(loc?: SubhutiSourceLocation): SlimeLBrace {
+    return this.commonLocType({
+      type: SlimeAstType.LBrace,
+      value: '{',
+      loc: loc
+    })
+  }
+
+
+  createRBrace(loc?: SubhutiSourceLocation): SlimeRBrace {
+    return this.commonLocType({
+      type: SlimeAstType.RBrace,
+      value: '}',
+      loc: loc
+    })
+  }
+
 
   commonLocType<T extends SlimeBaseNode>(node: T): T {
     return node
@@ -113,16 +152,17 @@ class SlimeAst {
     })
   }
 
-  createBlockStatement(body: Array<SlimeStatement>, loc?: SubhutiSourceLocation): SlimeBlockStatement {
-
+  createBlockStatement(lBrace: SlimeLBrace, rBrace: SlimeRBrace, body: Array<SlimeStatement>, loc?: SubhutiSourceLocation): SlimeBlockStatement {
     return this.commonLocType({
+      lBrace: lBrace,
+      rBrace: rBrace,
       type: SlimeAstType.BlockStatement,
       body: body,
       loc: loc
     })
   }
 
-  createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null, params?: SlimePattern[], loc?: SubhutiSourceLocation): SlimeFunctionExpression {
+  createFunctionExpression(body: SlimeBlockStatement, id?: SlimeIdentifier | null, params?: SlimeFunctionParams, loc?: SubhutiSourceLocation): SlimeFunctionExpression {
     return this.commonLocType({
       type: SlimeAstType.FunctionExpression,
       params: params,
@@ -131,6 +171,17 @@ class SlimeAst {
       loc: loc
     })
   }
+
+  createFunctionParams(lParen: SlimeLParen, rParen: SlimeRParen, loc?: SubhutiSourceLocation, params?: SlimePattern[]): SlimeFunctionParams {
+    return this.commonLocType({
+      type: SlimeAstType.FunctionParams,
+      lParen: lParen,
+      rParen: rParen,
+      params: params,
+      loc: loc
+    })
+  }
+
 
   createVariableDeclaration(kind: SlimeVariableDeclarationKind, declarations: SlimeVariableDeclarator[]): SlimeVariableDeclaration {
     return this.commonLocType({

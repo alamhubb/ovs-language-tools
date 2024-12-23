@@ -1,6 +1,9 @@
+import type {SlimeFunctionParams, SlimeLParen, SlimeRParen} from "./SlimeAstInterface.ts";
+
 export enum SlimeAstType {
     Program = 'Program',
     ImportDeclaration = 'ImportDeclaration',
+    FunctionParams = 'FunctionParams',
     ExportNamedDeclaration = 'ExportNamedDeclaration',
     FunctionDeclaration = 'FunctionDeclaration',
     ClassDeclaration = 'ClassDeclaration',
@@ -33,4 +36,8 @@ export enum SlimeAstType {
     NullLiteral = 'NullLiteral',
     EqualOperator = 'EqualOperator',
     Dot = 'Dot',
+    LParen = 'LParen',
+    RParen = 'RParen',
+    LBrace = 'LBrace',
+    RBrace = 'RBrace',
 }

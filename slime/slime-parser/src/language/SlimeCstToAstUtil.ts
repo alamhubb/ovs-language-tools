@@ -33,7 +33,12 @@ import {
   type SlimeObjectExpression,
   type SlimeProperty,
   type SlimeNumericLiteral,
-  type SlimeRestElement, type SlimeSuper, type SlimeDotOperator, type SlimeMemberExpression
+  type SlimeRestElement,
+  type SlimeSuper,
+  type SlimeDotOperator,
+  type SlimeMemberExpression,
+  type SlimeFunctionParams,
+  type SlimeLParen
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst, {type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
@@ -352,8 +357,7 @@ export class SlimeCstToAst {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionFormalParametersBodyDefine.name);
     const first = cst.children[0]
     const first1 = cst.children[1]
-
-    const params: SlimePattern[] = this.createFunctionFormalParametersAst(first)
+    const params: SlimeFunctionParams = this.createFunctionFormalParametersAst(first)
     const body: SlimeBlockStatement = this.createFunctionBodyDefineAst(first1)
 
     return SlimeAstUtil.createFunctionExpression(body, null, params, startLoc)
@@ -364,9 +368,9 @@ export class SlimeCstToAst {
     if (cst.children[1].name === Es6Parser.prototype.FunctionBody.name) {
       const first1 = cst.children[1]
       const body = this.createFunctionBodyAst(first1)
-      return SlimeAstUtil.createBlockStatement(body, cst.loc)
+      return SlimeAstUtil.createBlockStatement(null, null, body, cst.loc)
     }
-    return SlimeAstUtil.createBlockStatement([])
+    return SlimeAstUtil.createBlockStatement(null, null, [])
   }
 
   createFunctionBodyAst(cst: SubhutiCst): Array<SlimeStatement> {
@@ -375,15 +379,17 @@ export class SlimeCstToAst {
     return this.createStatementListAst(first)
   }
 
-  createFunctionFormalParametersAst(cst: SubhutiCst): SlimePattern[] {
+  createFunctionFormalParametersAst(cst: SubhutiCst): SlimeFunctionParams {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionFormalParameters.name);
-    if (cst.children.length > 2) {
+    const lp = SlimeAstUtil.createLParen(cst.children[0].loc)
+    const rp = SlimeAstUtil.createRParen(cst.children[cst.children.length - 1].loc)
+    if (cst.children[1].name === Es6Parser.prototype.FormalParameterList.name) {
       const FormalParameterListCst = cst.children[1]
-      this.createFormalParameterListAst(FormalParameterListCst)
+      const params = this.createFormalParameterListAst(FormalParameterListCst)
+      SlimeAstUtil.createFunctionParams(lp, rp, cst.loc, params)
     }
-    return []
+    return SlimeAstUtil.createFunctionParams(lp, rp, cst.loc)
   }
-
 
   createMethodDefinitionAst(cst: SubhutiCst, staticCst?: SubhutiCst): SlimeMethodDefinition {
     const astName = checkCstName(cst, Es6Parser.prototype.MethodDefinition.name);
@@ -401,8 +407,6 @@ export class SlimeCstToAst {
   createFunctionExpressionAst(cst: SubhutiCst): SlimeFunctionExpression {
     const astName = checkCstName(cst, Es6Parser.prototype.FunctionExpression.name);
     const FunctionFormalParametersBodyDefineCst: SubhutiCst = cst.children[1]
-    console.log(5653121)
-    console.log(cst)
     const FunctionFormalParametersBodyDefineAst = this.createFunctionFormalParametersBodyDefineAst(FunctionFormalParametersBodyDefineCst, cst.loc)
     return FunctionFormalParametersBodyDefineAst
   }

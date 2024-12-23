@@ -52,10 +52,18 @@ export interface SlimeDirective extends SlimeBaseNode {
 }
 
 export interface SlimeBaseFunction extends SlimeBaseNode {
-  params: SlimePattern[];
+  params: SlimeFunctionParams;
   generator?: boolean | undefined;
   async?: boolean | undefined;
   body: SlimeBlockStatement | SlimeExpression;
+}
+
+
+export interface SlimeFunctionParams extends SlimeBaseNode {
+  type: SlimeAstType.FunctionParams;
+  lParen: SlimeLParen;
+  rParen: SlimeRParen;
+  params: SlimePattern[];
 }
 
 export type SlimeFunction = SlimeFunctionDeclaration | SlimeFunctionExpression | SlimeArrowFunctionExpression;
@@ -67,6 +75,8 @@ export interface SlimeEmptyStatement extends SlimeBaseNode {
 
 export interface SlimeBlockStatement extends SlimeBaseNode {
   type: "BlockStatement";
+  lBrace: SlimeLBrace,
+  rBrace: SlimeRBrace,
   body: SlimeStatement[];
   innerComments?: Comment[] | undefined;
 }
@@ -218,6 +228,27 @@ export interface SlimeDotOperator extends SlimeBaseNode {
   type: SlimeAstType.Dot;
   value: '.'
 }
+
+export interface SlimeLParen extends SlimeBaseNode {
+  type: SlimeAstType.LParen;
+  value: '('
+}
+
+export interface SlimeRParen extends SlimeBaseNode {
+  type: SlimeAstType.RParen;
+  value: ')'
+}
+
+export interface SlimeLBrace extends SlimeBaseNode {
+  type: SlimeAstType.LBrace;
+  value: '{'
+}
+
+export interface SlimeRBrace extends SlimeBaseNode {
+  type: SlimeAstType.RBrace;
+  value: '}'
+}
+
 
 // Expression 相关定义
 export interface SlimeExpressionMap extends SlimeBaseNode {
