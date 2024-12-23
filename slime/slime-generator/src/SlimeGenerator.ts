@@ -101,8 +101,8 @@ export default class SlimeGenerator {
   }
 
   private static generatorExportNamedDeclaration(node: SlimeExportNamedDeclaration) {
-    this.addCode(es6TokensObj.ExportTok)
-    this.addCode(es6TokensObj.ExportTok)
+    this.addCodeAndMappings(es6TokensObj.ExportTok, node.loc)
+    this.addSpacing()
     this.generatorDeclaration(node.declaration)
   }
 
@@ -395,7 +395,7 @@ export default class SlimeGenerator {
   }
 
   static cstLocationToSlimeLocation(cstLocation: SubhutiSourceLocation, sourceLength: number) {
-    console.log( cstLocation)
+    console.log(cstLocation)
     const sourcePosition: SlimeCodeLocation = {
       type: cstLocation.type,
       index: cstLocation.start.index,
@@ -424,7 +424,7 @@ export default class SlimeGenerator {
     this.generateIndex += code.value.length
   }
 
-  private static addSemicolonAndNewLine(){
+  private static addSemicolonAndNewLine() {
     this.addSemicolon()
     this.addNewLine()
   }
