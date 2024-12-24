@@ -142,7 +142,8 @@ export class SlimeCstToAst {
   createModuleSpecifierAst(cst: SubhutiCst): SlimeStringLiteral {
     let astName = checkCstName(cst, Es6Parser.prototype.ModuleSpecifier.name);
     const first = cst.children[0]
-    return SlimeAstUtil.createStringLiteral(first.value)
+    const ast = SlimeAstUtil.createStringLiteral(first.value)
+    return ast
   }
 
   createImportClauseAst(cst: SubhutiCst): Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier> {
@@ -902,7 +903,8 @@ export class SlimeCstToAst {
   createStringLiteralAst(cst: SubhutiCst): SlimeStringLiteral {
     const astName = checkCstName(cst, Es6TokenConsumer.prototype.StringLiteral.name);
     const value = cst.value
-    return SlimeAstUtil.createStringLiteral(value)
+    const ast = SlimeAstUtil.createStringLiteral(value)
+    return ast
   }
 
   createArrayExpressionAst(cst: SubhutiCst): SlimeArrayExpression {

@@ -11,8 +11,13 @@ import {
   type SlimeExpression,
   type SlimeExpressionStatement,
   type SlimeFunctionDeclaration,
-  type SlimeFunctionExpression, type SlimeFunctionParams,
-  type SlimeIdentifier, type SlimeImportDeclaration, type SlimeLiteral,
+  type SlimeFunctionExpression,
+  type SlimeFunctionParams,
+  type SlimeIdentifier,
+  type SlimeImportDeclaration,
+  type SlimeImportDefaultSpecifier, type SlimeImportNamespaceSpecifier,
+  type SlimeImportSpecifier,
+  type SlimeLiteral,
   type SlimeMemberExpression,
   type SlimeModuleDeclaration,
   type SlimeNumericLiteral,
@@ -86,6 +91,7 @@ export default class SlimeGenerator {
   private static generatorModuleDeclarations(node: Array<SlimeStatement | SlimeModuleDeclaration>) {
     for (const nodeElement of node) {
       this.generatorModuleDeclaration(nodeElement)
+      this.addSemicolonAndNewLine()
     }
   }
 
@@ -104,9 +110,38 @@ export default class SlimeGenerator {
   private static generatorImportDeclaration(node: SlimeImportDeclaration) {
     this.addCodeAndMappings(es6TokensObj.ImportTok, node.loc)
     this.addSpacing()
+    this.generatorImportSpecifiers(node.specifiers)
+    this.addSpacing()
     this.addCodeAndMappings(es6TokensObj.FromTok, node.loc)
     this.addSpacing()
     this.generatorStringLiteral(node.source)
+  }
+
+
+  private static generatorImportSpecifiers(specifiers:  Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>) {
+    for (const specifier of specifiers) {
+      if (specifier.type === SlimeAstType.ImportSpecifier){
+        this.generatorImportSpecifier(specifier)
+      }else if (specifier.type === SlimeAstType.ImportDefaultSpecifier){
+        this.generatorImportDefaultSpecifier(specifier)
+      }else if (specifier.type === SlimeAstType.ImportNamespaceSpecifier){
+        this.generatorImportNamespaceSpecifier(specifier)
+      }
+    }
+  }
+
+
+  private static generatorImportSpecifier(node: SlimeImportSpecifier) {
+
+  }
+
+  private static generatorImportDefaultSpecifier(node: SlimeImportDefaultSpecifier) {
+    this.generatorIdentifier(node.local)
+  }
+
+
+  private static generatorImportNamespaceSpecifier(node: SlimeImportNamespaceSpecifier) {
+
   }
 
 
@@ -145,6 +180,7 @@ export default class SlimeGenerator {
       //     this.addNewLine()
       // }
       this.generatorStatement(node)
+      this.addSemicolonAndNewLine()
     })
   }
 
@@ -161,7 +197,6 @@ export default class SlimeGenerator {
     } else {
       throw new Error('不支持的类型：' + node.type)
     }
-    this.addSemicolonAndNewLine()
   }
 
   private static generatorExpressionStatement(node: SlimeExpressionStatement) {
@@ -401,21 +436,23 @@ export default class SlimeGenerator {
   }
 
   private static generatorStringLiteral(node: SlimeStringLiteral) {
-    this.addCodeAndMappings({name: Es6TokenName.StringLiteral, value: node.value}, node.loc)
+    this.addCodeAndMappings({name: Es6TokenName.StringLiteral, value: `'${node.value}'`}, node.loc)
   }
 
-  static cstLocationToSlimeLocation(cstLocation: SubhutiSourceLocation, sourceLength: number) {
-    console.log(cstLocation)
-    const sourcePosition: SlimeCodeLocation = {
-      type: cstLocation.type,
-      index: cstLocation.start.index,
-      value: cstLocation.value,
-      // length: sourceLength,
-      length: cstLocation.end.index - cstLocation.start.index,
-      line: cstLocation.start.line,
-      column: cstLocation.start.column,
+  static cstLocationToSlimeLocation(cstLocation: SubhutiSourceLocation) {
+    if (cstLocation) {
+      const sourcePosition: SlimeCodeLocation = {
+        type: cstLocation.type,
+        index: cstLocation.start.index,
+        value: cstLocation.value,
+        // length: sourceLength,
+        length: cstLocation.end.index - cstLocation.start.index,
+        line: cstLocation.start.line,
+        column: cstLocation.start.column,
+      }
+      return sourcePosition
     }
-    return sourcePosition
+    return null
   }
 
   private static addCodeAndMappingsBySourcePosition(code: SubhutiCreateToken, sourcePosition: SlimeCodeLocation) {
@@ -423,9 +460,8 @@ export default class SlimeGenerator {
     this.addCode(code)
   }
 
-  private static addCodeAndMappings(code: SubhutiCreateToken, cstLocation: SubhutiSourceLocation) {
-    const sourceLength: number = code.value.length
-    this.addCodeAndMappingsBySourcePosition(code, this.cstLocationToSlimeLocation(cstLocation, sourceLength))
+  private static addCodeAndMappings(token: SubhutiCreateToken, cstLocation: SubhutiSourceLocation = null) {
+    this.addCodeAndMappingsBySourcePosition(token, this.cstLocationToSlimeLocation(cstLocation))
   }
 
   private static addCode(code: SubhutiCreateToken) {
