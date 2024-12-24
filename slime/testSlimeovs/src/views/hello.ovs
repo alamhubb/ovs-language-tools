@@ -2,6 +2,7 @@ export const hello = {
     render() {
         return div{
            123789
+           123789
        }
     }
 }

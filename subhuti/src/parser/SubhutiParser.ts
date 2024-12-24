@@ -439,8 +439,6 @@ export default class SubhutiParser<T extends SubhutiTokenConsumer = SubhutiToken
         column: popToken.columnEndNum
       }
     }
-    console.log(989898)
-    console.log(cst)
     // cst.pathName = this.curCst.pathName + pathNameSymbol + cst.name
     this.curCst.children.push(cst)
     this.curCst.pushCstToken(popToken)

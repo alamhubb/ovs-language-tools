@@ -6,7 +6,7 @@ import {
   type SlimeBlockStatement,
   type SlimeCallExpression,
   type SlimeClassDeclaration,
-  type SlimeDeclaration,
+  type SlimeDeclaration, type SlimeDotOperator,
   type SlimeExportNamedDeclaration,
   type SlimeExpression,
   type SlimeExpressionStatement,
@@ -118,13 +118,13 @@ export default class SlimeGenerator {
   }
 
 
-  private static generatorImportSpecifiers(specifiers:  Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>) {
+  private static generatorImportSpecifiers(specifiers: Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>) {
     for (const specifier of specifiers) {
-      if (specifier.type === SlimeAstType.ImportSpecifier){
+      if (specifier.type === SlimeAstType.ImportSpecifier) {
         this.generatorImportSpecifier(specifier)
-      }else if (specifier.type === SlimeAstType.ImportDefaultSpecifier){
+      } else if (specifier.type === SlimeAstType.ImportDefaultSpecifier) {
         this.generatorImportDefaultSpecifier(specifier)
-      }else if (specifier.type === SlimeAstType.ImportNamespaceSpecifier){
+      } else if (specifier.type === SlimeAstType.ImportNamespaceSpecifier) {
         this.generatorImportNamespaceSpecifier(specifier)
       }
     }
@@ -204,21 +204,22 @@ export default class SlimeGenerator {
   }
 
   private static generatorCallExpression(node: SlimeCallExpression) {
+    //IIFE
     if (node.callee.type === SlimeAstType.FunctionExpression) {
-      this.addCode(es6TokensObj.LParen)
+      this.addLParen()
     }
     this.generatorExpression(node.callee as SlimeExpression)
     if (node.callee.type === SlimeAstType.FunctionExpression) {
-      this.addCode(es6TokensObj.RParen)
+      this.addRParen()
     }
-    this.addCodeAndMappings(es6TokensObj.LParen, node.callee.loc)
+    this.addLParen(node.callee.loc)
     node.arguments.forEach((argument, index) => {
       if (index !== 0) {
-        this.addCode(es6TokensObj.Comma)
+        this.addComma()
       }
       this.generatorExpression(argument as SlimeExpression)
     })
-    this.addCodeAndMappings(es6TokensObj.RParen, node.callee.loc)
+    this.addRParen(node.callee.loc)
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
@@ -233,30 +234,37 @@ export default class SlimeGenerator {
   }
 
   private static generatorFunctionParams(node: SlimeFunctionParams) {
-    this.addCodeAndMappings(es6TokensObj.LParen, node.lParen.loc)
+    this.addLParen(node.lParen.loc)
     if (node.params) {
       node.params.forEach((param, index) => {
         if (index !== 0) {
-          this.addCode(es6TokensObj.Comma)
+          this.addComma()
         }
         this.generatorIdentifier(param as SlimeIdentifier)
       })
     }
-    this.addCodeAndMappings(es6TokensObj.RParen, node.rParen.loc)
+    this.addRParen(node.rParen.loc)
   }
 
   private static generatorArrayExpression(node: SlimeArrayExpression) {
+    this.addLBracket()
     for (const element of node.elements) {
       this.generatorExpression(element as SlimeExpression)
+      this.addComma()
     }
+    this.addRBracket()
   }
 
   private static generatorObjectExpression(node: SlimeObjectExpression) {
     this.addCode(es6TokensObj.LBrace)
     this.addNewLine()
-    for (const element of node.properties) {
-      this.generatorProperty(element as SlimeProperty)
-    }
+    node.properties.forEach((item, index) => {
+
+      this.generatorProperty(item as SlimeProperty)
+      if (index !== node.properties.length - 1) {
+        this.addNewLine()
+      }
+    })
     this.addNewLine()
     this.addCode(es6TokensObj.RBrace)
   }
@@ -278,8 +286,7 @@ export default class SlimeGenerator {
     } else {
       this.generatorExpression(node.value as SlimeExpression)
     }
-    this.addCode(es6TokensObj.Comma)
-    this.addNewLine()
+    this.addComma()
   }
 
 
@@ -367,10 +374,43 @@ export default class SlimeGenerator {
     this.addCode(es6TokensObj.Spacing)
   }
 
+  private static addDot(loc?: SubhutiSourceLocation) {
+    this.addCodeAndMappings(es6TokensObj.Dot, loc)
+  }
+
+
+  private static addComma(loc?: SubhutiSourceLocation) {
+    this.addCodeAndMappings(es6TokensObj.Comma, loc)
+  }
+
+  private static addLParen(loc?: SubhutiSourceLocation) {
+    this.addCodeAndMappings(es6TokensObj.LParen, loc)
+  }
+
+  private static addRParen(loc?: SubhutiSourceLocation) {
+    this.addCodeAndMappings(es6TokensObj.RParen, loc)
+  }
+
+  private static addLBrace(loc?: SubhutiSourceLocation) {
+    this.addCodeAndMappings(es6TokensObj.LBrace, loc)
+  }
+
+  private static addRBrace(loc?: SubhutiSourceLocation) {
+    this.addCodeAndMappings(es6TokensObj.RBrace, loc)
+  }
+
+  private static addLBracket(loc?: SubhutiSourceLocation) {
+    this.addCodeAndMappings(es6TokensObj.LBracket, loc)
+  }
+
+  private static addRBracket(loc?: SubhutiSourceLocation) {
+    this.addCodeAndMappings(es6TokensObj.RBracket, loc)
+  }
+
   private static generatorMemberExpression(node: SlimeMemberExpression) {
     this.generatorExpression(node.object as SlimeExpression)
     if (node.dot) {
-      this.addCodeAndMappings(es6TokensObj.Dot, node.dot.loc)
+      this.addDot(node.dot.loc)
     }
     if (node.property) {
       if (node.property.type === SlimeAstType.PrivateIdentifier) {

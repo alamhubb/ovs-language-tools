@@ -58,11 +58,9 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 
   let curCst = parser.Program()
   // console.log(curCst)
-  JsonUtil.log(7777)
-  JsonUtil.log(curCst)
   curCst = traverseClearTokens(curCst)
-  // curCst = traverseClearLoc(curCst)
-  JsonUtil.log(88)
+  curCst = traverseClearLoc(curCst)
+  JsonUtil.log(5656)
   JsonUtil.log(curCst)
   const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
   JsonUtil.log(555)
@@ -83,10 +81,12 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 const code = `export const hello = {
     render() {
         return div{
+           123789,
            123789
        }
     }
 }
+
 `
 //
 // let div1 = function() {
