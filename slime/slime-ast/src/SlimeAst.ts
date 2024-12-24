@@ -39,7 +39,7 @@ import {
   type SlimeRBrace,
   type SlimeImportSpecifier,
   type SlimeImportDefaultSpecifier,
-  type SlimeImportNamespaceSpecifier, type SlimeImportDeclaration,
+  type SlimeImportNamespaceSpecifier, type SlimeImportDeclaration, type SlimeFromKeyword,
 } from "./SlimeAstInterface.ts";
 
 import {SlimeAstType} from "./SlimeAstType.ts";
@@ -54,6 +54,15 @@ class SlimeAst {
     })
   }
 
+
+  createFromKeyword(loc?: SubhutiSourceLocation): SlimeFromKeyword {
+    return this.commonLocType({
+      type: SlimeAstType.From,
+      value: 'from',
+      loc: loc
+    })
+  }
+
   createDotOperator(loc?: SubhutiSourceLocation): SlimeDotOperator {
     return this.commonLocType({
       type: SlimeAstType.Dot,
@@ -62,11 +71,21 @@ class SlimeAst {
     })
   }
 
-  createImportDeclaration(specifiers: Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>, source: SlimeStringLiteral, loc?: SubhutiSourceLocation): SlimeImportDeclaration {
+  createImportDeclaration(specifiers: Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>, from: SlimeFromKeyword, source: SlimeStringLiteral, loc?: SubhutiSourceLocation): SlimeImportDeclaration {
     return this.commonLocType({
       type: SlimeAstType.ImportDeclaration,
       source: source,
+      from: from,
       specifiers: specifiers,
+      loc: loc
+    })
+  }
+
+  createImportDefaultSpecifier(name: string, loc?: SubhutiSourceLocation): SlimeImportDefaultSpecifier {
+    const local = this.createIdentifier(name)
+    return this.commonLocType({
+      type: SlimeAstType.ImportDefaultSpecifier,
+      local: local,
       loc: loc
     })
   }

@@ -2,7 +2,7 @@ import {SlimeCstToAst} from "slime-parser/src/language/SlimeCstToAstUtil.ts";
 import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
 import {
   type SlimeCallExpression,
-  type SlimeExpression,
+  type SlimeExpression, type SlimeImportDeclaration, type SlimeImportDefaultSpecifier, type SlimeModuleDeclaration,
   type SlimeProgram, SlimeProgramSourceType,
   type SlimeStatement
 } from "slime-ast/src/SlimeAstInterface.ts";
@@ -11,6 +11,7 @@ import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
 import type {OvsAstLexicalBinding, OvsAstRenderDomViewDeclaration} from "../interface/OvsInterface";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
+import {SlimeAstType} from "slime-ast/src/SlimeAstType.ts";
 
 export function checkCstName(cst: SubhutiCst, cstName: string) {
   if (cst.name !== cstName) {
@@ -30,17 +31,33 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
     //找到导入模块，看有没有导入ovs，没有的话则添加导入代码
     const first = cst.children[0]
     let program: SlimeProgram
+    let body: Array<SlimeStatement | SlimeModuleDeclaration>
+    let hasImportOvsFLag = false
     if (first.name === Es6Parser.prototype.ModuleItemList.name) {
-      const body = this.createModuleItemListAst(first)
-      program = SlimeAstUtil.createProgram(body, SlimeProgramSourceType.module)
+      body = this.createModuleItemListAst(first)
+      for (const item of body) {
+        if (item.type === SlimeAstType.ImportDeclaration) {
+          const importDeclaration: SlimeImportDeclaration = item as SlimeImportDeclaration
+          const importDefaultSpecifiers: SlimeImportDefaultSpecifier[] = importDeclaration.specifiers.filter(item => item.type === SlimeAstType.ImportDefaultSpecifier)
+          hasImportOvsFLag = importDefaultSpecifiers.some(item => item.local.name === 'OvsAPI')
+        }
+      }
     } else if (first.name === Es6Parser.prototype.StatementList.name) {
-      const body = this.createStatementListAst(first)
-      program = SlimeAstUtil.createProgram(body, SlimeProgramSourceType.script)
+      body = this.createStatementListAst(first)
     }
+
+    if (!hasImportOvsFLag) {
+      const ovsImportDefaultSpecifiers: SlimeImportDefaultSpecifier = SlimeAstUtil.createImportDefaultSpecifier('OvsAPI')
+      const from = SlimeAstUtil.createFromKeyword()
+      const source = SlimeAstUtil.createStringLiteral('ovsjs/src/OvsAPI')
+      const ovsImport = SlimeAstUtil.createImportDeclaration([ovsImportDefaultSpecifiers], from, source)
+      body.unshift(ovsImport)
+    }
+
+    program = SlimeAstUtil.createProgram(body, SlimeProgramSourceType.module)
     program.loc = cst.loc
     return program
   }
-
 
 
   createExpressionAst(cst: SubhutiCst): SlimeExpression {

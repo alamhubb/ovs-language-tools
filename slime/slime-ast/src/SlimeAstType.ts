@@ -3,6 +3,9 @@ import type {SlimeFunctionParams, SlimeLParen, SlimeRParen} from "./SlimeAstInte
 export enum SlimeAstType {
     Program = 'Program',
     ImportDeclaration = 'ImportDeclaration',
+    ImportSpecifier = 'ImportSpecifier',
+    ImportNamespaceSpecifier = 'ImportNamespaceSpecifier',
+    ImportDefaultSpecifier = 'ImportDefaultSpecifier',
     FunctionParams = 'FunctionParams',
     ExportNamedDeclaration = 'ExportNamedDeclaration',
     FunctionDeclaration = 'FunctionDeclaration',
@@ -35,6 +38,7 @@ export enum SlimeAstType {
     BooleanLiteral = 'BooleanLiteral',
     NullLiteral = 'NullLiteral',
     EqualOperator = 'EqualOperator',
+    From = 'From',
     Dot = 'Dot',
     LParen = 'LParen',
     RParen = 'RParen',

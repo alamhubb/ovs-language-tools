@@ -1,6 +1,6 @@
 import {
   type AssignmentOperator, BaseExpression, BaseNode,
-  type BinaryOperator, BlockStatement, Expression,
+  type BinaryOperator, BlockStatement, Expression, Identifier,
   type LogicalOperator, MaybeNamedFunctionDeclaration, NewExpression, Pattern, Property, SpreadElement, Super,
   type UnaryOperator,
   type UpdateOperator
@@ -21,7 +21,6 @@ export interface SlimeLexicalBinding {
   id: SlimeIdentifier;
   init?: SlimeExpression | null | undefined;
 }
-
 
 export enum SlimeProgramSourceType {
   script = 'script',
@@ -227,6 +226,11 @@ export interface SlimeEqualOperator extends SlimeBaseNode {
 export interface SlimeDotOperator extends SlimeBaseNode {
   type: SlimeAstType.Dot;
   value: '.'
+}
+
+export interface SlimeFromKeyword extends SlimeBaseNode {
+  type: SlimeAstType.From;
+  value: 'from'
 }
 
 export interface SlimeLParen extends SlimeBaseNode {
@@ -661,9 +665,10 @@ export interface SlimeImportDeclaration extends SlimeBaseNode {
   type: "ImportDeclaration";
   specifiers: Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier>;
   source: SlimeStringLiteral;
+  from: SlimeFromKeyword;
 }
 
-export interface SlimeImportSpecifier extends SlimeBaseNode {
+export interface SlimeImportSpecifier extends SlimeBaseModuleSpecifier {
   type: "ImportSpecifier";
   imported: SlimeIdentifier | SlimeLiteral;
 }
@@ -673,11 +678,11 @@ export interface SlimeImportExpression extends SlimeBaseNode {
   source: SlimeExpression;
 }
 
-export interface SlimeImportDefaultSpecifier extends SlimeBaseNode {
+export interface SlimeImportDefaultSpecifier extends SlimeBaseModuleSpecifier {
   type: "ImportDefaultSpecifier";
 }
 
-export interface SlimeImportNamespaceSpecifier extends SlimeBaseNode {
+export interface SlimeImportNamespaceSpecifier extends SlimeBaseModuleSpecifier {
   type: "ImportNamespaceSpecifier";
 }
 
