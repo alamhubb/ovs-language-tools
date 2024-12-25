@@ -1,6 +1,7 @@
 const a = 1
 export const hello = {
     render() {
+    console.
         return div{
            a,
            a

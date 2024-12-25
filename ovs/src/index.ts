@@ -77,15 +77,16 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 // const code = `let a = 'di
 // const code = `console.log(123)
 // const code = `console.  let a = 1
-const code = `export const hello = {
+const code = `const a = 1
+export const hello = {
     render() {
+    console.
         return div{
-           123789,
-           123789
+           a,
+           a
        }
     }
 }
-
 `
 //
 // let div1 = function() {
@@ -96,7 +97,7 @@ const code = `export const hello = {
 //             true
 //         }
 // `
-// const res = vitePluginOvsTransform(code)
+const res = vitePluginOvsTransform(code)
 // console.log(res)
 
 export default function vitePluginOvs(): Plugin {
