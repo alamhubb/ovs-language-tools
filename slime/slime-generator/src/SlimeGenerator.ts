@@ -174,7 +174,6 @@ export default class SlimeGenerator {
 
 
   private static generatorStatements(nodes: SlimeStatement[]) {
-    console.log(nodes)
     nodes.forEach((node, index) => {
       // if (this.generateLine !== 0 || index !== 0) {
       //     this.addNewLine()
@@ -223,7 +222,6 @@ export default class SlimeGenerator {
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
-    console.log(node)
     this.addCodeAndMappings(es6TokensObj.FunctionTok, node.loc)
     if (node.id) {
       this.addSpacing()
@@ -256,7 +254,9 @@ export default class SlimeGenerator {
   }
 
   private static generatorObjectExpression(node: SlimeObjectExpression) {
-    this.addCode(es6TokensObj.LBrace)
+    console.log('fajskldfjals object')
+    this.addLBrace()
+    console.log('fajskldfjals 32323')
     this.addNewLine()
     node.properties.forEach((item, index) => {
 
@@ -266,7 +266,7 @@ export default class SlimeGenerator {
       }
     })
     this.addNewLine()
-    this.addCode(es6TokensObj.RBrace)
+    this.addRBrace()
   }
 
   private static generatorPrivateIdentifier(node: SlimePrivateIdentifier) {
@@ -358,10 +358,10 @@ export default class SlimeGenerator {
   }
 
   private static generatorBlockStatement(node: SlimeBlockStatement) {
-    this.addCode(es6TokensObj.LBrace)
+    this.addLBrace()
     this.addNewLine()
     this.generatorStatements(node.body)
-    this.addCode(es6TokensObj.RBrace)
+    this.addRBrace()
   }
 
   private static generatorReturnStatement(node: SlimeReturnStatement) {
@@ -501,7 +501,11 @@ export default class SlimeGenerator {
   }
 
   private static addCodeAndMappings(token: SubhutiCreateToken, cstLocation: SubhutiSourceLocation = null) {
-    this.addCodeAndMappingsBySourcePosition(token, this.cstLocationToSlimeLocation(cstLocation))
+    if (cstLocation) {
+      this.addCodeAndMappingsBySourcePosition(token, this.cstLocationToSlimeLocation(cstLocation))
+    } else {
+      this.addCode(token)
+    }
   }
 
   private static addCode(code: SubhutiCreateToken) {
@@ -542,6 +546,11 @@ export default class SlimeGenerator {
       length: generateCode.value.length,
       line: this.generateLine,
       column: this.generateColumn,
+    }
+    if (!sourcePosition) {
+      console.log(989898)
+      console.log(sourcePosition)
+      console.log(generate)
     }
     this.mappings.push({
       source: sourcePosition,

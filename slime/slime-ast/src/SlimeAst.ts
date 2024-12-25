@@ -81,8 +81,7 @@ class SlimeAst {
     })
   }
 
-  createImportDefaultSpecifier(name: string, loc?: SubhutiSourceLocation): SlimeImportDefaultSpecifier {
-    const local = this.createIdentifier(name)
+  createImportDefaultSpecifier(local: SlimeIdentifier, loc?: SubhutiSourceLocation): SlimeImportDefaultSpecifier {
     return this.commonLocType({
       type: SlimeAstType.ImportDefaultSpecifier,
       local: local,
@@ -125,6 +124,22 @@ class SlimeAst {
 
 
   commonLocType<T extends SlimeBaseNode>(node: T): T {
+    if (!node.loc) {
+      node.loc = {
+        value: null,
+        type: node.type,
+        start: {
+          index: 0,
+          line: 0,
+          column: 0,
+        },
+        end: {
+          index: 0,
+          line: 0,
+          column: 0,
+        }
+      }
+    }
     return node
   }
 

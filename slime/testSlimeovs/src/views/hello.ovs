@@ -1,8 +1,9 @@
+const a = 1
 export const hello = {
     render() {
         return div{
-           123789
-           123789
+           a,
+           a
        }
     }
 }

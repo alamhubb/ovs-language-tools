@@ -1,5 +1,5 @@
 import {SlimeCstToAst} from "slime-parser/src/language/SlimeCstToAstUtil.ts";
-import SubhutiCst from "subhuti/src/struct/SubhutiCst.ts";
+import SubhutiCst, {type SubhutiPosition, type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import {
   type SlimeCallExpression,
   type SlimeExpression, type SlimeImportDeclaration, type SlimeImportDefaultSpecifier, type SlimeModuleDeclaration,
@@ -12,6 +12,7 @@ import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
 import type {OvsAstLexicalBinding, OvsAstRenderDomViewDeclaration} from "../interface/OvsInterface";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
 import {SlimeAstType} from "slime-ast/src/SlimeAstType.ts";
+import Es6TokenConsumer from "slime-parser/src/language/es2015/Es6Tokens.ts";
 
 export function checkCstName(cst: SubhutiCst, cstName: string) {
   if (cst.name !== cstName) {
@@ -47,7 +48,8 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
     }
 
     if (!hasImportOvsFLag) {
-      const ovsImportDefaultSpecifiers: SlimeImportDefaultSpecifier = SlimeAstUtil.createImportDefaultSpecifier('OvsAPI')
+      const local = SlimeAstUtil.createIdentifier('OvsAPI')
+      const ovsImportDefaultSpecifiers: SlimeImportDefaultSpecifier = SlimeAstUtil.createImportDefaultSpecifier(local)
       const from = SlimeAstUtil.createFromKeyword()
       const source = SlimeAstUtil.createStringLiteral('ovsjs/src/OvsAPI')
       const ovsImport = SlimeAstUtil.createImportDeclaration([ovsImportDefaultSpecifiers], from, source)
@@ -91,8 +93,6 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
       // children: this.createAssignmentExpressionAst(cst.children[2])
     } as any
 
-    JsonUtil.log(33333)
-    JsonUtil.log(ast)
     const res = this.createOvsRenderDomViewDeclarationEstreeAst(ast)
     // left = this.ovsRenderDomViewDeclarationAstToEstreeAst(left)
     return res
@@ -110,7 +110,6 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
     const rp = SlimeAstUtil.createRParen(blockStatement.loc)
     const functionParams = SlimeAstUtil.createFunctionParams(lp, rp)
     const functionExpression = SlimeAstUtil.createFunctionExpression(blockStatement, null, functionParams, blockStatement.loc)
-    console.log(functionParams)
     const callExpression = SlimeAstUtil.createCallExpression(functionExpression, [])
     return callExpression
   }
