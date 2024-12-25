@@ -39,11 +39,21 @@ import {
   type SlimeRBrace,
   type SlimeImportSpecifier,
   type SlimeImportDefaultSpecifier,
-  type SlimeImportNamespaceSpecifier, type SlimeImportDeclaration, type SlimeFromKeyword,
+  type SlimeImportNamespaceSpecifier,
+  type SlimeImportDeclaration,
+  type SlimeFromKeyword,
+  type SlimeExportDefaultDeclaration,
+  type SlimeMaybeNamedFunctionDeclaration,
+  type SlimeMaybeNamedClassDeclaration,
+  type SlimeClassDeclaration,
+  type SlimeClassBody,
+  type SlimeExportNamedDeclaration,
+  type SlimeDeclaration,
+  type SlimeExportSpecifier,
 } from "./SlimeAstInterface.ts";
 
 import {SlimeAstType} from "./SlimeAstType.ts";
-import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
+import SubhutiCst, {type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 
 class SlimeAst {
   createProgram(body: Array<SlimeDirective | SlimeStatement | SlimeModuleDeclaration>, sourceType: SlimeProgramSourceType = SlimeProgramSourceType.script): SlimeProgram {
@@ -77,6 +87,34 @@ class SlimeAst {
       source: source,
       from: from,
       specifiers: specifiers,
+      loc: loc
+    })
+  }
+
+  createExportDefaultDeclaration(declaration: SlimeMaybeNamedFunctionDeclaration | SlimeMaybeNamedClassDeclaration | SlimeExpression, loc?: SubhutiSourceLocation): SlimeExportDefaultDeclaration {
+    return this.commonLocType({
+      type: SlimeAstType.ExportDefaultDeclaration,
+      declaration: declaration,
+      loc: loc
+    })
+  }
+
+
+  createExportNamedDeclaration(declaration: SlimeDeclaration, specifiers: SlimeExportSpecifier[], source?: SlimeLiteral, loc?: SubhutiSourceLocation): SlimeExportNamedDeclaration {
+    return this.commonLocType({
+      type: SlimeAstType.ExportNamedDeclaration,
+      declaration: declaration,
+      specifiers: specifiers,
+      source: source,
+      loc: loc
+    })
+  }
+
+  createClassDeclaration(id: SlimeIdentifier | null, body: SlimeClassBody, loc?: SubhutiSourceLocation): SlimeClassDeclaration {
+    return this.commonLocType({
+      type: SlimeAstType.ClassDeclaration,
+      id: id,
+      body: body,
       loc: loc
     })
   }
@@ -230,11 +268,12 @@ class SlimeAst {
   }
 
 
-  createVariableDeclaration(kind: SlimeVariableDeclarationKind, declarations: SlimeVariableDeclarator[]): SlimeVariableDeclaration {
+  createVariableDeclaration(kind: SlimeVariableDeclarationKind, declarations: SlimeVariableDeclarator[], loc?: SubhutiSourceLocation): SlimeVariableDeclaration {
     return this.commonLocType({
       type: SlimeAstType.VariableDeclaration,
       declarations: declarations,
-      kind: kind
+      kind: kind,
+      loc: loc
     })
   }
 

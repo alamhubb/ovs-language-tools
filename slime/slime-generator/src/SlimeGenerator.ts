@@ -148,6 +148,7 @@ export default class SlimeGenerator {
   private static generatorExportNamedDeclaration(node: SlimeExportNamedDeclaration) {
     this.addCodeAndMappings(es6TokensObj.ExportTok, node.loc)
     this.addSpacing()
+    console.log(node)
     this.generatorDeclaration(node.declaration)
   }
 

@@ -42,7 +42,7 @@ import {
   type SlimeImportDeclaration,
   type SlimeImportSpecifier,
   type SlimeImportDefaultSpecifier,
-  type SlimeImportNamespaceSpecifier, type SlimeImportExpression
+  type SlimeImportNamespaceSpecifier, type SlimeImportExpression, SlimeVariableDeclarationKind
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst, {type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
@@ -50,14 +50,8 @@ import Es6TokenConsumer from "./es2015/Es6Tokens.ts";
 import SlimeAstUtil from "slime-ast/src/SlimeAst.ts";
 import {SlimeAstType} from "slime-ast/src/SlimeAstType.ts";
 import type {SubhutiHighlithSourceLocation} from "slime-ast/src/fsadfasast.ts";
+import {SubhutiRule} from "subhuti/src/parser/SubhutiParser.ts";
 
-export const EsTreeAstType: {
-  ExportDefaultDeclaration: 'ExportDefaultDeclaration',
-  ExportNamedDeclaration: 'ExportNamedDeclaration'
-} = {
-  ExportDefaultDeclaration: 'ExportDefaultDeclaration',
-  ExportNamedDeclaration: 'ExportNamedDeclaration',
-}
 
 export function checkCstName(cst: SubhutiCst, cstName: string) {
   if (cst.name !== cstName) {
@@ -268,10 +262,33 @@ export class SlimeCstToAst {
 
   createExportDeclarationAst(cst: SubhutiCst): SlimeExportDefaultDeclaration | SlimeExportNamedDeclaration {
     let astName = checkCstName(cst, Es6Parser.prototype.ExportDeclaration.name);
-    if (cst.children.length > 2) {
-      return this.createExportDefaultDeclarationAst(cst)
-    } else {
-      return this.createExportNamedDeclarationAst(cst)
+    const first1 = cst.children[1]
+    if (first1.name === Es6Parser.prototype.AsteriskFromClauseEmptySemicolon.name) {
+
+    } else if (first1.name === Es6Parser.prototype.ExportClauseFromClauseEmptySemicolon.name) {
+
+    } else if (first1.name === Es6Parser.prototype.ExportClauseEmptySemicolon.name) {
+
+    } else if (first1.name === Es6Parser.prototype.Declaration.name) {
+      const declaration = this.createDeclarationAst(cst.children[1])
+      console.log('asdfsadfsad')
+      console.log(cst.children[1])
+      console.log(declaration)
+      return SlimeAstUtil.createExportNamedDeclaration(declaration, [], null, cst.loc)
+
+    } else if (first1.name === Es6Parser.prototype.DefaultTokHoistableDeclarationClassDeclarationAssignmentExpression.name) {
+      const del = this.createDefaultExportDeclarationAst(cst.children[2])
+      return SlimeAstUtil.createExportDefaultDeclaration(del, cst.loc)
+    }
+  }
+
+
+  createDeclarationAst(cst: SubhutiCst): SlimeDeclaration {
+    let astName = checkCstName(cst, Es6Parser.prototype.Declaration.name);
+    const first = cst.children[0]
+    switch (first.name) {
+      case Es6Parser.prototype.VariableDeclaration.name:
+        return this.createVariableDeclarationAst(first);
     }
   }
 
@@ -282,30 +299,7 @@ export class SlimeCstToAst {
     }
   }
 
-  createExportDefaultDeclarationAst(cst: SubhutiCst): SlimeExportDefaultDeclaration {
-    return {
-      type: EsTreeAstType.ExportDefaultDeclaration,
-      declaration: this.createDefaultExportDeclarationAst(cst.children[2]),
-      loc: cst.loc
-    };
-  }
 
-  createExportNamedDeclarationAst(cst: SubhutiCst): SlimeExportNamedDeclaration {
-    return {
-      type: EsTreeAstType.ExportNamedDeclaration,
-      declaration: this.createDeclarationAst(cst.children[1]),
-      specifiers: [],
-      loc: cst.loc
-    };
-  }
-
-
-  createDeclarationAst(cst: SubhutiCst): SlimeDeclaration {
-    switch (cst.name) {
-      case Es6Parser.prototype.VariableDeclaration.name:
-        return this.createVariableDeclarationAst(cst);
-    }
-  }
 
 
   createNodeAst(cst: SubhutiCst) {
@@ -323,25 +317,31 @@ export class SlimeCstToAst {
     //                 this.Statement()
     //                 this.Declaration()
     const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclaration.name);
-    const ast: SlimeVariableDeclaration = {
-      type: astName as any,
-      declarations: cst.children[1].children.map(item => this.createVariableDeclaratorAst(item)) as any[],
-      kind: cst.children[0].children[0].value as any,
-      loc: cst.loc
-    }
-    return ast
+    let kind: SlimeVariableDeclarationKind = cst.children[0].children[0].value as SlimeVariableDeclarationKind
+    let declarations = this.createVariableDeclarationListAst(cst.children[1])
+    return SlimeAstUtil.createVariableDeclaration(kind, declarations, cst.loc)
   }
 
+  createVariableDeclarationListAst(cst: SubhutiCst): SlimeVariableDeclarator[] {
+    let declarations = cst.children.map(item => this.createVariableDeclaratorAst(item)) as any[]
+    return declarations
+  }
 
   createClassDeclarationAst(cst: SubhutiCst): SlimeClassDeclaration {
     const astName = checkCstName(cst, Es6Parser.prototype.ClassDeclaration.name);
-    const ast: SlimeClassDeclaration = {
-      type: astName as any,
-      id: this.createIdentifierAst(cst.children[1].children[0]),
-      body: this.createClassBodyAst(cst.children[2].children[1]),
-      loc: cst.loc
-    }
+
+    const id = this.createBindingIdentifierAst(cst.children[1])
+    const body = this.createClassTailAst(cst.children[2])
+
+    const ast = SlimeAstUtil.createClassDeclaration(id, body, cst.loc)
+
     return ast
+  }
+
+  createClassTailAst(cst: SubhutiCst): SlimeClassBody {
+    const astName = checkCstName(cst, Es6Parser.prototype.ClassTail.name);
+    const body = this.createClassBodyAst(cst.children[1])
+    return body
   }
 
   createClassBodyItemAst(staticCst: SubhutiCst, cst: SubhutiCst): SlimeMethodDefinition | SlimePropertyDefinition {
@@ -633,7 +633,7 @@ export class SlimeCstToAst {
 
   createVariableDeclaratorAst(cst: SubhutiCst): SlimeVariableDeclarator {
     const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclarator.name);
-    const id = this.createIdentifierAst(cst.children[0].children[0])
+    const id = this.createBindingIdentifierAst(cst.children[0])
     let variableDeclarator: SlimeVariableDeclarator
     const varCst = cst.children[1]
     if (varCst) {

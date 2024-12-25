@@ -339,13 +339,13 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
     this.tokenConsumer.Dot()
     this.tokenConsumer.Identifier()
   }
+
   @SubhutiRule
   BracketExpression() {
     this.tokenConsumer.LBracket()
     this.Expression()
     this.tokenConsumer.RBracket()
   }
-
 
 
   @SubhutiRule
@@ -1734,45 +1734,70 @@ export default class Es6Parser<T extends Es6TokenConsumer> extends Es5Parser<T> 
   }
 
   @SubhutiRule
+  AsteriskFromClauseEmptySemicolon() {
+    this.tokenConsumer.Asterisk()
+    this.FromClause()
+    this.EmptySemicolon()
+  }
+
+  @SubhutiRule
+  ExportClauseFromClauseEmptySemicolon() {
+    this.ExportClause()
+    this.FromClause()
+    this.EmptySemicolon()
+  }
+
+
+  @SubhutiRule
+  ExportClauseEmptySemicolon() {
+    this.ExportClause()
+    this.EmptySemicolon()
+  }
+
+  @SubhutiRule
+  DefaultTokHoistableDeclarationClassDeclarationAssignmentExpression() {
+    this.tokenConsumer.DefaultTok()
+    this.Or([
+      {alt: () => this.HoistableDeclaration()},
+      {alt: () => this.ClassDeclaration()},
+      {
+        alt: () => {
+          // TODO: Implement lookahead check
+          this.AssignmentExpressionEmptySemicolon()
+        }
+      }
+    ])
+  }
+
+  @SubhutiRule
+  AssignmentExpressionEmptySemicolon() {
+    this.AssignmentExpression()
+    this.EmptySemicolon()
+  }
+
+  @SubhutiRule
   ExportDeclaration() {
     this.tokenConsumer.ExportTok()
     this.Or([
       {
         alt: () => {
-          this.tokenConsumer.Asterisk()
-          this.FromClause()
-          this.EmptySemicolon()
+          this.AsteriskFromClauseEmptySemicolon()
         }
       },
       {
         alt: () => {
-          this.ExportClause()
-          this.FromClause()
-          this.EmptySemicolon()
+          this.ExportClauseFromClauseEmptySemicolon()
         }
       },
       {
         alt: () => {
-          this.ExportClause()
-          this.EmptySemicolon()
+          this.ExportClauseEmptySemicolon()
         }
       },
-      {alt: () => this.VariableDeclaration()},
       {alt: () => this.Declaration()},
       {
         alt: () => {
-          this.tokenConsumer.DefaultTok()
-          this.Or([
-            {alt: () => this.HoistableDeclaration()},
-            {alt: () => this.ClassDeclaration()},
-            {
-              alt: () => {
-                // TODO: Implement lookahead check
-                this.AssignmentExpression()
-                this.EmptySemicolon()
-              }
-            }
-          ])
+          this.DefaultTokHoistableDeclarationClassDeclarationAssignmentExpression()
         }
       }
     ])

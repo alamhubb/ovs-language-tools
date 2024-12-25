@@ -688,7 +688,7 @@ export interface SlimeImportNamespaceSpecifier extends SlimeBaseModuleSpecifier 
 
 // Export 相关定义
 export interface SlimeExportNamedDeclaration extends SlimeBaseNode {
-  type: "ExportNamedDeclaration";
+  type: SlimeAstType.ExportNamedDeclaration;
   declaration?: SlimeDeclaration | null | undefined;
   specifiers: SlimeExportSpecifier[];
   source?: SlimeLiteral | null | undefined;
