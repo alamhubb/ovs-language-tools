@@ -254,9 +254,7 @@ export default class SlimeGenerator {
   }
 
   private static generatorObjectExpression(node: SlimeObjectExpression) {
-    console.log('fajskldfjals object')
     this.addLBrace()
-    console.log('fajskldfjals 32323')
     this.addNewLine()
     node.properties.forEach((item, index) => {
 

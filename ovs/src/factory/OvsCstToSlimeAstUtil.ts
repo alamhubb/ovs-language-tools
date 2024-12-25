@@ -38,6 +38,7 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
       body = this.createModuleItemListAst(first)
       for (const item of body) {
         if (item.type === SlimeAstType.ImportDeclaration) {
+          console.log(item)
           const importDeclaration: SlimeImportDeclaration = item as SlimeImportDeclaration
           const importDefaultSpecifiers: SlimeImportDefaultSpecifier[] = importDeclaration.specifiers.filter(item => item.type === SlimeAstType.ImportDefaultSpecifier)
           hasImportOvsFLag = importDefaultSpecifiers.some(item => item.local.name === 'OvsAPI')

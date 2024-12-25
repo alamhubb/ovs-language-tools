@@ -102,9 +102,7 @@ export class SlimeCstToAst {
       if (item.name === Es6Parser.prototype.ExportDeclaration.name) {
         return this.createExportDeclarationAst(item)
       } else if (item.name === Es6Parser.prototype.ImportDeclaration.name) {
-        // return this.createExportDeclarationAst(item)
-        throw new Error('暂时不支持')
-        // return {}
+        return this.createImportDeclarationAst(item)
       } else if (item.name === Es6Parser.prototype.StatementListItem.name) {
         return this.createStatementListItemAst(item)
       }
@@ -150,7 +148,8 @@ export class SlimeCstToAst {
     let astName = checkCstName(cst, Es6Parser.prototype.ImportClause.name);
     const first = cst.children[0]
     if (first.name === Es6Parser.prototype.ImportedDefaultBinding.name) {
-      this.createImportedDefaultBindingAst(first)
+      const specifier = this.createImportedDefaultBindingAst(first)
+      return [specifier]
     } else if (first.name === Es6Parser.prototype.NameSpaceImport.name) {
       this.createNameSpaceImportAst(first)
     } else if (first.name === Es6Parser.prototype.NamedImports.name) {
@@ -162,16 +161,18 @@ export class SlimeCstToAst {
     }
   }
 
-  createImportedDefaultBindingAst(cst: SubhutiCst): Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier> {
+  createImportedDefaultBindingAst(cst: SubhutiCst): SlimeImportDefaultSpecifier {
     let astName = checkCstName(cst, Es6Parser.prototype.ImportedDefaultBinding.name);
     const first = cst.children[0]
-    this.createImportedBindingAst(first)
+    const id = this.createImportedBindingAst(first)
+    const importDefaultSpecifier: SlimeImportDefaultSpecifier = SlimeAstUtil.createImportDefaultSpecifier(id)
+    return importDefaultSpecifier
   }
 
-  createImportedBindingAst(cst: SubhutiCst) {
+  createImportedBindingAst(cst: SubhutiCst): SlimeIdentifier {
     let astName = checkCstName(cst, Es6Parser.prototype.ImportedBinding.name);
     const first = cst.children[0]
-    this.createBindingIdentifierAst(first)
+    return this.createBindingIdentifierAst(first)
   }
 
   createNameSpaceImportAst(cst: SubhutiCst): Array<SlimeImportSpecifier | SlimeImportDefaultSpecifier | SlimeImportNamespaceSpecifier> {

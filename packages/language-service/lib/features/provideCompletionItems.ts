@@ -175,6 +175,8 @@ export function register(context: LanguageServiceContext) {
 				docs?: DocumentsAndMap,
 				codeInfo?: CodeInformation | undefined
 			) => {
+				LogUtil.log('const worker = async (')
+				LogUtil.log(position)
 
 				for (const plugin of sortedPlugins) {
 
@@ -261,8 +263,9 @@ export function register(context: LanguageServiceContext) {
 				isFirstMapping = false;
 			};
 
+			LogUtil.log('if (sourceScript?.generated) {')
 			if (sourceScript?.generated) {
-
+				LogUtil.log('for (const docs of forEachEmbeddedDocument(context, sourceScript, sourceScript.generated.root)) {')
 				for (const docs of forEachEmbeddedDocument(context, sourceScript, sourceScript.generated.root)) {
 
 					let _data: CodeInformation | undefined;
@@ -271,6 +274,8 @@ export function register(context: LanguageServiceContext) {
 						_data = data;
 						return isCompletionEnabled(data);
 					})) {
+						LogUtil.log('await worker(docs[1], mappedPosition, docs, _data);')
+						LogUtil.log(mappedPosition)
 						await worker(docs[1], mappedPosition, docs, _data);
 					}
 				}

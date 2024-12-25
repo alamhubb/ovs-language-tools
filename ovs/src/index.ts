@@ -10,6 +10,7 @@ import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import type {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping.ts";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
 
+
 export function traverseClearTokens(currentNode: SubhutiCst) {
   if (!currentNode || !currentNode.children || !currentNode.children.length)
     return currentNode
@@ -67,9 +68,6 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   JsonUtil.log(ast)
   const code11 = SlimeGenerator.generator(ast)
   // console.log(computedIndex(code11.mapping))
-  console.log(code11)
-  console.log(code11.code)
-  // console.log(code11.mapping)
   return code11
   // return `import OvsAPI from "@/ovs/OvsAPI.ts";\n ${code11.code}`
 }
@@ -80,11 +78,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
 const code = `const a = 1
 export const hello = {
     render() {
-    console.
-        return div{
-           a,
-           a
-       }
+console
     }
 }
 `

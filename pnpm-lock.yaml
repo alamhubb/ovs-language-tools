@@ -87,6 +87,9 @@ importers:
       '@volar/language-service':
         specifier: ~2.4.0
         version: link:../packages/language-service
+      '@volar/source-map':
+        specifier: ~2.4.0
+        version: link:../packages/source-map
       '@volar/typescript':
         specifier: ~2.4.0
         version: link:../packages/typescript

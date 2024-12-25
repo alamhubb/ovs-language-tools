@@ -328,6 +328,7 @@ export function create(
 
         async provideCompletionItems(document, position, completeContext, token) {
           LogUtil.log(' async provideCompletionItems(document, position, completeContext')
+          LogUtil.log(position)
           const uri = URI.parse(document.uri);
 
           if (!isSemanticDocument(uri, document)) {
@@ -352,6 +353,9 @@ export function create(
             triggerKind: completeContext.triggerKind,
           }
           LogUtil.log('ctx.languageService.getCompletionsAtPosition')
+          LogUtil.log(document.getText({start: document.positionAt(offset - 2), end: document.positionAt(offset + 2)}))
+          LogUtil.log(document.positionAt(offset))
+          LogUtil.log(document.offsetAt(document.positionAt(offset)))
           LogUtil.log(fileName)
           LogUtil.log(offset)
           // LogUtil.log(opts)

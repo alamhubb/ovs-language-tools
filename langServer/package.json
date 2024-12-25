@@ -59,6 +59,7 @@
     "slime-ast": "^0.0.1",
     "slime-generator": "^0.0.1",
     "ovsjs": "^0.0.9",
-    "slime-parser": "^0.0.1"
+    "slime-parser": "^0.0.1",
+    "@volar/source-map": "~2.4.0"
   }
 }

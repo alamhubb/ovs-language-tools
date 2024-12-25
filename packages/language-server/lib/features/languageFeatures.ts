@@ -4,6 +4,7 @@ import { URI } from 'vscode-uri';
 import { AutoInsertRequest, DocumentDrop_DataTransferItemAsStringRequest, DocumentDrop_DataTransferItemFileDataRequest, DocumentDropRequest, FindFileReferenceRequest } from '../../protocol';
 import type { LanguageServerProject, LanguageServerState } from '../types.js';
 import { SnapshotDocument } from '../utils/snapshotDocument';
+import {LogUtil} from "@volar/language-service/lib/logutil";
 
 const reportedCapabilities = new Set<string>();
 
@@ -361,6 +362,8 @@ export function register(
 				triggerCharacters: [...new Set(languageServicePlugins.map(({ capabilities }) => capabilities.completionProvider?.triggerCharacters ?? []).flat())],
 			};
 			server.connection.onCompletion(async (params, token) => {
+				LogUtil.log('server.connection.onCompletion(async (params, token) => {')
+				LogUtil.log(params.position)
 				const uri = URI.parse(params.textDocument.uri);
 				return await worker(uri, token, async languageService => {
 					lastCompleteUri = params.textDocument.uri;

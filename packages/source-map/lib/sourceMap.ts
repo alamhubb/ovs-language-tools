@@ -44,8 +44,8 @@ export class SourceMap<Data = unknown> {
 		if (memo.offsets.length === 0) {
 			return;
 		}
-
 		const { low: start, high: end } = binarySearch(memo.offsets, offset);
+
 		const skip = new Set<Mapping>();
 		const toRange: CodeRangeKey = fromRange == 'sourceOffsets' ? 'generatedOffsets' : 'sourceOffsets';
 
@@ -59,8 +59,9 @@ export class SourceMap<Data = unknown> {
 				if (filter && !filter(mapping.data)) {
 					continue;
 				}
-
 				const mapped = translateOffset(offset, mapping[fromRange], mapping[toRange], getLengths(mapping, fromRange), getLengths(mapping, toRange));
+
+
 				if (mapped !== undefined) {
 					yield [mapped, mapping] as const;
 				}
