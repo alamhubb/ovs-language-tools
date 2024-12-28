@@ -35,13 +35,15 @@ const mappings = [{
   },
 }]
 
-const defaultMapperFactory = new SourceMap(mappings);
+console.log(mappings)
 
-const res1111 = defaultMapperFactory.toGeneratedLocation(97)
+// const defaultMapperFactory = new SourceMap(mappings);
+
+/*const res1111 = defaultMapperFactory.toGeneratedLocation(97)
 console.log(res1111)
 for (const res1111Element of res1111) {
   console.log(6666)
   console.log(res1111Element)
-}
+}*/
 
 //问题来自于length太长了
