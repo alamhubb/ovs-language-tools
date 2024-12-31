@@ -282,7 +282,6 @@ export class SlimeCstToAst {
     }
   }
 
-
   createDeclarationAst(cst: SubhutiCst): SlimeDeclaration {
     let astName = checkCstName(cst, Es6Parser.prototype.Declaration.name);
     const first = cst.children[0]
