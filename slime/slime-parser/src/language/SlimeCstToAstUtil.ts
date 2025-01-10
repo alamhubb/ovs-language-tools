@@ -42,7 +42,10 @@ import {
   type SlimeImportDeclaration,
   type SlimeImportSpecifier,
   type SlimeImportDefaultSpecifier,
-  type SlimeImportNamespaceSpecifier, type SlimeImportExpression, SlimeVariableDeclarationKind
+  type SlimeImportNamespaceSpecifier,
+  type SlimeImportExpression,
+  SlimeVariableDeclarationKindValue,
+  type SlimeVariableDeclarationKind
 } from "slime-ast/src/SlimeAstInterface.ts";
 import SubhutiCst, {type SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import Es6Parser from "./es2015/Es6Parser.ts";
@@ -218,7 +221,7 @@ export class SlimeCstToAst {
     const astName = checkCstName(cst, Es6Parser.prototype.BindingIdentifier.name);
     //Identifier
     const first = cst.children[0]
-    return SlimeAstUtil.createIdentifier(first.value)
+    return SlimeAstUtil.createIdentifier(first.value, first.loc)
   }
 
 
@@ -299,8 +302,6 @@ export class SlimeCstToAst {
   }
 
 
-
-
   createNodeAst(cst: SubhutiCst) {
     switch (cst.name) {
       case Es6Parser.prototype.VariableDeclaration.name:
@@ -316,9 +317,10 @@ export class SlimeCstToAst {
     //                 this.Statement()
     //                 this.Declaration()
     const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclaration.name);
-    let kind: SlimeVariableDeclarationKind = cst.children[0].children[0].value as SlimeVariableDeclarationKind
+    let kindCst: SubhutiCst = cst.children[0].children[0]
+    let kindNode: SlimeVariableDeclarationKind = SlimeAstUtil.createVariableDeclarationKind(kindCst.value as SlimeVariableDeclarationKindValue, kindCst.loc)
     let declarations = this.createVariableDeclarationListAst(cst.children[1])
-    return SlimeAstUtil.createVariableDeclaration(kind, declarations, cst.loc)
+    return SlimeAstUtil.createVariableDeclaration(kindNode, declarations, cst.loc)
   }
 
   createVariableDeclarationListAst(cst: SubhutiCst): SlimeVariableDeclarator[] {
@@ -633,6 +635,9 @@ export class SlimeCstToAst {
   createVariableDeclaratorAst(cst: SubhutiCst): SlimeVariableDeclarator {
     const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclarator.name);
     const id = this.createBindingIdentifierAst(cst.children[0])
+
+    console.log(6565656)
+    console.log(id)
     let variableDeclarator: SlimeVariableDeclarator
     const varCst = cst.children[1]
     if (varCst) {

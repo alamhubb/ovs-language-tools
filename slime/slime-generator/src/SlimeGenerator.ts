@@ -421,7 +421,9 @@ export default class SlimeGenerator {
   }
 
   private static generatorVariableDeclaration(node: SlimeVariableDeclaration) {
-    this.addCodeAndMappings(es6TokenMapObj[node.kind.valueOf()], node.loc)
+    console.log(989898)
+    console.log(node.kind.loc)
+    this.addCodeAndMappings(es6TokenMapObj[node.kind.value.valueOf()], node.kind.loc)
     this.addCodeSpacing()
     for (const declaration of node.declarations) {
       this.generatorVariableDeclarator(declaration)
@@ -489,6 +491,8 @@ export default class SlimeGenerator {
         line: cstLocation.start.line,
         column: cstLocation.start.column,
       }
+      console.log(676767)
+      console.log(sourcePosition.length)
       return sourcePosition
     }
     return null

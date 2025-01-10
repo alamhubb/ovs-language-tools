@@ -17,7 +17,7 @@ import {
   type SlimeSimpleCallExpression,
   type SlimeSpreadElement,
   type SlimeSuper,
-  SlimeVariableDeclarationKind,
+  SlimeVariableDeclarationKindValue,
   type SlimeDirective,
   type SlimeExpression,
   type SlimeIdentifier,
@@ -49,7 +49,7 @@ import {
   type SlimeClassBody,
   type SlimeExportNamedDeclaration,
   type SlimeDeclaration,
-  type SlimeExportSpecifier,
+  type SlimeExportSpecifier, type SlimeVariableDeclarationKind,
 } from "./SlimeAstInterface.ts";
 
 import {SlimeAstType} from "./SlimeAstType.ts";
@@ -288,6 +288,15 @@ class SlimeAst {
     return this.commonLocType({
       type: SlimeAstType.SpreadElement,
       argument: argument
+    })
+  }
+
+
+  createVariableDeclarationKind(value: SlimeVariableDeclarationKindValue, loc?: SubhutiSourceLocation): SlimeVariableDeclarationKind {
+    return this.commonLocType({
+      type: SlimeAstType.VariableDeclarationKind,
+      value: value,
+      loc: loc
     })
   }
 

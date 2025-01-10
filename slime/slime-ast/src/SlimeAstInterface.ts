@@ -27,11 +27,17 @@ export enum SlimeProgramSourceType {
   module = 'module'
 }
 
-export enum SlimeVariableDeclarationKind {
+export enum SlimeVariableDeclarationKindValue {
   var = 'var',
   let = 'let',
   const = 'const'
 }
+
+export interface SlimeVariableDeclarationKind extends SlimeBaseNode {
+  type: SlimeAstType.VariableDeclarationKind
+  value: SlimeVariableDeclarationKindValue
+}
+
 
 export interface SlimeBaseNode {
   type: string
