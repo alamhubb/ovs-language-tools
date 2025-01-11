@@ -543,8 +543,8 @@ export default class SlimeGenerator {
 
   private static addMappings(sourcePosition: SlimeCodeLocation, generateCode: SubhutiCreateToken) {
     let generate: SlimeCodeLocation = {
-      index: this.generateIndex,
       type: generateCode.name,
+      index: this.generateIndex,
       value: generateCode.value,
       length: generateCode.value.length,
       line: this.generateLine,

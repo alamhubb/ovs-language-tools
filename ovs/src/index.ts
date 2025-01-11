@@ -9,6 +9,7 @@ import OvsCstToSlimeAstUtil from "./factory/OvsCstToSlimeAstUtil.ts";
 import JsonUtil from "subhuti/src/utils/JsonUtil.ts";
 import type {SlimeGeneratorResult} from "slime-generator/src/SlimeCodeMapping.ts";
 import Es6Parser from "slime-parser/src/language/es2015/Es6Parser.ts";
+import SlimeCstToAstUtil, {SlimeCstToAst} from "slime-parser/src/language/SlimeCstToAstUtil.ts";
 
 
 export function traverseClearTokens(currentNode: SubhutiCst) {
@@ -64,7 +65,7 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   JsonUtil.log(5656)
   JsonUtil.log(5656)
   JsonUtil.log(curCst)
-  const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
+  const ast = SlimeCstToAstUtil.toProgram(curCst)
   JsonUtil.log(9659)
   JsonUtil.log(ast)
   const code11 = SlimeGenerator.generator(ast)

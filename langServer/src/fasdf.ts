@@ -36,7 +36,8 @@ console.log(mappings)
 const defaultMapperFactory = new SourceMap(mappings);
 
 console.log(9988)
-const res1111 = defaultMapperFactory.toGeneratedLocation(6)
+//根据位置距离前一个位置的差 ，追加
+const res1111 = defaultMapperFactory.toGeneratedLocation(7)
 console.log(9977)
 console.log(res1111)
 for (const res1111Element of res1111) {
