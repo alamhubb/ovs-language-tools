@@ -49,7 +49,7 @@ import {
   type SlimeClassBody,
   type SlimeExportNamedDeclaration,
   type SlimeDeclaration,
-  type SlimeExportSpecifier, type SlimeVariableDeclarationKind,
+  type SlimeExportSpecifier, type SlimeVariableDeclarationKind, type SlimeExportToken,
 } from "./SlimeAstInterface.ts";
 
 import {SlimeAstType} from "./SlimeAstType.ts";
@@ -100,11 +100,19 @@ class SlimeAst {
   }
 
 
-  createExportNamedDeclaration(declaration: SlimeDeclaration, specifiers: SlimeExportSpecifier[], source?: SlimeLiteral, loc?: SubhutiSourceLocation): SlimeExportNamedDeclaration {
+  createExportToken(loc?: SubhutiSourceLocation): SlimeExportToken {
+    return this.commonLocType({
+      type: SlimeAstType.Export,
+      loc: loc
+    })
+  }
+
+  createExportNamedDeclaration(exportNode: SlimeExportToken, declaration: SlimeDeclaration, specifiers: SlimeExportSpecifier[], source?: SlimeLiteral, loc?: SubhutiSourceLocation): SlimeExportNamedDeclaration {
     return this.commonLocType({
       type: SlimeAstType.ExportNamedDeclaration,
       declaration: declaration,
       specifiers: specifiers,
+      export: exportNode,
       source: source,
       loc: loc
     })

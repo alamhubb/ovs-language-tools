@@ -693,10 +693,16 @@ export interface SlimeImportNamespaceSpecifier extends SlimeBaseModuleSpecifier 
 }
 
 // Export 相关定义
+export interface SlimeExportToken extends SlimeBaseNode {
+  type: SlimeAstType.Export;
+}
+
+// Export 相关定义
 export interface SlimeExportNamedDeclaration extends SlimeBaseNode {
   type: SlimeAstType.ExportNamedDeclaration;
   declaration?: SlimeDeclaration | null | undefined;
   specifiers: SlimeExportSpecifier[];
+  export: SlimeExportToken;
   source?: SlimeLiteral | null | undefined;
 }
 

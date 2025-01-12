@@ -146,7 +146,7 @@ export default class SlimeGenerator {
 
 
   private static generatorExportNamedDeclaration(node: SlimeExportNamedDeclaration) {
-    this.addCodeAndMappings(es6TokensObj.ExportTok, node.loc)
+    this.addCodeAndMappings(es6TokensObj.ExportTok, node.export.loc)
     this.addSpacing()
     console.log(node)
     this.generatorDeclaration(node.declaration)
@@ -498,9 +498,9 @@ export default class SlimeGenerator {
     return null
   }
 
-  private static addCodeAndMappingsBySourcePosition(code: SubhutiCreateToken, sourcePosition: SlimeCodeLocation) {
-    this.addMappings(sourcePosition, code)
-    this.addCode(code)
+  private static addCodeAndMappingsBySourcePosition(token: SubhutiCreateToken, sourcePosition: SlimeCodeLocation) {
+    this.addMappings(sourcePosition, token)
+    this.addCode(token)
   }
 
   private static addCodeAndMappings(token: SubhutiCreateToken, cstLocation: SubhutiSourceLocation = null) {

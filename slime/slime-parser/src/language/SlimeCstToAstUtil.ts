@@ -265,7 +265,9 @@ export class SlimeCstToAst {
 
   createExportDeclarationAst(cst: SubhutiCst): SlimeExportDefaultDeclaration | SlimeExportNamedDeclaration {
     let astName = checkCstName(cst, Es6Parser.prototype.ExportDeclaration.name);
+    const first = cst.children[0]
     const first1 = cst.children[1]
+    let token = SlimeAstUtil.createExportToken(first.loc)
     if (first1.name === Es6Parser.prototype.AsteriskFromClauseEmptySemicolon.name) {
 
     } else if (first1.name === Es6Parser.prototype.ExportClauseFromClauseEmptySemicolon.name) {
@@ -277,7 +279,8 @@ export class SlimeCstToAst {
       console.log('asdfsadfsad')
       console.log(cst.children[1])
       console.log(declaration)
-      return SlimeAstUtil.createExportNamedDeclaration(declaration, [], null, cst.loc)
+
+      return SlimeAstUtil.createExportNamedDeclaration(token, declaration, [], null, cst.loc)
 
     } else if (first1.name === Es6Parser.prototype.DefaultTokHoistableDeclarationClassDeclarationAssignmentExpression.name) {
       const del = this.createDefaultExportDeclarationAst(cst.children[2])

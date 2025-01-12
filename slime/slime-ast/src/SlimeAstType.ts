@@ -40,6 +40,7 @@ export enum SlimeAstType {
     EqualOperator = 'EqualOperator',
     VariableDeclarationKind = 'VariableDeclarationKind',
     From = 'From',
+    Export = 'Export',
     Dot = 'Dot',
     LParen = 'LParen',
     RParen = 'RParen',

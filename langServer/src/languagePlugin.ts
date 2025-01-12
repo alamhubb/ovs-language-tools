@@ -68,16 +68,21 @@ interface EnhancedMapping {
 export class MappingConverter {
   static convertMappings(mappings: SlimeCodeMapping[]): EnhancedMapping[] {
     return mappings.map((mapping, index) => {
-      return {
+      const res = {
+        original: {
+          offset: mapping.source.index,
+          length: mapping.source.length,
+        },
         generated: {
           offset: mapping.generate.index,
           length: mapping.generate.length,
         },
-        original: {
-          offset: mapping.source.index,
-          length: mapping.source.length,
-        }
       };
+      console.log(res)
+      console.log(mapping.source)
+      console.log(mapping.source.value)
+      console.log(mapping.generate.value)
+      return res
     });
   }
 }
