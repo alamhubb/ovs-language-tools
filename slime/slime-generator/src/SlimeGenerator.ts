@@ -56,7 +56,7 @@ export default class SlimeGenerator {
 
   private static findNextTokenLocByTypeAndIndex(tokenType: string, index: number): SubhutiSourceLocation {
     const popToken = this.tokens.find(item => ((item.tokenName === tokenType) && (item.index > index)))
-    let loc: SubhutiSourceLocation
+    let loc: SubhutiSourceLocation = null
     if (popToken) {
       loc = {
         // index: popToken.index,
@@ -71,24 +71,6 @@ export default class SlimeGenerator {
           index: popToken.index + popToken.tokenValue.length,
           line: popToken.rowNum,
           column: popToken.columnEndNum
-        }
-      }
-    } else {
-      //找到上一个
-      const lastToken = [...this.tokens].reverse().find(item => item.index < index)
-      loc = {
-        // index: popToken.index,
-        value: null,
-        type: tokenType,
-        start: {
-          index: lastToken.index + lastToken.tokenValue.length,
-          line: lastToken.rowNum,
-          column: lastToken.columnStartNum + lastToken.tokenValue.length,
-        },
-        end: {
-          index: lastToken.index + lastToken.tokenValue.length,
-          line: lastToken.rowNum,
-          column: lastToken.columnStartNum + lastToken.tokenValue.length
         }
       }
     }
@@ -135,7 +117,7 @@ export default class SlimeGenerator {
   private static generatorModuleDeclarations(node: Array<SlimeStatement | SlimeModuleDeclaration>) {
     for (const nodeElement of node) {
       this.generatorModuleDeclaration(nodeElement)
-      this.addSemicolonAndNewLine()
+      // this.addSemicolonAndNewLine()
     }
   }
 
@@ -214,17 +196,14 @@ export default class SlimeGenerator {
     } else {
       throw new Error('不支持的类型')
     }
-    this.addSemicolonAndNewLine()
+    // this.addSemicolonAndNewLine()
   }
 
 
   private static generatorStatements(nodes: SlimeStatement[]) {
     nodes.forEach((node, index) => {
-      // if (this.generateLine !== 0 || index !== 0) {
-      //     this.addNewLine()
-      // }
       this.generatorStatement(node)
-      this.addSemicolonAndNewLine()
+      // this.addSemicolonAndNewLine()
     })
   }
 
@@ -259,14 +238,16 @@ export default class SlimeGenerator {
 
     this.addCodeAndMappingsFindLoc(es6TokensObj.LParen, Es6TokenName.LParen, node.callee.loc.end.index)
 
-    node.arguments.forEach((argument, index) => {
-      if (index !== 0) {
-        this.addComma()
-      }
-      this.generatorExpression(argument as SlimeExpression)
-    })
-
-    this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, node.arguments[node.arguments.length - 1].loc.end.index)
+    if (node.arguments.length) {
+      node.arguments.forEach((argument, index) => {
+        if (index !== 0) {
+          this.addComma()
+        }
+        this.generatorExpression(argument as SlimeExpression)
+      })
+      const lastIndex = node.arguments[node.arguments.length - 1].loc.end.index
+      this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, lastIndex)
+    }
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
@@ -303,15 +284,12 @@ export default class SlimeGenerator {
 
   private static generatorObjectExpression(node: SlimeObjectExpression) {
     this.addLBrace()
-    this.addNewLine()
     node.properties.forEach((item, index) => {
 
       this.generatorProperty(item as SlimeProperty)
       if (index !== node.properties.length - 1) {
-        this.addNewLine()
       }
     })
-    this.addNewLine()
     this.addRBrace()
   }
 
@@ -405,7 +383,6 @@ export default class SlimeGenerator {
 
   private static generatorBlockStatement(node: SlimeBlockStatement) {
     this.addLBrace()
-    this.addNewLine()
     this.generatorStatements(node.body)
     this.addRBrace()
   }
@@ -544,13 +521,17 @@ export default class SlimeGenerator {
   }
 
   private static addCodeAndMappingsBySourcePosition(token: SubhutiCreateToken, sourcePosition: SlimeCodeLocation) {
+
+
     this.addMappings(token, sourcePosition)
     this.addCode(token)
   }
 
   private static addCodeAndMappingsFindLoc(token: SubhutiCreateToken, tokenType: string, findIndex: number) {
     const cstLocation = this.findNextTokenLocByTypeAndIndex(tokenType, findIndex)
-    this.addCodeAndMappings(token, cstLocation)
+    if (cstLocation) {
+      this.addCodeAndMappings(token, cstLocation)
+    }
   }
 
   private static addCodeAndMappings(token: SubhutiCreateToken, cstLocation: SubhutiSourceLocation = null) {
@@ -568,8 +549,8 @@ export default class SlimeGenerator {
   }
 
   private static addSemicolonAndNewLine() {
-    this.addSemicolon()
-    this.addNewLine()
+    // this.addSemicolon()
+    // this.addNewLine()
   }
 
   private static addSemicolon() {
@@ -592,6 +573,14 @@ export default class SlimeGenerator {
 
 
   private static addMappings(generateToken: SubhutiCreateToken, sourcePosition: SlimeCodeLocation) {
+    if (this.mappings.length) {
+      const lastMapping = this.mappings[this.mappings.length - 1]
+
+      if (sourcePosition.line > lastMapping.source.line) {
+        this.addNewLine()
+      }
+    }
+
     let generate: SlimeCodeLocation = {
       type: generateToken.name,
       index: this.generateIndex,

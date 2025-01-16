@@ -579,9 +579,11 @@ export class SlimeCstToAst {
   createArgumentsAst(cst: SubhutiCst): Array<SlimeExpression> {
     const astName = checkCstName(cst, Es6Parser.prototype.Arguments.name);
     const first1 = cst.children[1]
-    if (first1.name === Es6Parser.prototype.ArgumentList.name) {
-      const res = this.createArgumentListAst(first1)
-      return res
+    if (first1){
+      if (first1.name === Es6Parser.prototype.ArgumentList.name) {
+        const res = this.createArgumentListAst(first1)
+        return res
+      }
     }
     return []
   }
