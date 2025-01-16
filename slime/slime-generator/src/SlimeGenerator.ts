@@ -41,6 +41,7 @@ import type {SubhutiSourceLocation} from "subhuti/src/struct/SubhutiCst.ts";
 import {es6TokenMapObj, Es6TokenName, es6TokensObj} from "slime-parser/src/language/es2015/Es6Tokens.ts";
 import {es5TokensObj} from "slime-parser/src/language/es5/Es5Tokens.ts";
 import {SubhutiCreateToken} from "subhuti/src/struct/SubhutiCreateToken.ts";
+import SubhutiMatchToken from "subhuti/src/struct/SubhutiMatchToken.ts";
 
 export default class SlimeGenerator {
   static mappings: SlimeCodeMapping[] = null
@@ -51,9 +52,52 @@ export default class SlimeGenerator {
   private static generateLine = 0
   private static generateColumn = 0
   private static generateIndex = 0
+  private static tokens: SubhutiMatchToken[] = null
 
-  static generator(node: SlimeBaseNode): SlimeGeneratorResult {
+  private static findNextTokenLocByTypeAndIndex(tokenType: string, index: number): SubhutiSourceLocation {
+    const popToken = this.tokens.find(item => ((item.tokenName === tokenType) && (item.index > index)))
+    let loc: SubhutiSourceLocation
+    if (popToken) {
+      loc = {
+        // index: popToken.index,
+        value: popToken.tokenValue,
+        type: popToken.tokenName,
+        start: {
+          index: popToken.index,
+          line: popToken.rowNum,
+          column: popToken.columnStartNum,
+        },
+        end: {
+          index: popToken.index + popToken.tokenValue.length,
+          line: popToken.rowNum,
+          column: popToken.columnEndNum
+        }
+      }
+    } else {
+      //找到上一个
+      const lastToken = [...this.tokens].reverse().find(item => item.index < index)
+      loc = {
+        // index: popToken.index,
+        value: null,
+        type: tokenType,
+        start: {
+          index: lastToken.index + lastToken.tokenValue.length,
+          line: lastToken.rowNum,
+          column: lastToken.columnStartNum + lastToken.tokenValue.length,
+        },
+        end: {
+          index: lastToken.index + lastToken.tokenValue.length,
+          line: lastToken.rowNum,
+          column: lastToken.columnStartNum + lastToken.tokenValue.length
+        }
+      }
+    }
+    return loc
+  }
+
+  static generator(node: SlimeBaseNode, tokens: SubhutiMatchToken[]): SlimeGeneratorResult {
     this.mappings = []
+    this.tokens = tokens
     this.lastSourcePosition = new SlimeCodeLocation()
     this.generatePosition = new SlimeCodeLocation()
     this.sourceCodeIndex = 0
@@ -212,14 +256,17 @@ export default class SlimeGenerator {
     if (node.callee.type === SlimeAstType.FunctionExpression) {
       this.addRParen()
     }
-    this.addLParen(node.callee.loc)
+
+    this.addCodeAndMappingsFindLoc(es6TokensObj.LParen, Es6TokenName.LParen, node.callee.loc.end.index)
+
     node.arguments.forEach((argument, index) => {
       if (index !== 0) {
         this.addComma()
       }
       this.generatorExpression(argument as SlimeExpression)
     })
-    this.addRParen(node.callee.loc)
+
+    this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, node.arguments[node.arguments.length - 1].loc.end.index)
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
@@ -491,16 +538,19 @@ export default class SlimeGenerator {
         line: cstLocation.start.line,
         column: cstLocation.start.column,
       }
-      console.log(676767)
-      console.log(sourcePosition.length)
       return sourcePosition
     }
     return null
   }
 
   private static addCodeAndMappingsBySourcePosition(token: SubhutiCreateToken, sourcePosition: SlimeCodeLocation) {
-    this.addMappings(sourcePosition, token)
+    this.addMappings(token, sourcePosition)
     this.addCode(token)
+  }
+
+  private static addCodeAndMappingsFindLoc(token: SubhutiCreateToken, tokenType: string, findIndex: number) {
+    const cstLocation = this.findNextTokenLocByTypeAndIndex(tokenType, findIndex)
+    this.addCodeAndMappings(token, cstLocation)
   }
 
   private static addCodeAndMappings(token: SubhutiCreateToken, cstLocation: SubhutiSourceLocation = null) {
@@ -541,12 +591,12 @@ export default class SlimeGenerator {
   }
 
 
-  private static addMappings(sourcePosition: SlimeCodeLocation, generateCode: SubhutiCreateToken) {
+  private static addMappings(generateToken: SubhutiCreateToken, sourcePosition: SlimeCodeLocation) {
     let generate: SlimeCodeLocation = {
-      type: generateCode.name,
+      type: generateToken.name,
       index: this.generateIndex,
-      value: generateCode.value,
-      length: generateCode.value.length,
+      value: generateToken.value,
+      length: generateToken.value.length,
       line: this.generateLine,
       column: this.generateColumn,
     }

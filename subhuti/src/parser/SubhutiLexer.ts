@@ -61,6 +61,7 @@ export default class SubhutiLexer {
             rowNum: lineNum,
             columnStartNum: columnStartNum,
             columnEndNum: columnStartNum + matchLength,
+            // length: matchLength,
             tokenValue: matchRes[0],
             index: codeIndex
           })) // 创建匹配token并加入列表

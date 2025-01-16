@@ -3,7 +3,7 @@ import {MappingConverter} from "./languagePlugin.ts";
 import {LogUtil} from "./logutil.ts";
 import { SourceMap } from '@volar/source-map';
 
-const code = `let a = 123
+const code = `console.log(123
 `
 const res = vitePluginOvsTransform(code)
 
@@ -37,7 +37,7 @@ const defaultMapperFactory = new SourceMap(mappings);
 
 console.log(9988)
 //根据位置距离前一个位置的差 ，追加
-const res1111 = defaultMapperFactory.toGeneratedLocation(12)
+const res1111 = defaultMapperFactory.toGeneratedLocation(26)
 console.log(9977)
 console.log(res1111)
 for (const res1111Element of res1111) {
