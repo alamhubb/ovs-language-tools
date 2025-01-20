@@ -3,8 +3,7 @@ import {MappingConverter} from "./languagePlugin.ts";
 import {LogUtil} from "./logutil.ts";
 import { SourceMap } from '@volar/source-map';
 
-const code = `let a = 123
-console.log(
+const code = `let
 `
 const res = vitePluginOvsTransform(code)
 

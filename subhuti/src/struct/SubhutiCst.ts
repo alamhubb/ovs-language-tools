@@ -3,6 +3,7 @@ import SubhutiMatchToken from "./SubhutiMatchToken.ts";
 export interface SubhutiSourceLocation {
   // index?: number;
   value?: string;
+  newLine?: boolean;
   type?: string;
   start: SubhutiPosition;
   end: SubhutiPosition;

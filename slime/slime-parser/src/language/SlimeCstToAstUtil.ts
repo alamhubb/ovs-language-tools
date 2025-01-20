@@ -322,7 +322,10 @@ export class SlimeCstToAst {
     const astName = checkCstName(cst, Es6Parser.prototype.VariableDeclaration.name);
     let kindCst: SubhutiCst = cst.children[0].children[0]
     let kindNode: SlimeVariableDeclarationKind = SlimeAstUtil.createVariableDeclarationKind(kindCst.value as SlimeVariableDeclarationKindValue, kindCst.loc)
-    let declarations = this.createVariableDeclarationListAst(cst.children[1])
+    let declarations: SlimeVariableDeclarator[] = []
+    if (cst.children[1]) {
+      declarations = this.createVariableDeclarationListAst(cst.children[1])
+    }
     return SlimeAstUtil.createVariableDeclaration(kindNode, declarations, cst.loc)
   }
 
@@ -579,7 +582,7 @@ export class SlimeCstToAst {
   createArgumentsAst(cst: SubhutiCst): Array<SlimeExpression> {
     const astName = checkCstName(cst, Es6Parser.prototype.Arguments.name);
     const first1 = cst.children[1]
-    if (first1){
+    if (first1) {
       if (first1.name === Es6Parser.prototype.ArgumentList.name) {
         const res = this.createArgumentListAst(first1)
         return res
