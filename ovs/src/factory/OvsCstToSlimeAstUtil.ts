@@ -55,7 +55,7 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
       const source = SlimeAstUtil.createStringLiteral('ovsjs/src/OvsAPI')
       const ovsImport = SlimeAstUtil.createImportDeclaration([ovsImportDefaultSpecifiers], from, source)
       ovsImport.loc.newLine = true
-      body.unshift(ovsImport)
+      // body.unshift(ovsImport)
     }
 
     program = SlimeAstUtil.createProgram(body, SlimeProgramSourceType.module)

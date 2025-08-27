@@ -327,8 +327,10 @@ export function create(
         },
 
         async provideCompletionItems(document, position, completeContext, token) {
+          LogUtil.log('zhixingle 智能提示')
           LogUtil.log(' async provideCompletionItems(document, position, completeContext')
           LogUtil.log(position)
+          LogUtil.log('zhixingle 位置提示')
           const uri = URI.parse(document.uri);
 
           if (!isSemanticDocument(uri, document)) {
@@ -361,6 +363,7 @@ export function create(
           // LogUtil.log(opts)
           const info = safeCall(() => ctx.languageService.getCompletionsAtPosition(fileName, offset, opts));
           LogUtil.log('languageService.getCompletionsAtPosition(')
+          LogUtil.log(info.entries.length)
           if (info) {
             return convertCompletionInfo<CompletionItemData>(
               ts,

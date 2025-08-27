@@ -167,6 +167,7 @@ export function register(context: LanguageServiceContext) {
 					const errors = await plugin[1].provideDiagnostics?.(document, token) || [];
 
 					LogUtil.log('const errors = await plugin[1].provideDiagnostics?.(document, token) || [];')
+					LogUtil.log(document.getText())
 					LogUtil.log(errors)
 
 					errors.forEach(error => {

@@ -18,7 +18,7 @@ export const ovsLanguagePlugin: LanguagePlugin<URI> = {
     }
   },
   typescript: {
-    extraFileExtensions: [{extension: 'ovs', isMixedContent: true, scriptKind: 7 satisfies ts.ScriptKind.Deferred}],
+    extraFileExtensions: [{extension: 'ovs', isMixedContent: true, scriptKind: ts.ScriptKind.Deferred}],
     getServiceScript() {
       return undefined;
     },
