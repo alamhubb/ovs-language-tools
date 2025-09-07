@@ -362,8 +362,11 @@ export function create(
           LogUtil.log(offset)
           // LogUtil.log(opts)
           const info = safeCall(() => ctx.languageService.getCompletionsAtPosition(fileName, offset, opts));
+          // const info = null
           LogUtil.log('languageService.getCompletionsAtPosition(')
           LogUtil.log(info.entries.length)
+          LogUtil.log(info.entries.map(item => item.name))
+          LogUtil.log(info.entries.map(item => item.sortText))
           if (info) {
             return convertCompletionInfo<CompletionItemData>(
               ts,
