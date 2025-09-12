@@ -1,2 +1,1 @@
-let a = 1;
-le
+let a = 1

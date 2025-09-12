@@ -163,23 +163,23 @@ const uriConverter = {
   asFileName,
   asUri,
 }
+const tsSys = ts.sys
 
 const languageServiceHostAll = createLanguageServiceHost(
   ts,
-  ts.sys,
+  tsSys,
   language,
   s => uriConverter.asUri(s),
   projectHost
 )
 
-const sys = ts.sys
 
 const languageServiceHost = languageServiceHostAll.languageServiceHost
 
 
 const languageService = ts.createLanguageService(
   languageServiceHost,
-  getDocumentRegistry(ts, sys.useCaseSensitiveFileNames, languageServiceHost.getCurrentDirectory())
+  getDocumentRegistry(ts, tsSys.useCaseSensitiveFileNames, languageServiceHost.getCurrentDirectory())
 );
 
 // c:/Users/qinkaiyuan/IdeaProjects/testovsplg1/src/fasdf.ovs.ts1.ts
@@ -232,10 +232,11 @@ const tsToken: ts.CancellationToken = {
 const syntacticDiagnostics = program.getSyntacticDiagnostics(sourceFile, tsToken);
 const suggestionDiagnostics = languageService.getSuggestionDiagnostics(fileName);
 
-const info = safeCall(() => languageService.getCompletionsAtPosition(fileName, 14, opts));
+const info = safeCall(() => languageService.getCompletionsAtPosition(fileName, 9, opts));
 
 console.log(syntacticDiagnostics)
 console.log(suggestionDiagnostics)
+console.log(info.entries.length)
 
 const ary = info.entries.map(item => item.name)
 for (const item of info.entries) {
