@@ -84,7 +84,7 @@ export function createTypeScriptProject(
 		},
 	};
 
-	async function findMatchTSConfig(server: LanguageServer, uri: URI) {
+	async function  findMatchTSConfig(server: LanguageServer, uri: URI) {
 
 		const fileName = uriConverter.asFileName(uri);
 

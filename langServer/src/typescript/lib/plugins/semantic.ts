@@ -177,7 +177,8 @@ export function create(
         console.warn(`[volar] typescript-semantic requires typescript project.`);
         return {};
       }
-      const {sys, languageServiceHost, uriConverter, getExtraServiceScript} = context.project.typescript;
+      const {sys, languageServiceHost, uriConverter, getExtraServiceScript} =
+        context.project.typescript;
       let languageService: ts.LanguageService;
       let created: ReturnType<typeof tsWithImportCache.createLanguageService> | undefined;
       if (disableAutoImportCache) {

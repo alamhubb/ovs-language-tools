@@ -3,7 +3,7 @@ import * as ts from "typescript";
 const fileName = "example.ts";
 const fileContent = `
 const user = { name: "Kai", age: 25 };
-user.`;
+le`;
 
 const files: Record<string, { version: number; content: string }> = {
   [fileName]: { version: 0, content: fileContent }
