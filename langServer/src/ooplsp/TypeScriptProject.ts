@@ -1,0 +1,111 @@
+import * as ts from "typescript";
+import * as path from "path-browserify";
+import {
+  createUriConverter,
+  getWorkspaceFolder,
+  isFileInDir,
+  sortTSConfigs
+} from "@volar/language-server/lib/project/typescriptProject.ts";
+import {Language, LanguagePlugin, LanguageServer, ProjectContext, ProviderResult} from "@volar/language-server";
+import {URI} from "vscode-uri";
+import {createUriMap, FileType} from "@volar/language-service";
+import {
+  createTypeScriptLS,
+  ProjectExposeContext,
+  TypeScriptProjectLS
+} from "@volar/language-server/lib/project/typescriptProjectLs.ts";
+import FindMatchTsConfigUtil from "./FindMatchTsConfigUtil.ts";
+import {createLanguageServiceEnvironment} from "@volar/language-server/lib/project/simpleProject.ts";
+import {getInferredCompilerOptions} from "@volar/language-server/lib/project/inferredCompilerOptions.ts";
+
+export default class TypeScriptProject {
+  static tsLocalized: ts.MapLike<string>
+  static server: any
+  static rootTsConfigNames = ['tsconfig.json', 'jsconfig.json'];
+  static uriConverter: ReturnType<typeof createUriConverter>
+  static configProjects = createUriMap<Promise<TypeScriptProjectLS>>();
+  static inferredProjects = createUriMap<Promise<TypeScriptProjectLS>>();
+  static rootTsConfigs = new Set<string>();
+  static searchedDirs = new Set<string>();
+  static create: (projectContext: ProjectExposeContext) => ProviderResult<{
+    languagePlugins: LanguagePlugin<URI>[];
+    setup?(options: {
+      language: Language;
+      project: ProjectContext;
+    }): void;
+  }>;
+
+  static initTypeScriptProject(server, create: (projectContext: ProjectExposeContext) => ProviderResult<{
+    languagePlugins: LanguagePlugin<URI>[];
+    setup?(options: {
+      language: Language;
+      project: ProjectContext;
+    }): void;
+  }>, tsLocalized: ts.MapLike<string> | undefined) {
+    this.tsLocalized = tsLocalized
+    this.server = server
+    this.create = create
+    this.uriConverter = createUriConverter(server.workspaceFolders.all);
+  }
+
+  static async getLanguageService(uri) {
+    const tsconfig = await FindMatchTsConfigUtil.findMatchTSConfig(this.server, uri);
+    if (tsconfig) {
+      const project = await TypeScriptProject.getOrCreateConfiguredProject(this.server, tsconfig, this.tsLocalized);
+      return project.languageService;
+    }
+    const workspaceFolder = getWorkspaceFolder(uri, this.server.workspaceFolders);
+    const project = await TypeScriptProject.getOrCreateInferredProject(this.server, uri, workspaceFolder, this.tsLocalized);
+    return project.languageService;
+  }
+
+  static getOrCreateConfiguredProject(server: LanguageServer, tsconfig: string) {
+    tsconfig = tsconfig.replace(/\\/g, '/');
+    const tsconfigUri = TypeScriptProject.uriConverter.asUri(tsconfig);
+    let projectPromise = TypeScriptProject.configProjects.get(tsconfigUri);
+    if (!projectPromise) {
+      const workspaceFolder = getWorkspaceFolder(tsconfigUri, server.workspaceFolders);
+      const serviceEnv = createLanguageServiceEnvironment(server, [workspaceFolder]);
+      projectPromise = createTypeScriptLS(
+        ts,
+        TypeScriptProject.tsLocalized,
+        tsconfig,
+        server,
+        serviceEnv,
+        workspaceFolder,
+        TypeScriptProject.uriConverter,
+        TypeScriptProject.create
+      );
+      TypeScriptProject.configProjects.set(tsconfigUri, projectPromise);
+    }
+    return projectPromise;
+  }
+
+  static async getOrCreateInferredProject(server: LanguageServer, uri: URI, workspaceFolder: URI, tsLocalized: ts.MapLike<string>) {
+
+    if (!TypeScriptProject.inferredProjects.has(workspaceFolder)) {
+      TypeScriptProject.inferredProjects.set(workspaceFolder, (async () => {
+        const inferOptions = await getInferredCompilerOptions(server);
+        const serviceEnv = createLanguageServiceEnvironment(server, [workspaceFolder]);
+        return createTypeScriptLS(
+          ts,
+          tsLocalized,
+          inferOptions,
+          server,
+          serviceEnv,
+          workspaceFolder,
+          TypeScriptProject.uriConverter,
+          TypeScriptProject.create
+        );
+      })());
+    }
+
+    const project = await TypeScriptProject.inferredProjects.get(workspaceFolder)!;
+
+    project.tryAddFile(TypeScriptProject.uriConverter.asFileName(uri));
+
+    return project;
+  }
+
+
+}
