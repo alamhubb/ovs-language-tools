@@ -63,7 +63,7 @@ export function createTypeScriptProject(
 			}
 			const workspaceFolder = getWorkspaceFolder(uri, server.workspaceFolders);
 			const project = await getOrCreateInferredProject(server, uri, workspaceFolder);
-			return project.languageService;
+        return project.languageService;
 		},
 		async getExistingLanguageServices() {
 			const projects = await Promise.all([

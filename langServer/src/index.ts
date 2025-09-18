@@ -35,6 +35,8 @@ connection.onInitialize(params => {
 	try {
 		const tsdk = loadTsdkByPath(tsdkPath, params.locale);
 		const languagePlugins = [ovsLanguagePlugin]
+
+    //createTypeScriptServicePlugins
 		const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
 		const tsProject = createTypeScriptProject(
 			tsdk.typescript,
