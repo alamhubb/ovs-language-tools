@@ -222,7 +222,7 @@ connection.onCompletion(
         data: 1
       },
       {
-        label: 'JavaScript',
+        label: 'JavaScript111',
         kind: CompletionItemKind.Text,
         data: 2
       }
