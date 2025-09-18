@@ -22,17 +22,10 @@ import {
 import {
   TextDocument
 } from 'vscode-languageserver-textdocument';
-import TypeScriptProject from "./ooplsp/TypeScriptProject.ts";
-import {createServer, createTypeScriptProject, loadTsdkByPath} from "@volar/language-server/node.ts";
-import {ovsLanguagePlugin} from "./languagePlugin.ts";
-import {createTypeScriptServices} from "./typescript";
-import {LogUtil} from "./logutil.ts";
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
 const connection = createConnection(ProposedFeatures.all);
-
-const server = createServer(connection);
 
 // Create a simple text document manager.
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
@@ -41,30 +34,7 @@ let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
 
-
-function getLocalTsdkPath() {
-  let tsdkPath = "C:\\Users\\qinky\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
-  // let tsdkPath = "C:\\Users\\qinkaiyuan\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
-  return tsdkPath.replace(/\\/g, '/');
-}
-
-LogUtil.log('getLocalTsdkPath')
-
-const tsdkPath = getLocalTsdkPath();
-
 connection.onInitialize((params: InitializeParams) => {
-  const tsdk = loadTsdkByPath(tsdkPath, params.locale);
-  const languagePlugins = [ovsLanguagePlugin]
-  const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
-  const tsProject = TypeScriptProject.initTypeScriptProject(
-    tsdk.diagnosticMessages,
-    server,
-    () => ({
-      languagePlugins: languagePlugins,
-    })
-  )
-
-
   const capabilities = params.capabilities;
 
   // Does the client support the `workspace/configuration` request?
@@ -124,7 +94,7 @@ interface ExampleSettings {
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
-const defaultSettings: ExampleSettings = {maxNumberOfProblems: 1000};
+const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
 let globalSettings: ExampleSettings = defaultSettings;
 
 // Cache the settings of all open documents
