@@ -22,14 +22,6 @@ import {
 import {
   TextDocument
 } from 'vscode-languageserver-textdocument';
-import TypeScriptProject from "./ooplsp/TypeScriptProject.ts";
-import {LogUtil} from "./logutil.ts";
-import {createServer, loadTsdkByPath} from "@volar/language-server/node.ts";
-import {ovsLanguagePlugin} from "./languagePlugin.ts";
-import {createTypeScriptServices} from "./typescript";
-import {URI} from "vscode-uri";
-import {LanguageService} from "@volar/language-service";
-import * as vscode from "vscode-languageserver";
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -42,23 +34,7 @@ let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
 
-function getLocalTsdkPath() {
-  let tsdkPath = "C:\\Users\\qinky\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
-  // let tsdkPath = "C:\\Users\\qinkaiyuan\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
-  return tsdkPath.replace(/\\/g, '/');
-}
-
-LogUtil.log('getLocalTsdkPath')
-
-const tsdkPath = getLocalTsdkPath();
-
-const server = createServer(connection);
-
 connection.onInitialize((params: InitializeParams) => {
-  const tsdk = loadTsdkByPath(tsdkPath, params.locale);
-  const languagePlugins = []
-  const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
-  TypeScriptProject.initTypeScriptProject(server, tsdk.diagnosticMessages, params, languageServicePlugins)
   const capabilities = params.capabilities;
 
   // Does the client support the `workspace/configuration` request?
@@ -118,7 +94,7 @@ interface ExampleSettings {
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
-const defaultSettings: ExampleSettings = {maxNumberOfProblems: 1000};
+const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
 let globalSettings: ExampleSettings = defaultSettings;
 
 // Cache the settings of all open documents
@@ -235,47 +211,24 @@ connection.onDidChangeWatchedFiles(_change => {
 
 // This handler provides the initial list of the completion items.
 connection.onCompletion(
-  async (params, token) => {
-    const uri = URI.parse(params.textDocument.uri);
-    const languageService = await TypeScriptProject.getLanguageService(uri)
-
-    const list = await languageService.getCompletionItems(
-      uri,
-      params.position,
-      params.context,
-      token
-    );
-    list.items = list.items.map(item => handleCompletionItem(TypeScriptProject.initializeParams, item));
-    return list;
+  (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+    // The pass parameter contains the position of the text document in
+    // which code complete got requested. For the example we ignore this
+    // info and always provide the same completion items.
+    return [
+      {
+        label: 'TypeScript',
+        kind: CompletionItemKind.Text,
+        data: 1
+      },
+      {
+        label: 'JavaScript111',
+        kind: CompletionItemKind.Text,
+        data: 2
+      }
+    ];
   }
 );
-const reportedCapabilities = new Set<string>();
-
-function handleCompletionItem(initializeParams: vscode.InitializeParams, item: vscode.CompletionItem) {
-  const snippetSupport = initializeParams.capabilities.textDocument?.completion?.completionItem?.snippetSupport ?? false;
-  const insertReplaceSupport = initializeParams.capabilities.textDocument?.completion?.completionItem?.insertReplaceSupport ?? false;
-  if (!snippetSupport && item.insertTextFormat === vscode.InsertTextFormat.Snippet) {
-    item.insertTextFormat = vscode.InsertTextFormat.PlainText;
-    if (item.insertText) {
-      item.insertText = item.insertText.replace(/\$\d+/g, '');
-      item.insertText = item.insertText.replace(/\${\d+:([^}]*)}/g, '');
-    }
-    wranCapabilitiesNotSupported('textDocument.completion.completionItem.snippetSupport');
-  }
-  if (!insertReplaceSupport && item.textEdit && vscode.InsertReplaceEdit.is(item.textEdit)) {
-    item.textEdit = vscode.TextEdit.replace(item.textEdit.insert, item.textEdit.newText);
-    wranCapabilitiesNotSupported('textDocument.completion.completionItem.insertReplaceSupport');
-  }
-  return item;
-}
-
-function wranCapabilitiesNotSupported(path: string) {
-  if (reportedCapabilities.has(path)) {
-    return;
-  }
-  reportedCapabilities.add(path);
-  console.warn(`${path} is not supported by the client but could be used by the server.`);
-}
 
 // This handler resolves additional information for the item selected in
 // the completion list.

@@ -7,10 +7,11 @@ import {
   sortTSConfigs
 } from "@volar/language-server/lib/project/typescriptProject.ts";
 import {
+  type ExperimentalFeatures,
   Language,
   LanguagePlugin,
   LanguageServer,
-  type LanguageServerProject, type LanguageServicePlugin,
+  type LanguageServerProject, LanguageServerState, type LanguageServicePlugin,
   ProjectContext,
   ProviderResult
 } from "@volar/language-server";
@@ -25,6 +26,14 @@ import FindMatchTsConfigUtil from "./FindMatchTsConfigUtil.ts";
 import {createLanguageServiceEnvironment} from "@volar/language-server/lib/project/simpleProject.ts";
 import {getInferredCompilerOptions} from "@volar/language-server/lib/project/inferredCompilerOptions.ts";
 import {createServer} from "@volar/language-server/node.ts";
+import * as vscode from "vscode-languageserver";
+import {register as registerConfigurationSupport} from "@volar/language-server/lib/features/configurations.ts";
+import {register as registerEditorFeaturesSupport} from "@volar/language-server/lib/features/editorFeatures.ts";
+import {register as registerTextDocumentRegistry} from "@volar/language-server/lib/features/textDocuments.ts";
+import {register as registerWorkspaceFolderRegistry} from "@volar/language-server/lib/features/workspaceFolders.ts";
+import {register as registerFileWatcher} from "@volar/language-server/lib/features/fileWatcher.ts";
+import {register as registerLanguageFeatures} from "@volar/language-server/lib/features/languageFeatures.ts";
+import {register as registerFileSystemSupport} from "@volar/language-server/lib/features/fileSystem.ts";
 
 export default class TypeScriptProject {
   static tsLocalized: ts.MapLike<string>
@@ -37,6 +46,9 @@ export default class TypeScriptProject {
   static inferredProjects = createUriMap<Promise<TypeScriptProjectLS>>();
   static rootTsConfigs = new Set<string>();
   static searchedDirs = new Set<string>();
+
+  static onInitializeCallbacks: ((serverCapabilities: vscode.ServerCapabilities<ExperimentalFeatures>) => void)[] = [];
+
   static create: (projectContext: ProjectExposeContext) => ProviderResult<{
     languagePlugins: LanguagePlugin<URI>[];
     setup?(options: {
@@ -57,14 +69,25 @@ export default class TypeScriptProject {
         project: ProjectContext;
       }): void;
     }>
-  ): LanguageServerProject {
+  ): vscode.InitializeResult<ExperimentalFeatures> {
     this.tsLocalized = tsLocalized
     this.server = server
     this.initializeParams = initializeParams
     this.languageServicePlugins = languageServicePlugins
     this.create = create
     this.uriConverter = createUriConverter(server.workspaceFolders.all);
-    return null
+
+    const configurations = registerConfigurationSupport(TypeScriptProject as any);
+    const editorFeatures = registerEditorFeaturesSupport(TypeScriptProject as any);
+    const documents = registerTextDocumentRegistry(TypeScriptProject as any);
+    const workspaceFolders = registerWorkspaceFolderRegistry(TypeScriptProject as any);
+    const fileWatcher = registerFileWatcher(TypeScriptProject as any);
+    const languageFeatures = registerLanguageFeatures(TypeScriptProject as any, documents, configurations);
+    const fileSystem = registerFileSystemSupport(documents, fileWatcher);
+
+    const serverCapabilities: vscode.ServerCapabilities<ExperimentalFeatures> = {};
+    TypeScriptProject.onInitializeCallbacks.forEach(cb => cb(serverCapabilities));
+    return {capabilities: serverCapabilities};
   }
 
   static async getLanguageService(uri) {

@@ -54,61 +54,20 @@ const tsdkPath = getLocalTsdkPath();
 
 const server = createServer(connection);
 
+// Listen on the connection
+connection.listen();
+
 connection.onInitialize((params: InitializeParams) => {
   const tsdk = loadTsdkByPath(tsdkPath, params.locale);
   const languagePlugins = []
   const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
-  TypeScriptProject.initTypeScriptProject(server, tsdk.diagnosticMessages, params, languageServicePlugins)
-  const capabilities = params.capabilities;
+  const result = TypeScriptProject.initTypeScriptProject(server, tsdk.diagnosticMessages, params, languageServicePlugins)
 
-  // Does the client support the `workspace/configuration` request?
-  // If not, we fall back using global settings.
-  hasConfigurationCapability = !!(
-    capabilities.workspace && !!capabilities.workspace.configuration
-  );
-  hasWorkspaceFolderCapability = !!(
-    capabilities.workspace && !!capabilities.workspace.workspaceFolders
-  );
-  hasDiagnosticRelatedInformationCapability = !!(
-    capabilities.textDocument &&
-    capabilities.textDocument.publishDiagnostics &&
-    capabilities.textDocument.publishDiagnostics.relatedInformation
-  );
-
-  const result: InitializeResult = {
-    capabilities: {
-      textDocumentSync: TextDocumentSyncKind.Incremental,
-      // Tell the client that this server supports code completion.
-      completionProvider: {
-        resolveProvider: true
-      },
-      diagnosticProvider: {
-        interFileDependencies: false,
-        workspaceDiagnostics: false
-      }
-    }
-  };
-  if (hasWorkspaceFolderCapability) {
-    result.capabilities.workspace = {
-      workspaceFolders: {
-        supported: true
-      }
-    };
-  }
   return result;
 });
 
-connection.onInitialized(() => {
-  if (hasConfigurationCapability) {
-    // Register for all configuration changes.
-    connection.client.register(DidChangeConfigurationNotification.type, undefined);
-  }
-  if (hasWorkspaceFolderCapability) {
-    connection.workspace.onDidChangeWorkspaceFolders(_event => {
-      connection.console.log('Workspace folder change event received.');
-    });
-  }
-});
+
+connection.onInitialized(server.initialized);
 
 // The example settings
 interface ExampleSettings {
@@ -228,10 +187,6 @@ async function validateTextDocument(textDocument: TextDocument): Promise<Diagnos
   return diagnostics;
 }
 
-connection.onDidChangeWatchedFiles(_change => {
-  // Monitored files have change in VSCode
-  connection.console.log('We received a file change event');
-});
 
 // This handler provides the initial list of the completion items.
 connection.onCompletion(
@@ -294,7 +249,8 @@ connection.onCompletionResolve(
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
-documents.listen(connection);
+// documents.listen(connection);
 
-// Listen on the connection
-connection.listen();
+
+
+connection.onShutdown(server.shutdown);

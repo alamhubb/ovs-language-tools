@@ -140,8 +140,6 @@ enum TokenType {
     _ = 12
 }
 
-console.log(TokenType.class)
-
 enum TokenModifier {
     declaration = 0,
     static = 1,

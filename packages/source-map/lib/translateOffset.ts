@@ -54,12 +54,6 @@ function binarySearchRange(
     const mid = Math.floor((low + high) / 2);
     const start = startArray[mid];
     const end = start + lengthAry[mid];
-    console.log('low hi')
-    console.log(mid)
-    console.log(low)
-    console.log(high)
-    console.log(start)
-    console.log(end)
     // 检查是否在当前范围内
     if (searchValue >= start && searchValue <= end) {
       return mid;  // 返回找到的索引
@@ -85,4 +79,3 @@ const ary2 = [
 ]
 const ll = binarySearchRange(97, ary1, ary2)
 
-console.log(ll)
