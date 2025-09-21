@@ -1,5 +1,5 @@
 import * as kit from '@volar/kit';
-import {ovsLanguagePlugin} from "./languagePlugin";
+import {ovsLanguagePlugin} from "./OvsLanguagePlugin.ts";
 import {createTypeScriptServices} from "./typescript";
 import * as fs from "node:fs";
 import * as path from "node:path";

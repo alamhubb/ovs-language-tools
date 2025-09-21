@@ -4,7 +4,7 @@ import {
   createTypeScriptProject,
   loadTsdkByPath
 } from '@volar/language-server/node';
-import {ovsLanguagePlugin} from './languagePlugin';
+import {ovsLanguagePlugin} from './OvsLanguagePlugin.ts';
 import {LogUtil} from "./logutil";
 
 LogUtil.log('createTypeScriptServices')

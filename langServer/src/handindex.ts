@@ -11,7 +11,7 @@ import {
   isFileInDir,
   type LanguageServer, type LanguageServerProject, loadTsdkByPath, sortTSConfigs
 } from "@volar/language-server/node.ts";
-import {ovsLanguagePlugin} from "./languagePlugin.ts";
+import {ovsLanguagePlugin} from "./OvsLanguagePlugin.ts";
 import * as path from "path-browserify";
 import {
   createTypeScriptLS,

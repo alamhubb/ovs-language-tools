@@ -1,5 +1,5 @@
 import {vitePluginOvsTransform} from "ovsjs/src";
-import {MappingConverter} from "./languagePlugin.ts";
+import {MappingConverter} from "./OvsLanguagePlugin.ts";
 import {LogUtil} from "./logutil.ts";
 import { SourceMap } from '@volar/source-map';
 
