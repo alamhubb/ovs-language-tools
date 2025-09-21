@@ -1,46 +1,23 @@
-/* --------------------------------------------------------------------------------------------
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- * ------------------------------------------------------------------------------------------ */
 import {
   createConnection,
-  TextDocuments,
-  Diagnostic,
-  DiagnosticSeverity,
-  ProposedFeatures,
-  InitializeParams,
-  DidChangeConfigurationNotification,
-  CompletionItem,
-  CompletionItemKind,
-  TextDocumentPositionParams,
-  TextDocumentSyncKind,
-  InitializeResult,
-  DocumentDiagnosticReportKind,
-  type DocumentDiagnosticReport
-} from 'vscode-languageserver/node';
+  createServer,
+  createTypeScriptProject,
+  loadTsdkByPath
+} from '@volar/language-server/node';
+import {LogUtil} from "./logutil";
 
-import {
-  TextDocument
-} from 'vscode-languageserver-textdocument';
-import TypeScriptProject from "./ooplsp/TypeScriptProject.ts";
-import {LogUtil} from "./logutil.ts";
-import {createServer, loadTsdkByPath} from "@volar/language-server/node.ts";
-import {ovsLanguagePlugin} from "./languagePlugin.ts";
+LogUtil.log('createTypeScriptServices')
+
 import {createTypeScriptServices} from "./typescript";
-import {URI} from "vscode-uri";
-import {LanguageService} from "@volar/language-service";
-import * as vscode from "vscode-languageserver";
+import {qqsLanguagePlugin} from "./QqsLanguagePlugin.ts";
 
-// Create a connection for the server, using Node's IPC as a transport.
-// Also include all preview / proposed LSP features.
-const connection = createConnection(ProposedFeatures.all);
+const connection = createConnection();
 
-// Create a simple text document manager.
-const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
-let hasConfigurationCapability = false;
-let hasWorkspaceFolderCapability = false;
-let hasDiagnosticRelatedInformationCapability = false;
+const server = createServer(connection);
+
+
+connection.listen();
 
 function getLocalTsdkPath() {
   let tsdkPath = "C:\\Users\\qinky\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
@@ -51,206 +28,35 @@ function getLocalTsdkPath() {
 LogUtil.log('getLocalTsdkPath')
 
 const tsdkPath = getLocalTsdkPath();
+LogUtil.log('onInitialize')
+connection.onInitialize(params => {
+  LogUtil.log('params')
+  // LogUtil.log(params)
+  try {
+    const tsdk = loadTsdkByPath(tsdkPath, params.locale);
+    const languagePlugins = [qqsLanguagePlugin]
 
-const server = createServer(connection);
-
-// Listen on the connection
-connection.listen();
-
-connection.onInitialize((params: InitializeParams) => {
-  const tsdk = loadTsdkByPath(tsdkPath, params.locale);
-  const languagePlugins = []
-  const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
-  const result = TypeScriptProject.initTypeScriptProject(server, tsdk.diagnosticMessages, params, languageServicePlugins)
-
-  return result;
+    //createTypeScriptServicePlugins
+    const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
+    const tsProject = createTypeScriptProject(
+      tsdk.typescript,
+      tsdk.diagnosticMessages,
+      () => ({
+        languagePlugins: languagePlugins,
+      }))
+    return server.initialize(
+      params,
+      tsProject,
+      [
+        ...languageServicePlugins
+      ],
+    )
+  } catch (e) {
+    LogUtil.log(7777)
+    LogUtil.log(e.message)
+  }
 });
-
 
 connection.onInitialized(server.initialized);
-
-// The example settings
-interface ExampleSettings {
-  maxNumberOfProblems: number;
-}
-
-// The global settings, used when the `workspace/configuration` request is not supported by the client.
-// Please note that this is not the case when using this server with the client provided in this example
-// but could happen with other clients.
-const defaultSettings: ExampleSettings = {maxNumberOfProblems: 1000};
-let globalSettings: ExampleSettings = defaultSettings;
-
-// Cache the settings of all open documents
-const documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
-
-connection.onDidChangeConfiguration(change => {
-  if (hasConfigurationCapability) {
-    // Reset all cached document settings
-    documentSettings.clear();
-  } else {
-    globalSettings = <ExampleSettings>(
-      (change.settings.languageServerExample || defaultSettings)
-    );
-  }
-  // Refresh the diagnostics since the `maxNumberOfProblems` could have changed.
-  // We could optimize things here and re-fetch the setting first can compare it
-  // to the existing setting, but this is out of scope for this example.
-  connection.languages.diagnostics.refresh();
-});
-
-function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
-  if (!hasConfigurationCapability) {
-    return Promise.resolve(globalSettings);
-  }
-  let result = documentSettings.get(resource);
-  if (!result) {
-    result = connection.workspace.getConfiguration({
-      scopeUri: resource,
-      section: 'languageServerExample'
-    });
-    documentSettings.set(resource, result);
-  }
-  return result;
-}
-
-// Only keep settings for open documents
-documents.onDidClose(e => {
-  documentSettings.delete(e.document.uri);
-});
-
-
-connection.languages.diagnostics.on(async (params) => {
-  const document = documents.get(params.textDocument.uri);
-  if (document !== undefined) {
-    return {
-      kind: DocumentDiagnosticReportKind.Full,
-      items: await validateTextDocument(document)
-    } satisfies DocumentDiagnosticReport;
-  } else {
-    // We don't know the document. We can either try to read it from disk
-    // or we don't report problems for it.
-    return {
-      kind: DocumentDiagnosticReportKind.Full,
-      items: []
-    } satisfies DocumentDiagnosticReport;
-  }
-});
-
-// The content of a text document has changed. This event is emitted
-// when the text document first opened or when its content has changed.
-documents.onDidChangeContent(change => {
-  validateTextDocument(change.document);
-});
-
-async function validateTextDocument(textDocument: TextDocument): Promise<Diagnostic[]> {
-  // In this simple example we get the settings for every validate run.
-  const settings = await getDocumentSettings(textDocument.uri);
-
-  // The validator creates diagnostics for all uppercase words length 2 and more
-  const text = textDocument.getText();
-  const pattern = /\b[A-Z]{2,}\b/g;
-  let m: RegExpExecArray | null;
-
-  let problems = 0;
-  const diagnostics: Diagnostic[] = [];
-  while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
-    problems++;
-    const diagnostic: Diagnostic = {
-      severity: DiagnosticSeverity.Warning,
-      range: {
-        start: textDocument.positionAt(m.index),
-        end: textDocument.positionAt(m.index + m[0].length)
-      },
-      message: `${m[0]} is all uppercase.`,
-      source: 'ex'
-    };
-    if (hasDiagnosticRelatedInformationCapability) {
-      diagnostic.relatedInformation = [
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range)
-          },
-          message: 'Spelling matters'
-        },
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range)
-          },
-          message: 'Particularly for names'
-        }
-      ];
-    }
-    diagnostics.push(diagnostic);
-  }
-  return diagnostics;
-}
-
-
-// This handler provides the initial list of the completion items.
-connection.onCompletion(
-  async (params, token) => {
-    const uri = URI.parse(params.textDocument.uri);
-    const languageService = await TypeScriptProject.getLanguageService(uri)
-
-    const list = await languageService.getCompletionItems(
-      uri,
-      params.position,
-      params.context,
-      token
-    );
-    list.items = list.items.map(item => handleCompletionItem(TypeScriptProject.initializeParams, item));
-    return list;
-  }
-);
-const reportedCapabilities = new Set<string>();
-
-function handleCompletionItem(initializeParams: vscode.InitializeParams, item: vscode.CompletionItem) {
-  const snippetSupport = initializeParams.capabilities.textDocument?.completion?.completionItem?.snippetSupport ?? false;
-  const insertReplaceSupport = initializeParams.capabilities.textDocument?.completion?.completionItem?.insertReplaceSupport ?? false;
-  if (!snippetSupport && item.insertTextFormat === vscode.InsertTextFormat.Snippet) {
-    item.insertTextFormat = vscode.InsertTextFormat.PlainText;
-    if (item.insertText) {
-      item.insertText = item.insertText.replace(/\$\d+/g, '');
-      item.insertText = item.insertText.replace(/\${\d+:([^}]*)}/g, '');
-    }
-    wranCapabilitiesNotSupported('textDocument.completion.completionItem.snippetSupport');
-  }
-  if (!insertReplaceSupport && item.textEdit && vscode.InsertReplaceEdit.is(item.textEdit)) {
-    item.textEdit = vscode.TextEdit.replace(item.textEdit.insert, item.textEdit.newText);
-    wranCapabilitiesNotSupported('textDocument.completion.completionItem.insertReplaceSupport');
-  }
-  return item;
-}
-
-function wranCapabilitiesNotSupported(path: string) {
-  if (reportedCapabilities.has(path)) {
-    return;
-  }
-  reportedCapabilities.add(path);
-  console.warn(`${path} is not supported by the client but could be used by the server.`);
-}
-
-// This handler resolves additional information for the item selected in
-// the completion list.
-connection.onCompletionResolve(
-  (item: CompletionItem): CompletionItem => {
-    if (item.data === 1) {
-      item.detail = 'TypeScript details';
-      item.documentation = 'TypeScript documentation';
-    } else if (item.data === 2) {
-      item.detail = 'JavaScript details';
-      item.documentation = 'JavaScript documentation';
-    }
-    return item;
-  }
-);
-
-// Make the text document manager listen on the connection
-// for open, change and close text document events
-// documents.listen(connection);
-
-
 
 connection.onShutdown(server.shutdown);
