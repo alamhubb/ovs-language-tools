@@ -10,12 +10,12 @@ import {
   Language,
   LanguagePlugin,
   LanguageServer,
-  type LanguageServerProject,
+  type LanguageServerProject, type LanguageServicePlugin,
   ProjectContext,
   ProviderResult
 } from "@volar/language-server";
 import {URI} from "vscode-uri";
-import {createUriMap, FileType} from "@volar/language-service";
+import {createUriMap, FileType, type InitializeParams} from "@volar/language-service";
 import {
   createTypeScriptLS,
   ProjectExposeContext,
@@ -29,6 +29,8 @@ import {createServer} from "@volar/language-server/node.ts";
 export default class TypeScriptProject {
   static tsLocalized: ts.MapLike<string>
   static server: ReturnType<typeof createServer>
+  static initializeParams: InitializeParams;
+  static languageServicePlugins: LanguageServicePlugin[]
   static rootTsConfigNames = ['tsconfig.json', 'jsconfig.json'];
   static uriConverter: ReturnType<typeof createUriConverter>
   static configProjects = createUriMap<Promise<TypeScriptProjectLS>>();
@@ -44,9 +46,11 @@ export default class TypeScriptProject {
   }>;
 
   static initTypeScriptProject(
-    tsLocalized: ts.MapLike<string> | undefined,
     server: ReturnType<typeof createServer>,
-    create: (projectContext: ProjectExposeContext) => ProviderResult<{
+    tsLocalized: ts.MapLike<string> | undefined,
+    initializeParams: InitializeParams,
+    languageServicePlugins: LanguageServicePlugin[],
+    create?: (projectContext: ProjectExposeContext) => ProviderResult<{
       languagePlugins: LanguagePlugin<URI>[];
       setup?(options: {
         language: Language;
@@ -56,6 +60,8 @@ export default class TypeScriptProject {
   ): LanguageServerProject {
     this.tsLocalized = tsLocalized
     this.server = server
+    this.initializeParams = initializeParams
+    this.languageServicePlugins = languageServicePlugins
     this.create = create
     this.uriConverter = createUriConverter(server.workspaceFolders.all);
     return null
@@ -64,11 +70,11 @@ export default class TypeScriptProject {
   static async getLanguageService(uri) {
     const tsconfig = await FindMatchTsConfigUtil.findMatchTSConfig(this.server, uri);
     if (tsconfig) {
-      const project = await TypeScriptProject.getOrCreateConfiguredProject(this.server, tsconfig, this.tsLocalized);
+      const project = await TypeScriptProject.getOrCreateConfiguredProject(this.server, tsconfig);
       return project.languageService;
     }
     const workspaceFolder = getWorkspaceFolder(uri, this.server.workspaceFolders);
-    const project = await TypeScriptProject.getOrCreateInferredProject(this.server, uri, workspaceFolder, this.tsLocalized);
+    const project = await TypeScriptProject.getOrCreateInferredProject(this.server, uri, workspaceFolder);
     return project.languageService;
   }
 
@@ -94,7 +100,7 @@ export default class TypeScriptProject {
     return projectPromise;
   }
 
-  private static async getOrCreateInferredProject(server: LanguageServer, uri: URI, workspaceFolder: URI, tsLocalized: ts.MapLike<string>) {
+  private static async getOrCreateInferredProject(server: LanguageServer, uri: URI, workspaceFolder: URI) {
 
     if (!TypeScriptProject.inferredProjects.has(workspaceFolder)) {
       TypeScriptProject.inferredProjects.set(workspaceFolder, (async () => {
@@ -102,7 +108,7 @@ export default class TypeScriptProject {
         const serviceEnv = createLanguageServiceEnvironment(server, [workspaceFolder]);
         return createTypeScriptLS(
           ts,
-          tsLocalized,
+          TypeScriptProject.tsLocalized,
           inferOptions,
           server,
           serviceEnv,

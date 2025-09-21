@@ -37,7 +37,7 @@ connection.onInitialize(params => {
 		const languagePlugins = [ovsLanguagePlugin]
 
     //createTypeScriptServicePlugins
-		const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
+      const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
 		const tsProject = createTypeScriptProject(
 			tsdk.typescript,
 			tsdk.diagnosticMessages,
