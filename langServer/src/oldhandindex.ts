@@ -67,7 +67,6 @@ let completionItemAry: CompletionItem[] = []
 // 1. 基本补全请求处理
 connection.onCompletion(
   (params: CompletionParams): CompletionItem[] => {
-    LogUtil.log(params)
     // 返回基本的补全列表
     return completionItemAry
   }
@@ -76,14 +75,11 @@ connection.onCompletion(
 
 // 修改初始化处理
 connection.onInitialize((params: InitializeParams): InitializeResult => {
-  LogUtil.log({
-    capabilities: params.capabilities
-  });
+
 
   // 确保工作区文件夹存在
   if (params.workspaceFolders && params.workspaceFolders.length > 0) {
     completionItemAry = initCompletionMap(params.workspaceFolders[0].uri)
-    LogUtil.log(completionItemAry);
   }
 
   return {
@@ -107,7 +103,6 @@ connection.languages.semanticTokens.on(params => {
   const document = documents.get(params.textDocument.uri)
 
   if (!document) {
-    LogUtil.log('chufale kong' + params.textDocument.uri + 'fasfd')
     return {data: []}
   }
 
@@ -119,15 +114,10 @@ connection.languages.semanticTokens.on(params => {
     let tokens = lexer.lexer(text)
     const parser = new OvsParser(tokens)
     let curCst = parser.Program()
-    LogUtil.log('curCst')
-    LogUtil.log(curCst)
     const ast = ovsToAstUtil.createProgramAst(curCst)
-    LogUtil.log('ast')
-    LogUtil.log(ast)
     TokenProvider.visitNode(ast)
     JsonUtil.log(TokenProvider.tokens)
     const tokens1 = TokenProvider.tokens
-    LogUtil.log('Sending tokensRecord', JsonUtil.toJson(tokens))
 
     if (tokens1.length) {
       for (const semanticToken of tokens1) {
@@ -140,12 +130,8 @@ connection.languages.semanticTokens.on(params => {
         )
       }
     } else {
-      LogUtil.log('chufale kong' + text + 'fasfd')
     }
   } catch (e: Error) {
-    LogUtil.log('error')
-    LogUtil.log(e.message)
-    LogUtil.log(e.stack)
   }
 
   const build = builder.build()

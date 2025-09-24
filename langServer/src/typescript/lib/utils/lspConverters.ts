@@ -187,8 +187,6 @@ export function convertCompletionInfo<T>(
 			...convertCompletionEntry(tsEntry, document),
 			data: createData(tsEntry),
 		}));
-	LogUtil.log('return entries')
-	LogUtil.log(entries.length)
 	return {
 		isIncomplete: !!completionContext.isIncomplete,
 		items: entries,

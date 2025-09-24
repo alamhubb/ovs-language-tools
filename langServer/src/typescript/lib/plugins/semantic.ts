@@ -171,8 +171,6 @@ export function create(
       },
     },
     create(context): LanguageServicePluginInstance<Provide> {
-      LogUtil.log('chufale typescript plugin ')
-
       if (!context.project.typescript) {
         console.warn(`[volar] typescript-semantic requires typescript project.`);
         return {};
@@ -241,7 +239,6 @@ export function create(
       const getCodeActions = codeActions.register(ctx);
       const doCodeActionResolve = codeActionResolve.register(ctx);
 
-      LogUtil.log('chufale semanticTokens.register(ts, ctx)')
 
       const getDocumentSemanticTokens = semanticTokens.register(ts, ctx);
 
@@ -328,10 +325,6 @@ export function create(
         },
 
         async provideCompletionItems(document, position, completeContext, token) {
-          LogUtil.log('zhixingle 智能提示')
-          LogUtil.log(' async provideCompletionItems(document, position, completeContext')
-          LogUtil.log(position)
-          LogUtil.log('zhixingle 位置提示')
           const uri = URI.parse(document.uri);
 
           if (!isSemanticDocument(uri, document)) {
@@ -355,19 +348,20 @@ export function create(
             triggerCharacter: completeContext.triggerCharacter as ts.CompletionsTriggerCharacter,
             triggerKind: completeContext.triggerKind,
           }
-          LogUtil.log('ctx.languageService.getCompletionsAtPosition')
-          LogUtil.log(document.getText({start: document.positionAt(offset - 2), end: document.positionAt(offset + 2)}))
-          LogUtil.log(document.positionAt(offset))
-          LogUtil.log(document.offsetAt(document.positionAt(offset)))
-          LogUtil.log(fileName)
-          LogUtil.log(offset)
-          // LogUtil.log(opts)
+
           const info = safeCall(() => ctx.languageService.getCompletionsAtPosition(fileName, offset, opts));
           // const info = null
           LogUtil.log('languageService.getCompletionsAtPosition(')
-          LogUtil.log(info)
+          LogUtil.log('offset：' + offset)
+          if (info) {
+            LogUtil.log("存在info")
+            LogUtil.log(document.getText())
+            LogUtil.log(info?.entries?.length)
+          } else {
+            LogUtil.log('没有提示的文本')
+            LogUtil.log(document.getText())
+          }
           // LogUtil.log(info.entries)
-          // LogUtil.log(info.entries.length)
           // LogUtil.log(info.entries.map(item => item.name))
           // LogUtil.log(info.entries.map(item => item.sortText))
           if (info) {
@@ -1004,32 +998,16 @@ export function create(
             .map(diagnostic => convertDiagnostic(diagnostic, document, ctx.fileNameToUri, ctx.getTextDocument))
             .filter(diagnostic => !!diagnostic);
         } else if (mode === 'semantic') {
-          LogUtil.log('sourceFile111')
-          LogUtil.log(tsToken)
-          LogUtil.log(fileName)
-          LogUtil.log(sourceFile.fileName)
-          LogUtil.log(sourceFile.kind)
-          LogUtil.log(program)
           const semanticDiagnostics = safeCall(() => program.getSemanticDiagnostics(sourceFile, tsToken)) ?? [];
           const declarationDiagnostics = getEmitDeclarations(program.getCompilerOptions())
             ? safeCall(() => program.getDeclarationDiagnostics(sourceFile, tsToken)) ?? []
             : [];
 
-          LogUtil.log('semanticDiagnostics1')
           try {
-            LogUtil.log(semanticDiagnostics)
-            LogUtil.log(semanticDiagnostics.length)
-            LogUtil.log('semanticDiagnostics2')
             for (const semanticDiagnostic of semanticDiagnostics) {
-              LogUtil.log(semanticDiagnostic.messageText)
             }
           } catch (e) {
-            LogUtil.log('semanticDiagnostics3')
-            LogUtil.log(semanticDiagnostics.length)
           }
-          LogUtil.log('sFDSAFSDAFAS')
-          // LogUtil.log('declarationDiagnostics1')
-          // LogUtil.log(declarationDiagnostics)
 
           return [...semanticDiagnostics, ...declarationDiagnostics]
             .map(diagnostic => convertDiagnostic(diagnostic, document, ctx.fileNameToUri, ctx.getTextDocument))

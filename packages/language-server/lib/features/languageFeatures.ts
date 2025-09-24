@@ -1,10 +1,17 @@
-import { DataTransferItem, decodeEmbeddedDocumentUri, LanguageService, mergeWorkspaceEdits } from '@volar/language-service';
+import {
+  DataTransferItem,
+  decodeEmbeddedDocumentUri,
+  LanguageService,
+  mergeWorkspaceEdits,
+  SourceScript, VirtualCode
+} from '@volar/language-service';
 import * as vscode from 'vscode-languageserver';
 import { URI } from 'vscode-uri';
 import { AutoInsertRequest, DocumentDrop_DataTransferItemAsStringRequest, DocumentDrop_DataTransferItemFileDataRequest, DocumentDropRequest, FindFileReferenceRequest } from '../../protocol';
 import type { LanguageServerProject, LanguageServerState } from '../types.js';
 import { SnapshotDocument } from '../utils/snapshotDocument';
 import {LogUtil} from "@volar/language-service/lib/logutil";
+import {CompletionItem, CompletionItemKind, TextDocumentPositionParams} from "vscode-languageserver/node";
 
 const reportedCapabilities = new Set<string>();
 
@@ -362,10 +369,27 @@ export function register(
 				triggerCharacters: [...new Set(languageServicePlugins.map(({ capabilities }) => capabilities.completionProvider?.triggerCharacters ?? []).flat())],
 			};
 			server.connection.onCompletion(async (params, token) => {
-				LogUtil.log('server.connection.onCompletion(async (params, token) => {')
-				LogUtil.log(params.position)
 				const uri = URI.parse(params.textDocument.uri);
 				return await worker(uri, token, async languageService => {
+          LogUtil.log('server.connection.onCompletion(async (params, token) => {')
+          LogUtil.log(params.position)
+          LogUtil.log(params.textDocument)
+          LogUtil.log(params.context)
+
+          let langaugeIdAndSnapshot: SourceScript<URI> | VirtualCode | undefined;
+          const context = languageService.context
+          const decoded = context.decodeEmbeddedDocumentUri(uri);
+          if (decoded) {
+            langaugeIdAndSnapshot = context.language.scripts.get(decoded[0])?.generated?.embeddedCodes.get(decoded[1]);
+          }
+          else {
+            const sourceScript = context.language.scripts.get(uri);
+            langaugeIdAndSnapshot = sourceScript;
+          }
+          const document = languageService.context.documents.get(uri, langaugeIdAndSnapshot.languageId, langaugeIdAndSnapshot.snapshot);
+
+          LogUtil.log(document.getText())
+
 					lastCompleteUri = params.textDocument.uri;
 					lastCompleteLs = languageService;
 					const list = await languageService.getCompletionItems(

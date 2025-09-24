@@ -234,9 +234,6 @@ const suggestionDiagnostics = languageService.getSuggestionDiagnostics(fileName)
 
 const info = safeCall(() => languageService.getCompletionsAtPosition(fileName, 9, opts));
 
-console.log(syntacticDiagnostics)
-console.log(suggestionDiagnostics)
-console.log(info.entries.length)
 
 const ary = info.entries.map(item => item.name)
 for (const item of info.entries) {

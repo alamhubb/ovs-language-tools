@@ -44,13 +44,16 @@ connection.onInitialize(params => {
       () => ({
         languagePlugins: languagePlugins,
       }))
-    return server.initialize(
+    const res = server.initialize(
       params,
       tsProject,
       [
         ...languageServicePlugins
       ],
     )
+    LogUtil.log('res.capabilities.completionProvider.triggerCharacters')
+    LogUtil.log(res.capabilities.completionProvider.triggerCharacters)
+    return res
   } catch (e) {
     LogUtil.log(7777)
     LogUtil.log(e.message)

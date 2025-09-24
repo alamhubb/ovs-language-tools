@@ -6,28 +6,17 @@ import type {URI} from 'vscode-uri';
 import {LogUtil} from "../../../logutil";
 
 export function register(ts: typeof import('typescript'), ctx: SharedContext) {
-    LogUtil.log('chufale semanticTokens.register register')
     return (uri: URI, document: TextDocument, range: vscode.Range, legend: vscode.SemanticTokensLegend) => {
 
-        LogUtil.log('chufale semanticTokens.register( ctx: Share6666')
-        LogUtil.log(legend)
         const fileName = ctx.uriToFileName(uri);
 
-        LogUtil.log('range：' + range)
-        LogUtil.log(range)
-        LogUtil.log('document.offsetAt(range.start)：' + document.offsetAt(range.start))
-        LogUtil.log('document.getText().length：' + document.getText().length)
 
         const start = range ? document.offsetAt(range.start) : 0;
-        LogUtil.log(' (document.offsetAt(range.end) - start))：' + (document.offsetAt(range.end) - start))
         const length = range ? (document.offsetAt(range.end) - start) : document.getText().length;
 
         if (ctx.project.typescript?.languageServiceHost.getCancellationToken?.().isCancellationRequested()) {
             return;
         }
-        LogUtil.log('fileName：' + fileName)
-        LogUtil.log('start：' + start)
-        LogUtil.log('length：' + length)
         const response = safeCall(() => ctx.languageService.getEncodedSemanticClassifications(fileName, {
             start,
             length
@@ -47,8 +36,6 @@ export function register(ts: typeof import('typescript'), ctx: SharedContext) {
 
         const end = start + length;
         const tokenSpan = response.spans;
-        LogUtil.log('ts tokenspan----')
-        LogUtil.log(tokenSpan)
 
         const tokens: [number, number, number, number, number][] = [];
         let i = 0;
@@ -80,20 +67,12 @@ export function register(ts: typeof import('typescript'), ctx: SharedContext) {
 
             const serverTokenModifiers = tsTokenModifierToServerTokenModifier(tokenModifiers);
 
-            LogUtil.log('tsTokenModifierToServerTokenModifier(tokenModifiers)')
-            LogUtil.log('tsClassification:'+tsClassification)
-            LogUtil.log('tokenType:'+tokenType)
-            LogUtil.log('serverToken:'+serverToken)
-            LogUtil.log('tokenModifiers:'+tokenModifiers)
-            LogUtil.log('serverTokenModifiers:'+serverTokenModifiers)
-
             for (let line = startPos.line; line <= endPos.line; line++) {
                 const startCharacter = (line === startPos.line ? startPos.character : 0);
                 const endCharacter = (line === endPos.line ? endPos.character : docLineLength(document, line));
                 tokens.push([line, startCharacter, endCharacter - startCharacter, serverToken, serverTokenModifiers]);
             }
         }
-        LogUtil.log(tokens)
         return tokens;
 
         function tsTokenTypeToServerTokenType(tokenType: number) {
@@ -158,7 +137,6 @@ enum TokenEncodingConsts {
 function getTokenTypeFromClassification(tsClassification: number): number | undefined {
     if (tsClassification > TokenEncodingConsts.modifierMask) {
         const res = (tsClassification >> TokenEncodingConsts.typeOffset) - 1
-        LogUtil.log('tsClassification > TokenEncodingConsts.modifierMask:' + res)
         return res;
     }
     return undefined;
