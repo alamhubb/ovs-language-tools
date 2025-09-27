@@ -214,29 +214,9 @@ const opts: GetCompletionsAtPositionOptions = {
   "includePackageJsonAutoImports": "auto",
   "triggerKind": 1
 }
-const res = languageService.getCompletionsAtPosition('D:/project/qkyproject/test-volar/langServer/src/testkitovs.ovs.ts1.ts', 1, opts)
-
-const fileName = 'D:/project/qkyproject/test-volar/langServer/src/testkitovs.ovs.ts1.ts'
-const program = languageService.getProgram();
 
 
-const sourceFile = program?.getSourceFile(fileName);
+const res = languageService.getCompletionsAtPosition
+('D:/project/qkyproject/test-volar/langServer/src/testkifadsf.ts', 19, opts)
 
-const tsToken: ts.CancellationToken = {
-  isCancellationRequested() {
-    return languageServiceHost.getCancellationToken?.().isCancellationRequested() ?? false;
-  },
-  throwIfCancellationRequested() {
-  },
-};
-const syntacticDiagnostics = program.getSyntacticDiagnostics(sourceFile, tsToken);
-const suggestionDiagnostics = languageService.getSuggestionDiagnostics(fileName);
-
-const info = safeCall(() => languageService.getCompletionsAtPosition(fileName, 9, opts));
-
-
-const ary = info.entries.map(item => item.name)
-for (const item of info.entries) {
-  Testkitlog.log(item.name)
-  Testkitlog.log(item.sortText)
-}
+console.log(res.entries.length)

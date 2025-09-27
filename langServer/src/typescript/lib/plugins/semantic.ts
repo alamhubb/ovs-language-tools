@@ -353,6 +353,7 @@ export function create(
           // const info = null
           LogUtil.log('languageService.getCompletionsAtPosition(')
           LogUtil.log('offset：' + offset)
+          LogUtil.log('triggerKind：' + completeContext.triggerKind)
           if (info) {
             LogUtil.log("存在info")
             LogUtil.log(document.getText())
@@ -1094,8 +1095,11 @@ export function create(
 
 function getBasicTriggerCharacters(tsVersion: string) {
 
+  /*const triggerCharacters = ['.', '"', '\'', '`', '/', '<'
+    , "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+  ];*/
   const triggerCharacters = ['.', '"', '\'', '`', '/', '<'];
-
   // https://github.com/microsoft/vscode/blob/8e65ae28d5fb8b3c931135da1a41edb9c80ae46f/extensions/typescript-language-features/src/languageFeatures/completions.ts#L811-L833
   if (semver.lt(tsVersion, '3.1.0') || semver.gte(tsVersion, '3.2.0')) {
     triggerCharacters.push('@');
