@@ -1107,9 +1107,9 @@ function getBasicTriggerCharacters(tsVersion: string) {
   if (semver.gte(tsVersion, '3.8.1')) {
     triggerCharacters.push('#');
   }
-  if (semver.gte(tsVersion, '4.3.0')) {
+  /*if (semver.gte(tsVersion, '4.3.0')) {
     triggerCharacters.push(' ');
-  }
+  }*/
 
   return triggerCharacters;
 }

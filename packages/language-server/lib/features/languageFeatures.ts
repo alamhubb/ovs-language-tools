@@ -408,7 +408,7 @@ export function register(
           list.items = list.items.map(item => handleCompletionItem(initializeParams, item));
           LogUtil.log('list.items.length')
           LogUtil.log(list.items.length)
-          return []
+          return list.items
         });
       });
       if (languageServicePlugins.some(({capabilities}) => capabilities.completionProvider?.resolveProvider)) {

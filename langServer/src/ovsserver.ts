@@ -1,289 +1,66 @@
-/* --------------------------------------------------------------------------------------------
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- * ------------------------------------------------------------------------------------------ */
 import {
   createConnection,
-  TextDocuments,
-  Diagnostic,
-  DiagnosticSeverity,
-  ProposedFeatures,
-  InitializeParams,
-  DidChangeConfigurationNotification,
-  CompletionItem,
-  CompletionItemKind,
-  TextDocumentPositionParams,
-  TextDocumentSyncKind,
-  InitializeResult,
-  DocumentDiagnosticReportKind,
-  type DocumentDiagnosticReport
-} from 'vscode-languageserver/node';
+  createServer,
+  createTypeScriptProject,
+  loadTsdkByPath
+} from '@volar/language-server/node';
+import {LogUtil} from "./logutil";
 
-import {
-  TextDocument
-} from 'vscode-languageserver-textdocument';
-import {LogUtil} from "./logutil.ts";
+LogUtil.log('createTypeScriptServices')
 
-try {
-// Create a connection for the server, using Node's IPC as a transport.
-// Also include all preview / proposed LSP features.
-  const connection = createConnection(ProposedFeatures.all);
+import {createTypeScriptServices} from "./typescript";
+import {ovsLanguagePlugin} from "./OvsLanguagePlugin.ts";
+import type {CodeActionKind} from "@volar/language-service";
 
-// Create a simple text document manager.
-  const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
-
-  let hasConfigurationCapability = false;
-  let hasWorkspaceFolderCapability = false;
-  let hasDiagnosticRelatedInformationCapability = false;
-
-  connection.onInitialize((params: InitializeParams) => {
-    const capabilities = params.capabilities;
-
-    LogUtil.log('capabilities')
-    LogUtil.log(capabilities)
-
-    // Does the client support the `workspace/configuration` request?
-    // If not, we fall back using global settings.
-    hasConfigurationCapability = !!(
-      capabilities.workspace && !!capabilities.workspace.configuration
-    );
-    hasWorkspaceFolderCapability = !!(
-      capabilities.workspace && !!capabilities.workspace.workspaceFolders
-    );
-    hasDiagnosticRelatedInformationCapability = !!(
-      capabilities.textDocument &&
-      capabilities.textDocument.publishDiagnostics &&
-      capabilities.textDocument.publishDiagnostics.relatedInformation
-    );
-
-    const result: InitializeResult = {
-      capabilities: {
-        textDocumentSync: TextDocumentSyncKind.Incremental,
-        // Tell the client that this server supports code completion.
-        completionProvider: {
-          resolveProvider: true
-        },
-        diagnosticProvider: {
-          interFileDependencies: false,
-          workspaceDiagnostics: false
-        }
-      }
-    };
-    if (hasWorkspaceFolderCapability) {
-      result.capabilities.workspace = {
-        workspaceFolders: {
-          supported: true
-        }
-      };
-    }
-    return result;
-  });
-
-  connection.onInitialized(() => {
-    if (hasConfigurationCapability) {
-      // Register for all configuration changes.
-      connection.client.register(DidChangeConfigurationNotification.type, undefined);
-    }
-    if (hasWorkspaceFolderCapability) {
-      connection.workspace.onDidChangeWorkspaceFolders(_event => {
-        connection.console.log('Workspace folder change event received.');
-      });
-    }
-  });
-
-// The example settings
-  interface ExampleSettings {
-    maxNumberOfProblems: number;
-  }
-
-// The global settings, used when the `workspace/configuration` request is not supported by the client.
-// Please note that this is not the case when using this server with the client provided in this example
-// but could happen with other clients.
-  const defaultSettings: ExampleSettings = {maxNumberOfProblems: 1000};
-  let globalSettings: ExampleSettings = defaultSettings;
-
-// Cache the settings of all open documents
-  const documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
-
-  connection.onDidChangeConfiguration(change => {
-    LogUtil.log('connection.onDidChangeConfiguration(')
-    if (hasConfigurationCapability) {
-      LogUtil.log('documentSettings.clear()')
-      // Reset all cached document settings
-      documentSettings.clear();
-    } else {
-      LogUtil.log('globalSettings = change.settings.languageServerExample')
-      globalSettings = <ExampleSettings>(
-        (change.settings.languageServerExample || defaultSettings)
-      );
-    }
-    // Refresh the diagnostics since the `maxNumberOfProblems` could have changed.
-    // We could optimize things here and re-fetch the setting first can compare it
-    // to the existing setting, but this is out of scope for this example.
-    connection.languages.diagnostics.refresh();
-  });
-
-  function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
-    if (!hasConfigurationCapability) {
-      LogUtil.log('fanhuile globalSettings')
-      return Promise.resolve(globalSettings);
-    }else {
-      LogUtil.log('hasConfigurationCapability优质')
-    }
-    let result = documentSettings.get(resource);
-    LogUtil.log('fanhuile documentSettings.get(resource)')
-    if (!result) {
-      LogUtil.log('connection.workspace.getConfiguration(')
-      result = connection.workspace.getConfiguration({
-        scopeUri: resource,
-        section: 'languageServerExample'
-      });
-      LogUtil.log('result：'+ result)
-      documentSettings.set(resource, result);
-    }
-    return result;
-  }
-
-// Only keep settings for open documents
-  documents.onDidClose(e => {
-    documentSettings.delete(e.document.uri);
-  });
+const connection = createConnection();
 
 
-  connection.languages.diagnostics.on(async (params) => {
-    const document = documents.get(params.textDocument.uri);
-    LogUtil.log('触发了诊断')
-    if (document !== undefined) {
-      LogUtil.log('诊断')
-      return {
-        kind: DocumentDiagnosticReportKind.Full,
-        items: await validateTextDocument(document)
-      } satisfies DocumentDiagnosticReport;
-    } else {
-      LogUtil.log('为空')
-      // We don't know the document. We can either try to read it from disk
-      // or we don't report problems for it.
-      return {
-        kind: DocumentDiagnosticReportKind.Full,
-        items: []
-      } satisfies DocumentDiagnosticReport;
-    }
-  });
+const server = createServer(connection);
 
-// The content of a text document has changed. This event is emitted
-// when the text document first opened or when its content has changed.
-  documents.onDidChangeContent(change => {
-    LogUtil.log('validateTextDocument change');
-    validateTextDocument(change.document);
-  });
 
-  async function validateTextDocument(textDocument: TextDocument): Promise<Diagnostic[]> {
-    // In this simple example we get the settings for every validate run.
-    LogUtil.log('validateTextDocument' + textDocument.getText());
-    const settings = await getDocumentSettings(textDocument.uri);
-    LogUtil.log('settings' + settings);
-    // The validator creates diagnostics for all uppercase words length 2 and more
-    const text = textDocument.getText();
+connection.listen();
 
-    LogUtil.log('text:' + text.length)
-
-    const pattern = /\b[A-Z]{2,}\b/g;
-    let m: RegExpExecArray | null;
-
-    let problems = 0;
-    const diagnostics: Diagnostic[] = [];
-    try {
-      LogUtil.log(`settings.maxNumberOfProblems:` + settings.maxNumberOfProblems)
-      LogUtil.log(`problems:` + problems)
-      while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
-        LogUtil.log(`problems:`)
-        LogUtil.log(problems)
-        LogUtil.log(m[0])
-        problems++;
-        const diagnostic: Diagnostic = {
-          severity: DiagnosticSeverity.Warning,
-          range: {
-            start: textDocument.positionAt(m.index),
-            end: textDocument.positionAt(m.index + m[0].length)
-          },
-          message: `${m[0]} is all uppercase.`,
-          source: 'ex'
-        };
-        if (hasDiagnosticRelatedInformationCapability) {
-          diagnostic.relatedInformation = [
-            {
-              location: {
-                uri: textDocument.uri,
-                range: Object.assign({}, diagnostic.range)
-              },
-              message: 'Spelling matters'
-            },
-            {
-              location: {
-                uri: textDocument.uri,
-                range: Object.assign({}, diagnostic.range)
-              },
-              message: 'Particularly for names'
-            }
-          ];
-        }
-        diagnostics.push(diagnostic);
-      }
-    } catch (e) {
-      LogUtil.log('chu cuowule :' + e)
-    }
-    LogUtil.log(`diagnostics.length:`)
-    LogUtil.log(diagnostics.length)
-    return diagnostics;
-  }
-
-  connection.onDidChangeWatchedFiles(_change => {
-    // Monitored files have change in VSCode
-    connection.console.log('We received a file change event');
-  });
-
-// This handler provides the initial list of the completion items.
-  connection.onCompletion(
-    (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-      // The pass parameter contains the position of the text document in
-      // which code complete got requested. For the example we ignore this
-      // info and always provide the same completion items.
-      return [
-        {
-          label: 'TypeScript',
-          kind: CompletionItemKind.Text,
-          data: 1
-        },
-        {
-          label: 'JavaScript',
-          kind: CompletionItemKind.Text,
-          data: 2
-        }
-      ];
-    }
-  );
-
-// This handler resolves additional information for the item selected in
-// the completion list.
-  connection.onCompletionResolve(
-    (item: CompletionItem): CompletionItem => {
-      if (item.data === 1) {
-        item.detail = 'TypeScript details';
-        item.documentation = 'TypeScript documentation';
-      } else if (item.data === 2) {
-        item.detail = 'JavaScript details';
-        item.documentation = 'JavaScript documentation';
-      }
-      return item;
-    }
-  );
-
-// Make the text document manager listen on the connection
-// for open, change and close text document events
-  documents.listen(connection);
-
-// Listen on the connection
-  connection.listen();
-} catch (e) {
-  LogUtil.log('chufalecuowu:' + e)
+function getLocalTsdkPath() {
+  let tsdkPath = "C:\\Users\\qinky\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
+  // let tsdkPath = "C:\\Users\\qinkaiyuan\\AppData\\Roaming\\npm\\node_modules\\typescript\\lib";
+  return tsdkPath.replace(/\\/g, '/');
 }
+
+LogUtil.log('getLocalTsdkPath')
+
+const tsdkPath = getLocalTsdkPath();
+LogUtil.log('onInitialize')
+connection.onInitialize(params => {
+  LogUtil.log('params')
+  // LogUtil.log(params)
+  try {
+    const tsdk = loadTsdkByPath(tsdkPath, params.locale);
+    const languagePlugins = [ovsLanguagePlugin]
+
+    //createTypeScriptServicePlugins
+    const languageServicePlugins = [...createTypeScriptServices(tsdk.typescript)]
+    const tsProject = createTypeScriptProject(
+      tsdk.typescript,
+      tsdk.diagnosticMessages,
+      () => ({
+        languagePlugins: languagePlugins,
+      }))
+    const res = server.initialize(
+      params,
+      tsProject,
+      [
+        ...languageServicePlugins
+      ],
+    )
+    LogUtil.log('res.capabilities.completionProvider.triggerCharacters')
+    LogUtil.log(res.capabilities)
+    return res
+  } catch (e) {
+    LogUtil.log(7777)
+    LogUtil.log(e.message)
+  }
+});
+
+connection.onInitialized(server.initialized);
+
+connection.onShutdown(server.shutdown);
