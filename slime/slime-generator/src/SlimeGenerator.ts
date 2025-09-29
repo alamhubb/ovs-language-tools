@@ -179,9 +179,11 @@ export default class SlimeGenerator {
         }
         this.generatorNode(argument as SlimeExpression)
       })
-      const lastIndex = node.arguments[node.arguments.length - 1].loc.end.index
-      this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, lastIndex)
     }
+    const rParenSearchIndex = node.arguments.length
+      ? node.arguments[node.arguments.length - 1].loc.end.index
+      : node.callee.loc.end.index
+    this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, rParenSearchIndex)
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
@@ -486,6 +488,9 @@ export default class SlimeGenerator {
     const cstLocation = this.findNextTokenLocByTypeAndIndex(tokenType, findIndex)
     if (cstLocation) {
       this.addCodeAndMappings(token, cstLocation)
+    } else {
+      // 当无法在源代码中定位到对应位置时，仍然要输出生成代码，避免欠缺括号等 token
+      this.addCodeAndMappings(token)
     }
   }
 
