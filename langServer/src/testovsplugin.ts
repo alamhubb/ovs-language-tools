@@ -1,8 +1,16 @@
-import {vitePluginOvsTransform} from "ovsjs/src";
+import {vitePluginOvsTransform} from "ovsjs/src"
 
-const code = `console.log(1)`
+const cases: Record<string, string> = {
+  simpleCall: `console.log(1)`,
+  ovsDivLiteral: `div {
+  123
+}`
+}
 
-const res = vitePluginOvsTransform(code)
-
-console.log(res)
+for (const [name, code] of Object.entries(cases)) {
+  const res = vitePluginOvsTransform(code)
+  console.log(`=== ${name} ===`)
+  console.log('code:', res.code)
+  console.log('mapping:', res.mapping)
+}
 

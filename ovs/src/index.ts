@@ -50,8 +50,6 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   const lexer = new SubhutiLexer(es6Tokens)
   const tokens = lexer.lexer(code)
 
-  JsonUtil.log(tokens)
-
   if (!tokens.length) return {
     code: code,
     mapping: []
@@ -59,47 +57,11 @@ export function vitePluginOvsTransform(code: string): SlimeGeneratorResult {
   const parser = new OvsParser(tokens)
 
   let curCst = parser.Program()
-  // console.log(curCst)
   curCst = traverseClearTokens(curCst)
-  // curCst = traverseClearLoc(curCst)
-  JsonUtil.log(5656)
-  JsonUtil.log(5656)
-  JsonUtil.log(curCst)
-  // const ast = SlimeCstToAstUtil.toProgram(curCst)
   const ast = OvsCstToSlimeAstUtil.toProgram(curCst)
-  JsonUtil.log(9659)
-  JsonUtil.log(ast)
-  let code11 = '111'
-  code11 = SlimeGenerator.generator(ast, tokens)
-  // console.log(computedIndex(code11.mapping))
-  return code11
-  // return `import OvsAPI from "@/ovs/OvsAPI.ts";\n ${code11.code}`
+  const result = SlimeGenerator.generator(ast, tokens)
+  return result
 }
-
-// const code = `let a = 'di
-// const code = `console.log(123)
-// const code = `console.  let a = 1
-const code = `
-let a = 1
-export const hello = {
-    render() {
-    console.log(a)
-    }
-}
-
-
-`
-//
-// let div1 = function() {
-//     return OvsAPI.createVNode("div", [a, b])
-// }()
-/*const code = `let a = div{
-            header = div{123},
-            true
-        }
-`*/
-const res = vitePluginOvsTransform(code)
-console.log(res)
 
 export default function vitePluginOvs(): Plugin {
   const filter = createFilter(

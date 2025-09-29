@@ -38,7 +38,6 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
       body = this.createModuleItemListAst(first)
       for (const item of body) {
         if (item.type === SlimeAstType.ImportDeclaration) {
-          console.log(item)
           const importDeclaration: SlimeImportDeclaration = item as SlimeImportDeclaration
           const importDefaultSpecifiers: SlimeImportDefaultSpecifier[] = importDeclaration.specifiers.filter(item => item.type === SlimeAstType.ImportDefaultSpecifier)
           hasImportOvsFLag = importDefaultSpecifiers.some(item => item.local.name === 'OvsAPI')
@@ -77,7 +76,6 @@ export class OvsCstToSlimeAst extends SlimeCstToAst {
 
   createOvsRenderDomViewDeclarationAst(cst: SubhutiCst): SlimeCallExpression {
     const astName = checkCstName(cst, OvsParser.prototype.OvsRenderDomViewDeclaration.name);
-    JsonUtil.log(cst)
     let children = []
     if (cst.children.length > 1) {
       children = cst.children[2].children.filter(item => item.name === OvsParser.prototype.OvsRenderDomViewDeclarator.name).map(item => this.createOvsRenderDomViewDeclaratorAst(item)) as any[]
