@@ -180,8 +180,8 @@ export default class SlimeGenerator {
         this.generatorNode(argument as SlimeExpression)
       })
       const lastIndex = node.arguments[node.arguments.length - 1].loc.end.index
+      this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, lastIndex)
     }
-    this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, lastIndex)
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
