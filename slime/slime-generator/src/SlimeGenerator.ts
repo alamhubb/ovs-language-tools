@@ -180,8 +180,8 @@ export default class SlimeGenerator {
         this.generatorNode(argument as SlimeExpression)
       })
       const lastIndex = node.arguments[node.arguments.length - 1].loc.end.index
-      this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, lastIndex)
     }
+    this.addCodeAndMappingsFindLoc(es6TokensObj.RParen, Es6TokenName.RParen, lastIndex)
   }
 
   private static generatorFunctionExpression(node: SlimeFunctionExpression) {
@@ -334,6 +334,8 @@ export default class SlimeGenerator {
 
     } else if (node.type === SlimeAstType.ImportDeclaration) {
       this.generatorImportDeclaration(node as SlimeImportDeclaration)
+    } else if (node.type === SlimeAstType.FunctionParams) {
+      this.generatorFunctionParams(node as SlimeFunctionParams)
     } else {
       throw new Error('不支持的类型：' + node.type)
     }

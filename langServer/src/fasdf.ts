@@ -3,13 +3,9 @@ import {MappingConverter} from "./OvsLanguagePlugin.ts";
 import {LogUtil} from "./logutil.ts";
 import { SourceMap } from '@volar/source-map';
 
-const code = `const a = 1
-export const hello = {
-    render() {
-console
-    }
-}
-`
+const code = `let a = 1
+let b = a`
+
 const res = vitePluginOvsTransform(code)
 
 console.log(777888)
